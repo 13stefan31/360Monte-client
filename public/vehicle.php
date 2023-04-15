@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php include ('layouts/head.php')?>
+
+<body>
+<div class="app">
+    <div class="layout">
+        <?php include ('layouts/header.php')?>
+        <?php include ('layouts/sideNav.php')?>
+        <!-- Page Container START -->
+        <div class="page-container">
+            <!-- Content Wrapper START -->
+            <div class="main-content">
+                <div class="page-header">
+                    <h2 class="header-title">Vozilo</h2>
+                    <div class="header-sub-title">
+                        <nav class="breadcrumb breadcrumb-dash">
+                            <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
+                            <a class="breadcrumb-item" href="vehicles.php">Vozila</a>
+                            <span class="breadcrumb-item active">Vozilo</span>
+                        </nav>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4> <a href="vehicles.php"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
+
+                        <div class="m-t-25">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Opšte informacije</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Istorija kvarova i neregularnosti</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content m-t-15" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <p>Opšte informacije o vozilu</p>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="alert alert-success">
+                                        <div class="d-flex align-items-center justify-content-start">
+                                        <span class="alert-icon">
+                                            <i class="anticon anticon-check-o"></i>
+                                        </span>
+                                            <span>Uspješno ste unijeli novi komentar</span>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger">
+                                        <div class="d-flex align-items-center justify-content-start">
+                                        <span class="alert-icon">
+                                            <i class="anticon anticon-close-o"></i>
+                                        </span>
+                                            <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity">
+                                        Novi unos
+                                    </button>
+                                    <table id="data-table" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Komentar</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Komentar 1</td>
+                                            <td>Status 1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Komentar 2</td>
+                                            <td>Status 2</td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Komentar</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="newIrregularity">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Novi unos</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="input-group m-b-10">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Komentar</span>
+                                </div>
+                                <textarea class="form-control" aria-label="With textarea"></textarea>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">Status</span>
+                                </div>
+                                <select class="form-control" name="">
+                                    <option value=""></option>
+                                    <option value="">Ispravno</option>
+                                    <option value="">Neispravno</option>
+                                </select>
+                            </div>
+                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                            <button type="button" class="btn btn-primary">Sačuvaj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Wrapper END -->
+            <?php include ('layouts/footer.php')?>
+        </div>
+        <!-- Page Container END -->
+        <?php  include ('layouts/themeConfig.php')?>
+    </div>
+</div>
+
+
+
+
+
+<?php include ('layouts/scripts.php')?>
+
+</body>
+
+</html>
