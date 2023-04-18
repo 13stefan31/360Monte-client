@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>
@@ -22,25 +26,9 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <div class="alert alert-success">
-                                <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-check-o"></i>
-                                        </span>
-                                    <span>Uspješno ste unijeli novog zaposlenog</span>
-                                </div>
-                            </div>
-                            <div class="alert alert-danger">
-                                <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-close-o"></i>
-                                        </span>
-                                    <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>
-                                </div>
-                            </div>
+                            <div id="alert"></div>
                             <div class="m-t-25">
-
-                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newPerson">
+                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newPersonButton" data-target="#newPerson">
                                     Novi unos
                                 </button>
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showPersonsFilter" >
@@ -75,48 +63,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table id="data-table" class="table">
+                                <div id="alertAddUser"></div>
+                                <table id="persons-table" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Ime</th>
-                                            <th>Prezime</th>
+                                            <th>Ime i prezime</th>
                                             <th>Email</th>
+                                            <th>Username</th>
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Marko</td>
-                                            <td>Markovic</td>
-                                            <td>marko@gmail.com</td>
-                                            <td><a class="btn btn-primary m-r-5" href="person.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Janko</td>
-                                            <td>Jankovic</td>
-                                            <td>janko@gmail.com</td>
-                                            <td><a class="btn btn-primary m-r-5" href="person.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Milena</td>
-                                            <td>Novakovic</td>
-                                            <td>milenan@yahoo.com</td>
-                                            <td><a class="btn btn-primary m-r-5" href="person.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                    </tbody>
-<!--                                    <tfoot>-->
-<!--                                    <tr>-->
-<!--                                        <th>Ime i prezime</th>-->
-<!--                                        <th>Email</th>-->
-<!--                                        <th></th>-->
-<!--                                    </tr>-->
-<!--                                    </tfoot>-->
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade" id="newPerson">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -126,30 +88,42 @@
                                     <i class="anticon anticon-close"></i>
                                 </button>
                             </div>
+                            <form id="personAdd">
                             <div class="modal-body">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">Ime</span>
+                                        <span class="input-group-text"  >Ime i prezime</span>
                                     </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <input type="text" class="form-control" id="name" aria-describedby="basic-addon3" placeholder="Unesite ime i prezime">
+
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">Prezime</span>
+                                        <span class="input-group-text" >Email</span>
                                     </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <input type="text" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Unesite email">
+
                                 </div>
+<!--                                <div class="input-group mb-3">-->
+<!--                                    <div class="input-group-prepend">-->
+<!--                                        <span class="input-group-text" id="basic-addon3">Username</span>-->
+<!--                                    </div>-->
+<!--                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Unesite username">-->
+<!--                                </div>-->
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">Email</span>
+                                        <span class="input-group-text">Rola</span>
                                     </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <select id="rolaId" class="form-control"></select>
+
                                 </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                <button type="button" class="btn btn-primary">Sačuvaj</button>
+                                <button type="submit" class="btn btn-primary" id="addNewPerson">Sačuvaj</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -163,9 +137,8 @@
 
 
 
-
-
-    <?php include ('layouts/scripts.php')?>
+<?php include ('layouts/scripts.php')?>
+<script src="/assets/js/persons.js"></script>
 
 </body>
 

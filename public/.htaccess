@@ -1,0 +1,62 @@
+Options +FollowSymLinks -MultiViews
+# ukljucivanje mod_rewrite on
+RewriteEngine On
+RewriteBase /
+
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteRule ^/?$ index.php
+
+
+RewriteRule ^zaposleni/?$ persons.php
+RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]
+
+
+
+
+RewriteRule ^([^/.]+)/kontakt/?$ kontakt.php?lang=$1
+RewriteRule ^([^/.]+)/contact/?$ kontakt.php?lang=$1
+#RewriteRule ^aranzmani/?$ aranzmani.php
+RewriteRule ^blog/?$ blog.php
+RewriteRule ^blog-detalj/?$ blog-detalj.php
+
+
+RewriteRule ^politika-privatnosti/?$ politika-privatnosti.php
+RewriteRule ^uslovi-koriscenja/?$ uslovi-koriscenja.php
+
+
+Rewriterule ^([^/.]+)/blogovi/?$ blog.php?lang=$1&alias=$2 [QSA]
+Rewriterule ^([^/.]+)/blogs/?$ blog.php?lang=$1&alias=$2 [QSA]
+RewriteRule ^([^/.]+)/aranzman/([^/.]+)/?$ aranzman.php?lang=$1&alias=$2 [QSA]
+RewriteRule ^([^/.]+)/tour/([^/.]+)/?$ aranzman.php?lang=$1&alias=$2 [QSA]
+
+RewriteRule ^([^/.]+)/blog/([^/.]+)/?$ blog-detalj.php?lang=$1&alias=$2 [QSA]
+Rewriterule ^([^/.]+)/ture/([^/.]+)/?$ aranzmani.php?lang=$1&alias=$2 [QSA]
+Rewriterule ^([^/.]+)/tours/([^/.]+)/?$ aranzmani.php?lang=$1&alias=$2 [QSA]
+
+Rewriterule ^([^/.]+)/blogovi/?$ blogovi.php?lang=$1&alias=$2 [QSA]
+Rewriterule ^([^/.]+)/blogs/?$ blogovi.php?lang=$1&alias=$2 [QSA]
+
+Rewriterule ^([^/.]+)/([^/.]+)/?$ web_page.php?lang=$1&alias=$2 [QSA]
+
+
+<IfModule mod_headers.c>
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always append X-Frame-Options SAMEORIGIN
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options nosniff
+</IfModule>
+
+
+
+
+
+
+
+

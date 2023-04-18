@@ -8,4 +8,9 @@ $(document).ready(function () {
     $("#showAllocationsFilter").click(function () {
         $("#filterAllocations").toggle();
     });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // Remove success message
+        $(".alert").remove();
+    });
 });

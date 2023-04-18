@@ -12,7 +12,7 @@
                 <div class="main-content">
                     <div class="row">
                         <div class="col-md-6 col-lg-3">
-                            <a href="persons.php">
+                            <a href="/zaposleni">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="media align-items-center">
