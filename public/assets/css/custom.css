@@ -4,8 +4,11 @@ p.error {
 .input-group .error {
     position: absolute;
     right: 0;
-    bottom: -2em; /* increase this value to move the input down further */
-    /*width: 100%;*/
-    font-size: 1.2em; /* increase the font size */
+    bottom: -2em;
+    font-size: 1.2em;
     color: red;
+}
+.warrningAlert{
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }

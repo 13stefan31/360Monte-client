@@ -6,7 +6,9 @@ $(document).ready(function() {
         type:'GET',
         data:{getSinglePerson:1,personId:personId},
         dataType: 'json',
-        success: function(data) {
+        success: function(response) {
+            console.log(response)
+            var data = response.data.data;
             if (data.error) {
                 $('#alertGetPerson').html(createWarningMessage(data.error));
             } else {
@@ -21,10 +23,8 @@ $(document).ready(function() {
             }
         }  ,
         error: function(jqXHR) {
-
-            var errorMessage = '';
-            errorMessage += jqXHR.status +' Došlo je do greške prilikom preuzimanja podataka.';
-            $('#alertGetPerson').html(createWarningMessage(errorMessage));
+            var error = generateAjaxError(jqXHR);
+            $('#alertGetPerson').html(createWarningMessage(error));
         }
     });
 
@@ -35,7 +35,6 @@ $(document).ready(function() {
             $.ajax({
                 url: '/../../functions/person.php',
                 type:'put',
-                contentType: 'application/json',
                 data:  JSON.stringify({
                     'updatePerson': 1,
                     'data':{
@@ -45,8 +44,8 @@ $(document).ready(function() {
                     }
                 }),
                 success: function(response) {
-                    var data = JSON.parse(response);
-                    console.log(data)
+                    var dataParse = JSON.parse(response);
+                    var data = dataParse.data.data;
                     if (data.error) {
                         $('#alertChangeUser').html(createWarningMessage(data.error));
                     } else {
@@ -55,17 +54,13 @@ $(document).ready(function() {
                         $('.personEmail').html(data.email);
                         $('.personUsername').html(data.username);
 
-
                         $('#personName').val(data.name);
                         $('#personEmail').val(data.email);
                         $('#personUsername').val(data.username);
                     }
-
                 },  error: function(jqXHR) {
-
-                    var errorMessage = '';
-                    errorMessage += jqXHR.status +' Došlo je do greške prilikom preuzimanja podataka.';
-                    $('#alertChangeUser').html(createErrorMessage(errorMessage));
+                    var error = generateAjaxError(jqXHR);
+                    $('#alertChangeUser').html(createErrorMessage(error));
                 }
             });
 
@@ -74,6 +69,7 @@ $(document).ready(function() {
 
     $('#personPasswordChange').click(function(e) {
         e.preventDefault();
+        $(this).prop('disabled', true); // disable the button
         var validated = validatePasswordData();
         if (validated){
 
@@ -101,18 +97,14 @@ $(document).ready(function() {
                     }
 
                 },  error: function(jqXHR) {
-                    var errorMessage = '';
-                    if (jqXHR.status === 404) {
-                        errorMessage = 'API endpoint not found.';
-                    } else if (jqXHR.status === 500) {
-                        errorMessage = 'Internal server error.';
-                    }
-                    errorMessage += ' Došlo je do greške prilikom izmjene podataka.';
-                    $('#alertChangeUserPassword').html(createErrorMessage(errorMessage));
+
+                    var error = generateAjaxError(jqXHR);
+                    $('#alertChangeUserPassword').html(createErrorMessage(error));
                 },complete:function (){
                     $("#currentPassword").val("");
                     $("#newPassword").val("");
                     $("#confirmPassword").val("");
+                    $('#personPasswordChange').prop('disabled', false); // enable the button
                 }
             });
         }

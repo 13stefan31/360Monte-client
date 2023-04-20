@@ -4,10 +4,11 @@ $(document).ready(function() {
         type:'GET',
         data:{getAllPersons:1},
         dataType: 'json',
-        success: function(data) {
-            if (data.error) {
-                $('#alert').append(createWarningMessage(data.error));
+        success: function(response) {
+            if (response.error) {
+                $('#alert').append(createWarningMessage(response.error));
             } else {
+                var data = response.data.data;
                 $.each(data, function(index, row) {
                     $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
                 });
@@ -15,12 +16,10 @@ $(document).ready(function() {
             }
         }  ,
         error: function(jqXHR) {
-            var errorMessage = '';
-            errorMessage += jqXHR.status +' Došlo je do greške prilikom preuzimanja podataka.';
-            $('#alert').append(createWarningMessage(errorMessage));
+            var error = generateAjaxError(jqXHR);
+           $('#alert').append(createWarningMessage(error));
         }
     });
-
 
     $('#newPersonButton').click(function(e) {
         e.preventDefault();
@@ -29,8 +28,8 @@ $(document).ready(function() {
             type: 'GET',
             dataType: 'json',
             data:{'getRoles':1},
-            success: function(data) {
-                console.log(data)
+            success: function(response) {
+                var data = response.data.data;
                 var select = $('#rolaId');
                 select.empty();
                 select.append('<option value="">Odaberite rolu</option>');
@@ -61,11 +60,11 @@ $(document).ready(function() {
                         }
                     } ,
                     success: function(response) {
-                        var data = JSON.parse(response);
+                        var dataParse = JSON.parse(response);
+                        var data = dataParse.data.data;
                         if (data.error){
                             $('#alertAddUser').html(createWarningMessage(data.error));
                         }else{
-
                             var newRow = $('<tr>').attr('id', 'row-' + data.id);
                             newRow.append($('<td>').text(data.name));
                             newRow.append($('<td>').text(data.email));
@@ -78,9 +77,8 @@ $(document).ready(function() {
                         }
 
                     },  error: function(jqXHR) {
-                        var errorMessage = '';
-                        errorMessage += jqXHR.status +' Došlo je do greške prilikom preuzimanja podataka.';
-                        $('#alertAddUser').html(createErrorMessage(errorMessage));
+                        var error = generateAjaxError(jqXHR);
+                        $('#alertAddUser').html(createErrorMessage(error));
                     },
                     complete: function() {
                         $('#newPerson').modal('hide');
