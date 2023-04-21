@@ -22,26 +22,8 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="alert alert-success">
-                            <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-check-o"></i>
-                                        </span>
-                                <span>Uspješno ste unijeli novo vozilo</span>
-                            </div>
-                        </div>
-                        <div class="alert alert-danger">
-                            <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-close-o"></i>
-                                        </span>
-                                <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>
-                            </div>
-                        </div>
+                        <div id="alertVehicles"></div>
                         <div class="m-t-25">
-                            <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newVehicle">
-                                Novi unos
-                            </button>
                             <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showVehicleFilter" >
                                Filteri
                             </button>
@@ -74,82 +56,25 @@
                                         </div>
                                     </div>
                                 </div>
-                            <table id="data-table" class="table">
+                            <table id="vehicles-table" class="table">
                                 <thead>
                                 <tr>
-                                    <th>Vozilo</th>
+                                    <th>Brend</th>
+                                    <th>Model</th>
+                                    <th>Godina</th>
                                     <th>Registarska oznaka</th>
+                                    <th>Broj sjedišta</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Vozilo 1</td>
-                                    <td>PG GG666</td>
-                                    <td>Ispravno</td>
-                                    <td>
-                                        <div class="text-right">
-                                            <a class="btn btn-primary m-r-5" href="vehicle.php"><i class="anticon anticon-plus"></i>Detalji</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Vozilo 2</td>
-                                    <td>NK BB888</td>
-                                    <td>Neispravno</td>
-                                    <td>
-                                        <div class="text-right">
-                                            <a class="btn btn-primary m-r-5" href="vehicle.php"><i class="anticon anticon-plus"></i>Detalji</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-<!--                                <tfoot>-->
-<!--                                <tr>-->
-<!--                                    <th>Vozilo</th>-->
-<!--                                    <th>Registarska oznaka</th>-->
-<!--                                    <th>Status</th>-->
-<!--                                    <th></th>-->
-<!--                                </tr>-->
-<!--                                </tfoot>-->
+                                <tbody> </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="newVehicle">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Novi unos</h5>
-                            <button type="button" class="close" data-dismiss="modal">
-                                <i class="anticon anticon-close"></i>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon3">Naziv</span>
-                                </div>
-                                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                            </div>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon3">Registarska oznaka</span>
-                                </div>
-                                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                            <button type="button" class="btn btn-primary">Sačuvaj</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>
@@ -163,6 +88,7 @@
 
 
 <?php include ('layouts/scripts.php')?>
+<script src="/assets/js/vehicles.js"></script>
 
 </body>
 

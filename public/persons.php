@@ -64,6 +64,7 @@
                                     </div>
                                 </div>
                                 <div id="alertAddUser"></div>
+                                <div id="alertDeleteUser"></div>
                                 <table id="persons-table" class="table">
                                     <thead>
                                         <tr>

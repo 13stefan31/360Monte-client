@@ -10,7 +10,8 @@ $(document).ready(function() {
             } else {
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
+                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                        '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 $('#persons-table').DataTable();
             }
@@ -69,7 +70,7 @@ $(document).ready(function() {
                             newRow.append($('<td>').text(data.name));
                             newRow.append($('<td>').text(data.email));
                             newRow.append($('<td>').text(data.username));
-                            newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/zaposleni/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>'));
+                            newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/zaposleni/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 user-delete" data-userid="'+data.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button>'));
                             $('#persons-table tbody').prepend(newRow);
 
                             $('#alertAddUser').html(createSuccessMessage('Uspješno ste dodali novog korisnika'));
@@ -88,6 +89,39 @@ $(document).ready(function() {
             }
     });
 });
+$(document).on('click', '.user-delete', function() {
+    var userId = $(this).data('userid');
+    if (confirm('Are you sure you want to delete this user?')) {
+
+        $.ajax({
+            url: '/../../functions/persons.php',
+            type: 'delete',
+            contentType: 'application/json',
+            data: JSON.stringify({ deleteUser: 1, userId: userId }),
+            success: function(response) {
+                var data = JSON.parse(response);
+                if (data.error){
+                    $('#alertDeleteUser').html(createWarningMessage(data.error));
+                }else{
+                    var id = data.data.data.id;
+                    var name = data.data.data.name;
+                    var table = $('#persons-table').DataTable();
+                    var row = table.row('#'+id);
+                    row.remove().draw();
+
+                    $('#alertDeleteUser').html(createSuccessMessage('Uspješno ste obrisali korisnika '+name));
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                var error = generateAjaxError(jqXHR);
+                $('#alertDeleteUser').html(createErrorMessage(error));
+            }
+        });
+    }
+});
+
 function isValidEmail(email) {
     var regex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return regex.test(email);

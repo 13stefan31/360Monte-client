@@ -75,6 +75,7 @@ class SenderService
 
     public function send_post_request($field,$data)
     {
+        try{
         $client = new Client(['base_uri'=>$this->url]);
         $headers = [
             'Content-Type'=>'application/json'
@@ -84,6 +85,41 @@ class SenderService
            'json'=>$data
         ]);
         return $this->check_response($response);
+        } catch (\Exception $e) {
+            $error = json_decode($e->getResponse()->getBody(), true)['error'];
+            $errorMessages = [];
+            if (count($error) === 1) {
+                $errorMessages[] = reset($error);
+            } else {
+                foreach ($error as $key => $value) {
+                    $errorMessages[] = implode(', ', $value);
+                }
+            }
+            $response_array = [
+                "success" => false,
+                "error" => implode("\n", $errorMessages),
+                "status" => intval($e->getCode())
+            ];
+            echo json_encode($response_array);
+        }
+
+    }
+
+    public function send_delete_request($field)
+    {
+
+        $client = new Client(['base_uri'=>$this->url]);
+        try {
+            $response = $client->delete($field);
+            return $this->check_response($response);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                $responseBody = $e->getResponse()->getBody()->getContents();
+                return $responseBody;
+            } else {
+                return $e->getMessage();
+            }
+        }
 
     }
     public function getRoles() {

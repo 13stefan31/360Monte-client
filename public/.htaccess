@@ -13,6 +13,8 @@ RewriteRule ^zaposleni/?$ persons.php
 RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]
 
 
+RewriteRule ^vozila/?$ vehicles.php
+RewriteRule ^vozilo/([0-9]+)/?$ vehicle.php?id=$1 [QSA]
 
 
 RewriteRule ^([^/.]+)/kontakt/?$ kontakt.php?lang=$1

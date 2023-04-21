@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../../../Sender/Service/SenderService.php');
 
-class PersonSender extends \Main\SenderService
+class VehicleSender extends \Main\SenderService
 {
 
     private static $instance = null;
@@ -13,20 +13,20 @@ class PersonSender extends \Main\SenderService
 
     public static function getInstance(){
         if (self::$instance == null) {
-            self::$instance = new PersonSender();
+            self::$instance = new VehicleSender();
         }
 
         return self::$instance;
     }
 
-    public function getAllPersons(){
-        $initialize_field = 'users' ;
+    public function getAllVehicles(){
+        $initialize_field = 'vehicles' ;
         return  $this->send_get_request($initialize_field, '');
     }
 
 
-    public function getSinglePerson($id) {
-        $initialize_field = 'users' . '/' . $id;
+    public function getSingleVehicle($id) {
+        $initialize_field = 'vehicles' . '/' . $id;
         return  $this->send_get_request($initialize_field, '');
     }
 

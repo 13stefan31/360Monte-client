@@ -12,19 +12,19 @@
             <!-- Content Wrapper START -->
             <div class="main-content">
                 <div class="page-header">
-                    <h2 class="header-title">Vozilo</h2>
+                    <h2 class="header-title vehicleName"></h2>
                     <div class="header-sub-title">
                         <nav class="breadcrumb breadcrumb-dash">
-                            <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
-                            <a class="breadcrumb-item" href="vehicles.php">Vozila</a>
-                            <span class="breadcrumb-item active">Vozilo</span>
+                            <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
+                            <a class="breadcrumb-item" href="/vozila">Vozila</a>
+                            <span class="breadcrumb-item active vehicleName"></span>
                         </nav>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4> <a href="vehicles.php"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
-
+                        <h4> <a href="/vozila"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
+                        <div id="alertGetVehicle"></div>
                         <div class="m-t-25">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -36,7 +36,39 @@
                             </ul>
                             <div class="tab-content m-t-15" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <p>Opšte informacije o vozilu</p>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="product-info-table m-t-20">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Brend:</td>
+                                                        <td class="text-dark font-weight-semibold vehicleBrand" ></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Model:</td>
+                                                        <td class="vehicleModel"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Broj sjedišta:</td>
+                                                        <td class="vehicleNumberOfSeats"></td>
+                                                    <tr>
+                                                        <td>Registarska oznaka:</td>
+                                                        <td class="vehicleRegistrationNumber"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Godina:</td>
+                                                        <td class="vehicleYear"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ispravnost:</td>
+                                                        <td class="vehicleReadyForDrive"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="alert alert-success">
@@ -137,6 +169,7 @@
 
 
 <?php include ('layouts/scripts.php')?>
+<script src="/assets/js/vehicle.js"></script>
 
 </body>
 

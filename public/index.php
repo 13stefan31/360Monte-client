@@ -28,7 +28,7 @@
                             </a>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <a href="vehicles.php">
+                            <a href="/vozila">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="media align-items-center">
