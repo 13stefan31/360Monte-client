@@ -1,13 +1,18 @@
+
+ErrorDocument 404 /error.php
 Options +FollowSymLinks -MultiViews
 # ukljucivanje mod_rewrite on
 RewriteEngine On
 RewriteBase /
-
 #RewriteCond %{HTTPS} off
 #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 RewriteRule ^/?$ index.php
+RewriteRule ^pocetna/?$ index.php
 
+
+RewriteRule ^prijava/?$ login.php
+RewriteRule ^zaboravljena-lozinka/?$ forgotPassword.php
 
 RewriteRule ^zaposleni/?$ persons.php
 RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]

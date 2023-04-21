@@ -1,7 +1,4 @@
-<?php
-
-
-?>
+<?php require 'auth.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>

@@ -25,15 +25,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-semibold" for="password">Lozinka:</label>
-                                            <a class="float-right font-size-13 text-muted" href="forgotPassword.php">Zaboravili ste lozinku?</a>
+                                            <a class="float-right font-size-13 text-muted" href="/zaboravljena-lozinka">Zaboravili ste lozinku?</a>
                                             <div class="input-affix m-b-10">
                                                 <i class="prefix-icon anticon anticon-lock"></i>
                                                 <input type="password" class="form-control" id="password" placeholder="Lozinka">
                                             </div>
                                         </div>
+                                        <div id="loginAlert"></div>
                                         <div class="form-group">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <button class="btn btn-primary">Prijavite se</button>
+                                                <button class="btn btn-primary login" >Prijavite se</button>
                                             </div>
                                         </div>
                                     </form>
@@ -49,12 +50,13 @@
 
     
     <!-- Core Vendors JS -->
-    <script src="assets/js/vendors.min.js"></script>
+    <script src="/assets/js/vendors.min.js"></script>
 
     <!-- page js -->
 
     <!-- Core JS -->
-    <script src="assets/js/app.min.js"></script>
+    <script src="/assets/js/app.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
 
 </body>
 

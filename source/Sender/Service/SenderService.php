@@ -73,15 +73,20 @@ class SenderService
         }
     }
 
-    public function send_post_request($field,$data)
+    public function send_post_request($field,$data,$headers=null)
     {
         try{
         $client = new Client(['base_uri'=>$this->url]);
-        $headers = [
-            'Content-Type'=>'application/json'
-        ];
+        if ($headers==null){
+            $head = [
+                'Content-Type'=>'application/json'
+            ];
+        }else{
+            $head=$headers;
+        }
+
         $response = $client->post($field,[
-           'headers'=>$headers,
+           'headers'=>$head,
            'json'=>$data
         ]);
         return $this->check_response($response);
