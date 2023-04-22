@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'auth.php';
 
 if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola_id'])){
@@ -34,7 +33,7 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                         <h2 class="header-title">Zaposleni</h2>
                         <div class="header-sub-title">
                             <nav class="breadcrumb breadcrumb-dash">
-                                <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
+                                <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
                                 <span class="breadcrumb-item active">Zaposleni</span>
                             </nav>
                         </div>
@@ -54,8 +53,7 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                                         <h4>Filteri</h4>
                                         <input type="hidden" id="person_filter_rola_id" value="<?php echo isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '' ?>">
                                         <div class="input-group mb-3">
-                                            <input type="hidden" id="person_filter_rola_id" value="<?php echo isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '' ?>">
-                                            <div class="input-group-prepend">
+                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">Ime i prezime</span>
                                             </div>
                                             <input type="text" class="form-control" id="personFilterName" placeholder="Unesite ime i prezime" aria-label="Unesite ime" aria-describedby="basic-addon1" value="<?=$nameFilters?>">

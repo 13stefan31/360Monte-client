@@ -19,8 +19,30 @@ class VehicleSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllVehicles(){
+    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null){
         $initialize_field = 'vehicles' ;
+
+        $filters = array();
+        if (!empty($brand)) {
+            $filters[] = 'brand=' . urlencode($brand);
+        }
+        if (!empty($model)) {
+            $filters[] = 'model=' . urlencode($model);
+        }
+        if (!empty($regNo)) {
+            $filters[] = 'registration_number=' . urlencode($regNo);
+        }
+        if (!empty($status)) {
+            $filters[] = 'ready_to_drive=' . urlencode($status);
+        }
+        if (!empty($seatsNo)) {
+            $filters[] = 'seats=' . urlencode($seatsNo);
+        }
+        $filterString = implode('&', $filters);
+        if (!empty($filterString)) {
+            $initialize_field .= '?' . $filterString;
+        }
+
         return  $this->send_get_request($initialize_field, '');
     }
 
