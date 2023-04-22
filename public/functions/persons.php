@@ -2,7 +2,19 @@
 require_once(dirname(__FILE__). '/../../common/functions.inc');
 
 if(isset($_GET) && isset($_GET['getAllPersons'])){
-    return $person_sender->getAllPersons();
+    $name = isset($_GET['name']) ? $_GET['name'] : null;
+    $rolaId = isset($_GET['rolaId']) ? $_GET['rolaId'] : null;
+    if (isset($name)){
+        $_SESSION['person_filter_name'] = $name;
+    }else{
+        $_SESSION['person_filter_name'] = null;
+    }
+    if (isset($name)){
+        $_SESSION['person_filter_rola_id'] = $rolaId;
+    }else{
+        $_SESSION['person_filter_rola_id'] = null;
+    }
+    return $person_sender->getAllPersons($name, $rolaId);
 }
 
 if(isset($_POST) && isset($_POST['addNewPerson'])){

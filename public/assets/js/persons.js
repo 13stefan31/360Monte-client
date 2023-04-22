@@ -1,49 +1,22 @@
 $(document).ready(function() {
-    $.ajax({
-        url: '/../../functions/persons.php',
-        type:'GET',
-        data:{getAllPersons:1},
-        dataType: 'json',
-        success: function(response) {
-            if (response.error) {
-                $('#alert').append(createWarningMessage(response.error));
-            } else {
-                var data = response.data.data;
-                $.each(data, function(index, row) {
-                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
-                        '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
-                });
-                $('#persons-table').DataTable();
-            }
-        }  ,
-        error: function(jqXHR) {
-            var error = generateAjaxError(jqXHR);
-           $('#alert').append(createWarningMessage(error));
-        }
-    });
+    var savedFilters = localStorage.getItem('personFilters');
+    if (savedFilters) {
+        savedFilters = JSON.parse(savedFilters);
+        getUsers(savedFilters);
+        var selectedValue=$('#person_filter_rola_id').val();
+        getRoles('rolaFilterId',selectedValue);
+    } else {
+        getUsers('');
+    }
 
+    $('#showPersonsFilter').click(function(e) {
+        e.preventDefault();
+        getRoles('rolaFilterId');
+    });
     $('#newPersonButton').click(function(e) {
         e.preventDefault();
-        $.ajax({
-            url: '/../../functions/persons.php',
-            type: 'GET',
-            dataType: 'json',
-            data:{'getRoles':1},
-            success: function(response) {
-                var data = response.data.data;
-                var select = $('#rolaId');
-                select.empty();
-                select.append('<option value="">Odaberite rolu</option>');
-                $.each(data, function(key, value) {
-                    select.append('<option value="' + value.id + '">' + value.name + '</option>');
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Error: ' + errorThrown);
-            }
-        });
+        getRoles('rolaId');
     });
-
     $('#addNewPerson').click(function(e) {
         e.preventDefault();
             var validate = validateNewUser();
@@ -88,6 +61,13 @@ $(document).ready(function() {
                 });
             }
     });
+    $('#clearFilters').on('click', function() {
+        getUsers('');
+        localStorage.removeItem('personFilters');
+        $('#personFilterName').val('');
+        $('#rolaFilterId').val('');
+        $('#clearFilters').hide();
+    });
 });
 $(document).on('click', '.user-delete', function() {
     var userId = $(this).data('userid');
@@ -122,11 +102,78 @@ $(document).on('click', '.user-delete', function() {
     }
 });
 
+$(document).on('click', '#persosnsFilter', function() {
+    var name = $('#personFilterName').val();
+    var rolaId = $('#rolaFilterId').val();
+    var filters = {
+        name: name,
+        rolaId: rolaId
+    };
+
+    localStorage.setItem('personFilters', JSON.stringify(filters));
+    getUsers(filters);
+    $('#clearFilters').show();
+});
+function getUsers(filters){
+    var data = {
+        getAllPersons: 1
+    };
+
+    if (filters !== '') {
+        data.name = filters.name;
+        data.rolaId = filters.rolaId;
+    }
+
+    $.ajax({
+        url: '/../../functions/persons.php',
+        type:'GET',
+        data:data,
+        dataType: 'json',
+        success: function(response) {
+            if (response.error) {
+                $('#alert').append(createWarningMessage(response.error));
+            } else {
+                $('#persons-table tbody').empty();
+                var data = response.data.data;
+                $.each(data, function(index, row) {
+                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                        '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
+                });
+                $('#persons-table').DataTable();
+            }
+        }  ,
+        error: function(jqXHR) {
+            var error = generateAjaxError(jqXHR);
+            $('#alert').append(createWarningMessage(error));
+        }
+    });
+}
+function getRoles(selectId, selectedValue = null){
+    $.ajax({
+        url: '/../../functions/persons.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{'getRoles':1},
+        success: function(response) {
+            var data = response.data.data;
+            var select = $('#'+selectId);
+            select.empty();
+            select.append('<option value="">Odaberite rolu</option>');
+            $.each(data, function(key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
+
+}
 function isValidEmail(email) {
     var regex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return regex.test(email);
 }
-
 function validateNewUser(){
     var name = $('#name').val();
     var email = $('#email').val();

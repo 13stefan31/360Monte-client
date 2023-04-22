@@ -1,4 +1,22 @@
-<?php require 'auth.php'; ?>
+<?php
+session_start();
+require 'auth.php';
+
+if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola_id'])){
+    $nameFilters = isset($_SESSION['person_filter_name']) ? $_SESSION['person_filter_name'] : '';
+    $roleIdFilters = isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '';
+    $showFilters = '';
+    $clearFilters = '';
+
+}else{
+    $showFilters = 'display:none;';
+    $clearFilters = 'display:none;';
+    $nameFilters = '';
+    $roleIdFilters = '';
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>
@@ -31,32 +49,29 @@
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showPersonsFilter" >
                                     Filteri
                                 </button>
-                                <div class="card" id="filterPersons" style="display:none">
+                                <div class="card" id="filterPersons" style="<?=$showFilters?>">
                                     <div class="card-body">
                                         <h4>Filteri</h4>
+                                        <input type="hidden" id="person_filter_rola_id" value="<?php echo isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '' ?>">
                                         <div class="input-group mb-3">
+                                            <input type="hidden" id="person_filter_rola_id" value="<?php echo isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '' ?>">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">Ime</span>
+                                                <span class="input-group-text" id="basic-addon1">Ime i prezime</span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Unesite ime" aria-label="Unesite ime" aria-describedby="basic-addon1">
+                                            <input type="text" class="form-control" id="personFilterName" placeholder="Unesite ime i prezime" aria-label="Unesite ime" aria-describedby="basic-addon1" value="<?=$nameFilters?>">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">Prezime</span>
+                                                <span class="input-group-text" id="basic-addon1">Rola</span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Unesite prezime" aria-label="Unesite prezime" aria-describedby="basic-addon1">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">Email</span>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="Unesite email" aria-label="Unesite email" aria-describedby="basic-addon1">
+                                            <select id="rolaFilterId" class="form-control"></select>
                                         </div>
 
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-right">
-                                            <button class="btn btn-primary">Filtritaj</button>
+                                            <button id="clearFilters" class="btn btn-danger" style="<?=$clearFilters?>">Poništi filtere</button>
+                                            <button class="btn btn-primary" id="persosnsFilter">Filtritaj</button>
                                         </div>
                                     </div>
                                 </div>
@@ -102,18 +117,11 @@
                                     <input type="text" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Unesite email">
 
                                 </div>
-<!--                                <div class="input-group mb-3">-->
-<!--                                    <div class="input-group-prepend">-->
-<!--                                        <span class="input-group-text" id="basic-addon3">Username</span>-->
-<!--                                    </div>-->
-<!--                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Unesite username">-->
-<!--                                </div>-->
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rola</span>
                                     </div>
                                     <select id="rolaId" class="form-control"></select>
-
                                 </div>
 
                             </div>

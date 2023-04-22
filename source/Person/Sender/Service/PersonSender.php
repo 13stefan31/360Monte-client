@@ -19,8 +19,18 @@ class PersonSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllPersons(){
+    public function getAllPersons($name = null, $rolaId = null){
         $initialize_field = 'users' ;
+        if ($name!=null){
+            $initialize_field .='?name='.$name;
+        }
+        if ($rolaId!=null){
+            if ($name!=null){
+                $initialize_field .='&roleId='.$rolaId;
+            }else{
+                $initialize_field .='?roleId='.$rolaId;
+            }
+        }
         return  $this->send_get_request($initialize_field, '');
     }
 
