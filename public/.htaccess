@@ -22,6 +22,10 @@ RewriteRule ^vozila/?$ vehicles.php
 RewriteRule ^vozilo/([0-9]+)/?$ vehicle.php?id=$1 [QSA]
 
 
+RewriteRule ^alokacije/?$ allocations.php
+RewriteRule ^alokacija/([0-9]+)/?$ allocation.php?id=$1 [QSA]
+
+
 RewriteRule ^([^/.]+)/kontakt/?$ kontakt.php?lang=$1
 RewriteRule ^([^/.]+)/contact/?$ kontakt.php?lang=$1
 #RewriteRule ^aranzmani/?$ aranzmani.php

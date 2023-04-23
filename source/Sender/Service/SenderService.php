@@ -38,20 +38,50 @@ class SenderService
 
         echo json_encode($response_array);
     }
-    public function send_get_request($field, $data) {
-        $client = new Client(['base_uri' => $this->url]);
-        $response = $client->request('GET', $field);
+    public function send_get_request($field,$headers=null) {
 
-        return $this->check_response($response);
+        try{
+            $client = new Client(['base_uri'=>$this->url]);
+            if ($headers==null){
+                $head = [
+                    'Content-Type'=>'application/json'
+                ];
+            }else{
+                $head=$headers;
+            }
+
+            $response = $client->request('GET', $field, [
+                'headers' => $head
+            ]);
+
+            return $this->check_response($response);
+        } catch (\Exception $e) {
+            $error = json_decode($e->getResponse()->getBody(), true)['error'];
+            $errorMessages = [];
+            if (count($error) === 1) {
+                $errorMessages[] = reset($error);
+            } else {
+                foreach ($error as $key => $value) {
+                    $errorMessages[] = implode(', ', $value);
+                }
+            }
+            $response_array = [
+                "success" => false,
+                "error" => implode("\n", $errorMessages),
+                "status" => intval($e->getCode())
+            ];
+            echo json_encode($response_array);
+        }
 
     }
 
-    public function send_put_request($field,$data) {
+    public function send_put_request($field,$data,$headers=null) {
 
         try {
             $client = new Client(['base_uri' => $this->url]);
             $response = $client->put($field, [
-                'json' => $data
+                'json' => $data,
+                'headers' => array_filter($headers),
             ]);
             return $this->check_response($response);
         } catch (\Exception $e) {
@@ -110,12 +140,12 @@ class SenderService
 
     }
 
-    public function send_delete_request($field)
+    public function send_delete_request($field,$headers)
     {
 
         $client = new Client(['base_uri'=>$this->url]);
         try {
-            $response = $client->delete($field);
+            $response = $client->delete($field, ['headers' => $headers]);
             return $this->check_response($response);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -130,6 +160,5 @@ class SenderService
     public function getRoles() {
         return $this->send_get_request('roles/','');
     }
-
 }
 

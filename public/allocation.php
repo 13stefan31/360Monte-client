@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>
@@ -16,16 +17,14 @@
                     <div class="header-sub-title">
                         <nav class="breadcrumb breadcrumb-dash">
                             <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
-                            <a class="breadcrumb-item" href="allocations.php">Alokacije</a>
+                            <a class="breadcrumb-item" href="/alokacije">Alokacije</a>
                             <span class="breadcrumb-item active">Alokacija</span>
                         </nav>
                     </div>
                 </div>
-
-
                 <div class="container-fluid">
                     <div class="tab-content m-t-15">
-                        <div class="tab-pane fade show active"  >
+                        <div class="tab-pane fade show active">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Informacije</h4>
@@ -34,29 +33,36 @@
                                             <tbody>
                                             <tr>
                                                 <td>Vozač:</td>
-                                                <td class="text-dark font-weight-semibold">Janko Janković</td>
+                                                <td class="text-dark font-weight-semibold"></td>
                                             </tr>
                                             <tr>
                                                 <td>Vodič:</td>
-                                                <td class="text-dark font-weight-semibold">Marko Marković</td>
+                                                <td class="text-dark font-weight-semibold"></td>
                                             </tr>
                                             <tr>
                                                 <td>U paru sa vozačem?</td>
-                                                <td>DA</td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Datum:</td>
-                                                <td class="text-dark font-weight-semibold">23.06.2023</td>
+                                                <td class="text-dark font-weight-semibold allocationDate">23.06.2023</td>
                                             </tr>
                                             <tr>
                                                 <td>Vozilo:</td>
-                                                <td>Vozilo naziv</td>
+                                                <td class="allocationVehicle"></td>
                                             </tr>
-
+                                            <tr>
+                                                <td>Registraciona oznaka vozila:</td>
+                                                <td class="allocationVehicleRegNo"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Broj sjedišta vozila:</td>
+                                                <td class="allocationVehicleSeatsNo"></td>
+                                            </tr>
                                             <tr>
                                                 <td>Status:</td>
                                                 <td>
-                                                    <span class="badge badge-pill badge-cyan">Na čekanju</span>
+                                                    <span class="allocationStatus"></span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -94,6 +100,8 @@
 
 
 <?php include ('layouts/scripts.php')?>
+    <script src="/assets/js/userAuth.js"></script>
+    <script src="/assets/js/allocation.js"></script>
 
 </body>
 

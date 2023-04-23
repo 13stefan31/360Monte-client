@@ -26,9 +26,6 @@ if(isset($_GET) && isset($_GET['getRoles'])){
 }
 
 
-if(isset($_GET) && isset($_GET['getRoles'])){
-    return $person_sender->send_delete_request();
-}
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $data = file_get_contents('php://input');
     $decoded_data = json_decode($data, true);

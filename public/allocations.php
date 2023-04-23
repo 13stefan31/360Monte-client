@@ -1,3 +1,35 @@
+<?php
+require 'auth.php';
+if(isset($_SESSION['allocation_filter_vehicle']) ||
+    isset($_SESSION['allocation_filter_status']) ||
+    isset($_SESSION['allocation_filter_date'])  ){
+    $vehicleFilters = isset($_SESSION['allocation_filter_vehicle']) ? $_SESSION['allocation_filter_vehicle'] : '';
+    $statusFilters = isset($_SESSION['allocation_filter_status']) ? $_SESSION['allocation_filter_status'] : '';
+    $dateFilters = isset($_SESSION['allocation_filter_date']) ? $_SESSION['allocation_filter_date'] : '';
+    $showFilters = '';
+    $clearFilters = '';
+}else{
+    $showFilters = 'display:none;';
+    $clearFilters = 'display:none;';
+    $vehicleFilters = '';
+    $dateFilters = '';
+    $statusFilters='';
+}
+
+$total_items = 10;
+$per_page=3;
+$current_page= 1;
+$offset = ($current_page - 1) * $per_page;
+$total_pages = ceil($total_items / $per_page);
+
+//"currentPage": 1,
+//        "from": 1,
+//        "lastPage": 2,
+//        "itemsPerPage": 4,
+//        "totalItems": 6
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>
@@ -15,119 +47,70 @@
                         <h2 class="header-title">Alokacije</h2>
                         <div class="header-sub-title">
                             <nav class="breadcrumb breadcrumb-dash">
-                                <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
+                                <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
                                 <span class="breadcrumb-item active">Alokacije</span>
                             </nav>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
-
-                            <div class="alert alert-success">
-                                <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-check-o"></i>
-                                        </span>
-                                    <span>Uspješno ste unijeli novu alokaciju</span>
-                                </div>
-                            </div>
-                            <div class="alert alert-danger">
-                                <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-close-o"></i>
-                                        </span>
-                                    <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>
-                                </div>
-                            </div>
+                            <div id="alertAddAllocationSuccess">  </div>
+                            <div id="allocationAlert"> </div>
+                            <div id="alertDeleteAllocation"></div>
                             <div class="m-t-25">
-
-                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newAllocation">
+                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newAllocationBtn" data-target="#newAllocation">
                                     Novi unos
                                 </button>
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showAllocationsFilter" >
                                     Filteri
                                 </button>
-                                <div class="card" id="filterAllocations" style="display:none">
-                                    <div class="card-body">
+                               <div class="card" id="filterAllocations" style="<?=$showFilters?>">
+                                   <input type="hidden" id="allocation_filter_vehicle" value="<?php echo isset($_SESSION['allocation_filter_vehicle']) ? $_SESSION['allocation_filter_vehicle'] : '' ?>">
+                                    <input type="hidden" id="allocation_filter_date" value="<?php echo isset($_SESSION['allocation_filter_date']) ? $_SESSION['allocation_filter_date'] : '' ?>">
+                                   <div class="card-body">
                                         <h4>Filteri</h4>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">Vozilo</span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Unesite naziv vozila" aria-label="Unesite naziv vozila" aria-describedby="basic-addon1">
+                                            <select id="vehicleFilterId" class="form-control"></select>
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">Datum</span>
                                             </div>
-                                            <input type="date" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" aria-describedby="basic-addon1">
+                                            <input type="date" id="dateFilter" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" aria-describedby="basic-addon1" value="<?php echo $dateFilters; ?>">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">Email</span>
+                                                <span class="input-group-text" id="basic-addon1">Status</span>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Unesite email" aria-label="Unesite email" aria-describedby="basic-addon1">
+                                            <select id="statusFilter" class="form-control">
+                                                <option value="">Odaberite status alokacije</option>
+                                                <option value="0"<?php if ($statusFilters == '0') echo ' selected'; ?>>Pending</option>
+                                                <option value="1"<?php if ($statusFilters == '1') echo ' selected'; ?>>Confirmed</option>
+                                            </select>
                                         </div>
 
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-right">
-                                            <button class="btn btn-primary">Filtritaj</button>
+                                            <button id="clearFilters" class="btn btn-danger" style="<?=$clearFilters?>">Poništi filtere</button>
+                                            <button class="btn btn-primary" id="allocationsFilter">Filtritaj</button>
                                         </div>
                                     </div>
                                 </div>
-                                <table id="data-table" class="table">
+                                <table id="allocations-table" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Vozač</th>
-                                            <th>Vodič</th>
-                                            <th>Vozilo</th>
                                             <th>Datum</th>
+                                            <th>Vozilo</th>
+                                            <th>Registraciona oznaka vozila</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Marko Marković</td>
-                                            <td>Marko Marković</td>
-                                            <td>Vozilo 1</td>
-                                            <td>23.06.2023</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-cyan font-size-13">Prihvaćeno</span>
-                                            </td>
-                                            <td><a class="btn btn-primary m-r-5" href="allocation.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Janko Janković</td>
-                                            <td>Marko Marković</td>
-                                            <td>Vozilo 11</td>
-                                            <td>23.06.2023</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-gold font-size-13">Na čekanju</span>
-                                            </td>
-                                            <td><a class="btn btn-primary m-r-5" href="allocation.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Janko Janković</td>
-                                            <td>Marko Marković</td>
-                                            <td>Vozilo 11</td>
-                                            <td>23.06.2023</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-blue font-size-13">Nije odgovoreno</span>
-                                            </td>
-                                            <td><a class="btn btn-primary m-r-5" href="allocation.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Janko Janković</td>
-                                            <td>Marko Marković</td>
-                                            <td>Vozilo 11</td>
-                                            <td>23.06.2023</td>
-                                            <td>
-                                                <span class="badge badge-pill badge-red font-size-13">Odbijeno</span>
-                                            </td>
-                                            <td><a class="btn btn-primary m-r-5" href="allocation.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -144,34 +127,27 @@
                                     <i class="anticon anticon-close"></i>
                                 </button>
                             </div>
+                            <div id="alertAddAllocationError"></div>
+
+                            <form id="allocationAdd">
                             <div class="modal-body">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">Vozač</span>
+                                        <span class="input-group-text" id="basic-addon3">Datum</span>
                                     </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <input type="date" class="form-control" id="allocationDate" aria-describedby="basic-addon3">
                                 </div>
-                                <div class="checkbox float-right">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="checkbox2">Vozač je vodič</label>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3">Vodič</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                                </div>
-
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon3">Vozilo</span>
                                     </div>
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <select id="vehicleAdd" class="form-control"></select>
                                 </div>
                             </div>
+                            </form>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                <button type="button" class="btn btn-primary">Sačuvaj</button>
+                                <button type="button" class="btn btn-primary" id="addNewAllocation">Sačuvaj</button>
                             </div>
                         </div>
                     </div>
@@ -185,11 +161,9 @@
     </div>
 
 
-
-
-
     <?php include ('layouts/scripts.php')?>
-
+    <script src="/assets/js/userAuth.js"></script>
+    <script src="/assets/js/allocations.js"></script>
 </body>
 
 </html>

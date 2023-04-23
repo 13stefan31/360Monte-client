@@ -1,4 +1,4 @@
-<?php require 'auth.php'; ?>
+<?php  require 'auth.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php  include ('layouts/head.php')?>
@@ -61,7 +61,7 @@
                             </a>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <a href="allocations.php">
+                            <a href="/alokacije">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="media align-items-center">
@@ -88,6 +88,7 @@
 
 
     <?php  include ('layouts/scripts.php')?>
+    <script src="/assets/js/userAuth.js"></script>
 
 </body>
 

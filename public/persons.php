@@ -142,6 +142,7 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
 
 
 <?php include ('layouts/scripts.php')?>
+    <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/persons.js"></script>
 
 </body>

@@ -8,6 +8,9 @@ if(isset($_GET) && isset($_GET['getAllVehicles'])){
     $status = isset($_GET['status']) ? $_GET['status'] : null;
     $seatsNo = isset($_GET['seatsNo']) ? $_GET['seatsNo'] : null;
 
+    $limit = isset($_GET['per_page']) ? $_GET['per_page'] : null;
+    $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
+
     if (isset($brand)){
         $_SESSION['vehicle_filter_brand'] = $brand;
     }else{
@@ -35,7 +38,7 @@ if(isset($_GET) && isset($_GET['getAllVehicles'])){
     }
 
 
-    return $vehicle_sender->getAllVehicles($brand,$model,$regNo,$status,$seatsNo);
+    return $vehicle_sender->getAllVehicles($brand,$model,$regNo,$status,$seatsNo,$limit,$page);
 }
 
 if(isset($_GET) && isset($_GET['getSingleVehicle']) && isset($_GET['vehicleId'])){

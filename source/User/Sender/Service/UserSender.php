@@ -19,16 +19,7 @@ class UserSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllVehicles(){
-        $initialize_field = 'vehicles' ;
-        return  $this->send_get_request($initialize_field, '');
-    }
 
-
-    public function getSingleVehicle($id) {
-        $initialize_field = 'vehicles' . '/' . $id;
-        return  $this->send_get_request($initialize_field, '');
-    }
 
     public function loginUser($data){
         $body = [
@@ -50,21 +41,16 @@ class UserSender extends \Main\SenderService
         return $this->send_post_request($initialize_field,$body,$headers);
     }
 
-    public function insertNewPerson($data){
-        $body = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'roleId' => $data['rolaId']
+    public function loggedUser(){
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ];
-
-        $initialize_field = 'users';
-        return  $this->send_post_request($initialize_field, $body);
-
-    }
-    public function deleteUser($id){
-        $initialize_field = 'users/'.$id;
-        return  $this->send_delete_request($initialize_field);
+        $initialize_field = 'users/user/logged';
+        return  $this->send_get_request($initialize_field, $headers);
 
     }
+
 }
 

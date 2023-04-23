@@ -1,3 +1,9 @@
+<?php
+
+if (isset($_COOKIE['token'])){
+    header("Location: /");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

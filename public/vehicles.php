@@ -23,6 +23,13 @@ if(isset($_SESSION['vehicle_filter_brand']) ||
     $seatsNoFilters='';
 }
 
+$total_items = 200;
+$per_page=5;
+$current_page= 1;
+$offset = ($current_page - 1) * $per_page;
+$total_pages = ceil($total_items / $per_page);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -128,12 +135,21 @@ if(isset($_SESSION['vehicle_filter_brand']) ||
     </div>
 </div>
 
+<form id="pagination-form">
+    <input type="hidden" name="total_items" value="<?php echo $total_items; ?>">
+    <input type="hidden" name="per_page" value="<?php echo $per_page; ?>">
+    <input type="hidden" name="current_page" value="<?php echo $current_page; ?>">
+    <input type="hidden" name="offset" value="<?php echo $offset; ?>">
+    <input type="hidden" name="total_pages" value="<?php echo $total_pages; ?>">
+</form>
 
 
 
 
 <?php include ('layouts/scripts.php')?>
+<script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/vehicles.js"></script>
+
 
 </body>
 

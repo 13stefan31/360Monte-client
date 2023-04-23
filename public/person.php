@@ -138,6 +138,7 @@
 </div>
 
 <?php include ('layouts/scripts.php')?>
+<script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/person.js"></script>
 
 </body>

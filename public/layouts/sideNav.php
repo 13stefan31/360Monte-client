@@ -14,19 +14,19 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="active">
-                        <a href="/persons.php">
+                        <a href="/zaposleni">
                             <span class="icon-holder">
                          <i class="anticon anticon-user-add"></i>
                          </span>  Zaposleni</a>
                     </li>
                     <li>
-                        <a href="/vehicles.php">
+                        <a href="/vozila">
                             <span class="icon-holder">
                          <i class="anticon anticon-car"></i>
                          </span> Vozila</a>
                     </li>
                     <li>
-                        <a href="/allocations.php">
+                        <a href="/alokacije">
                              <span class="icon-holder">
                          <i class="anticon anticon-deployment-unit"></i>
                          </span> Alokacije</a>

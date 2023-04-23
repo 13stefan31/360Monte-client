@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $("#showVehicleFilter").click(function () {
         $("#filterVehicles").toggle();
     });

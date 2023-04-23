@@ -41,20 +41,21 @@
                     <div class="p-h-20 p-b-15 m-b-10 border-bottom">
                         <div class="d-flex m-r-50">
                             <div class="m-l-10">
-                                <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                <p class="m-b-0 opacity-07">General Manager</p>
+                                <p class="m-b-0 text-dark font-weight-semibold loggedUserName"></p>
+                                <p class="m-b-0 opacity-07 loggedUserEmail"></p>
+                                <p class="m-b-0 opacity-07 loggedUserRole"></p>
                             </div>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                <span class="m-l-10">Edit Profile</span>
-                            </div>
-                            <i class="anticon font-size-10 anticon-right"></i>
-                        </div>
-                    </a>
+<!--                    <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">-->
+<!--                        <div class="d-flex align-items-center justify-content-between">-->
+<!--                            <div>-->
+<!--                                <i class="anticon opacity-04 font-size-16 anticon-user"></i>-->
+<!--                                <span class="m-l-10">Edit Profile</span>-->
+<!--                            </div>-->
+<!--                            <i class="anticon font-size-10 anticon-right"></i>-->
+<!--                        </div>-->
+<!--                    </a>-->
                     <button href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10" id="logout">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>

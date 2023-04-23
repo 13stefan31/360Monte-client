@@ -19,7 +19,7 @@ class VehicleSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null){
+    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null,$limit,$page){
         $initialize_field = 'vehicles' ;
 
         $filters = array();
@@ -38,6 +38,12 @@ class VehicleSender extends \Main\SenderService
         if (!empty($seatsNo)) {
             $filters[] = 'seats=' . urlencode($seatsNo);
         }
+        if (!empty($limit)) {
+            $filters[] = 'limit=' . urlencode($limit);
+        }
+        if (!empty($page)) {
+            $filters[] = 'page=' . urlencode($page);
+        }
         $filterString = implode('&', $filters);
         if (!empty($filterString)) {
             $initialize_field .= '?' . $filterString;
@@ -50,45 +56,6 @@ class VehicleSender extends \Main\SenderService
     public function getSingleVehicle($id) {
         $initialize_field = 'vehicles' . '/' . $id;
         return  $this->send_get_request($initialize_field, '');
-    }
-
-    public function updatePerson($data){
-        $body = [
-            'userId' => $data['personId'],
-            'name' => $data['personName'],
-            'email' => $data['personEmail'],
-            'roleId' => 1
-        ];
-
-        $initialize_field = 'users';
-        return  $this->send_put_request($initialize_field, $body);
-
-    }
-    public function changePassword($data){
-        $body=[
-            'userId'=>$data['personId'],
-            'currentPassword'=>$data['currentPassword'],
-            'newPassword'=>$data['newPassword'],
-            'confirmPassword'=>$data['confirmPassword']
-        ];
-        $initialize_field = 'users/password/change';
-        return $this->send_put_request($initialize_field,$body);
-    }
-
-    public function insertNewPerson($data){
-        $body = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'roleId' => $data['rolaId']
-        ];
-
-        $initialize_field = 'users';
-        return  $this->send_post_request($initialize_field, $body);
-
-    }
-    public function deleteUser($id){
-        $initialize_field = 'users/'.$id;
-        return  $this->send_delete_request($initialize_field);
 
     }
 }

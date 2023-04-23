@@ -53,6 +53,11 @@ function getVehicles(filters){
         data.status= filters.status;
         data.seatsNo= filters.seatsNo
     }
+    var paginationData = $('#pagination-form').serializeArray();
+    $.each(paginationData, function(index, item) {
+        data[item.name] = item.value;
+    });
+
     $.ajax({
         url: '/../../functions/vehicles.php',
         type:'GET',
@@ -64,6 +69,7 @@ function getVehicles(filters){
             } else {
                 $('#vehicles-table tbody').empty();
                 var data = response.data.data;
+                var meta = response.data.meta;
                 $.each(data, function(index, row) {
                     if (row.readyForDrive==true){
                         var readyForDrive ='<span class="badge badge-pill badge-cyan font-size-13">Ispravno</span>';

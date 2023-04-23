@@ -14,6 +14,9 @@ require_once(dirname(__FILE__) . "/../source/Vehicle/Model/Vehicle.php");
 require_once(dirname(__FILE__) . "/../source/User/Sender/Service/UserSender.php");
 require_once(dirname(__FILE__) . "/../source/User/Model/User.php");
 
+require_once(dirname(__FILE__) . "/../source/Allocation/Sender/Service/AllocationSender.php");
+require_once(dirname(__FILE__) . "/../source/Allocation/Model/Allocation.php");
+
 
 $person_sender = PersonSender::getInstance();
 $person = Person::getInstance();
@@ -23,3 +26,6 @@ $vehicle = Vehicle::getInstance();
 
 $user_sender = UserSender::getInstance();
 $user = User::getInstance();
+
+$allocation_sender = AllocationSender::getInstance();
+$allocation = Allocation::getInstance();

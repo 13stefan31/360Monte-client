@@ -8,3 +8,7 @@ if(isset($_POST) && isset($_POST['login'])){
 if(isset($_POST) && isset($_POST['logout'])){
     return $user_sender->logoutUser();
 }
+
+if(isset($_POST) && isset($_POST['loggedUser'])){
+    return $user_sender->loggedUser();
+}
