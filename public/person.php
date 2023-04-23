@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div id="alertChangeUser"></div>
+                                    <div id="alertSingleUser"></div>
                                     <div class="card">
                                         <form id="updateUserForm">
                                         <div class="card-body">

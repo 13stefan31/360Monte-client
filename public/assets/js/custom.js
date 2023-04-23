@@ -98,3 +98,31 @@ function getVehiclesSelect(selectId, selectedValue = null){
     });
 
 }
+function handleErrors(error) {
+    if (typeof error === 'string') {
+        return createWarningMessage(error);
+    } else if (error.request && typeof error.request === 'string') {
+        return createWarningMessage(error.request);
+    } else if (error.request && typeof error.request === 'object') {
+        let messages = [];
+        for (let key in error.request) {
+            if (Array.isArray(error.request[key])) {
+                messages.push(key + ': ' + error.request[key].join(', '));
+            } else {
+                messages.push(key + ': ' + error.request[key]);
+            }
+        }
+        return createWarningMessage(messages.join('<br>'));
+    } else if (typeof error === 'object') {
+        for (let key in error) {
+            if (typeof error[key] === 'string') {
+                return createWarningMessage(error[key]);
+            } else if (Array.isArray(error[key])) {
+                return createWarningMessage(error[key][0]);
+            } else if (typeof error[key] === 'object') {
+                return createWarningMessage(JSON.stringify(error[key]));
+            }
+        }
+    }
+    return createWarningMessage('Unknown error occurred.');
+}

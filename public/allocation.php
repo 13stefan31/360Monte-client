@@ -27,6 +27,9 @@
                         <div class="tab-pane fade show active">
                             <div class="card">
                                 <div class="card-body">
+<!--                                    staviti ovaj prvi div za svaki error-->
+                                    <div id="allocationAlert"></div>
+                                    <div id="alertGetAllocation"></div>
                                     <h4 class="card-title">Informacije</h4>
                                     <div class="card-group">
                                         <div class="card">
@@ -40,6 +43,12 @@
                                     <div class="card-group">
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
+                                                <div class="card-footer">
+                                                    <div class="text-center m-t-5">
+                                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
+                                                            <i class="anticon anticon-form"></i>Izmijeni podatke o datumu i vozilu
+                                                        </button>  </div>
+                                                </div>
                                                 <li class="list-group-item">
                                                         <p>Datum:</p><p class="allocationDate m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
@@ -53,24 +62,39 @@
                                                     <p>Broj sjedišta vozila:</p><p class="allocationVehicleSeatsNo m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
                                             </ul>
-                                            <div class="card-footer">
-                                                <div class="text-center m-t-5">
-                                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
-                                                        <i class="anticon anticon-form"></i>Izmijeni podatke o datumu i vozilu
-                                                    </button>  </div>
-                                            </div>
+
                                         </div>
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
-                                                <li class="list-group-item">
-                                                    <p>Vozač:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <p>Vodič:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <p>U paru sa vozačem:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
-                                                </li>
+                                                <div class="card-footer">
+                                                    <div class="text-center m-t-5">
+                                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="addEmpAllocationButton" data-target="#allocation-add-person-modal">
+                                                            <i class="anticon anticon-usergroup-add"></i>Dodaj osobe
+                                                        </button>  </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table id="allocation-stuff-tabele" class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">Pozicija</th>
+                                                            <th scope="col">Ime i prezime</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+<!--                                                <li class="list-group-item">-->
+<!--                                                    <p>Vozač:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
+<!--                                                </li>-->
+<!--                                                <li class="list-group-item">-->
+<!--                                                    <p>Vodič:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
+<!--                                                </li>-->
+<!--                                                <li class="list-group-item">-->
+<!--                                                    <p>U paru sa vozačem:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
+<!--                                                </li>-->
                                             </ul>
                                   </div>
                                     </div>
@@ -102,7 +126,8 @@
                                     <i class="anticon anticon-close"></i>
                                 </button>
                             </div>
-                            <form id="allocationDataChange">
+                            <div id="allocationDataChangeError"></div>
+                            <form id="allocationPersonChange">
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -121,7 +146,81 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                    <button type="submit" class="btn btn-primary" id="addNewPerson">Sačuvaj</button>
+                                    <button type="submit" class="btn btn-primary" id="editAllocationData">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="allocation-add-person-modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Dodaj zapolsenog</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <div id="allocationPersonAddError"></div>
+                            <form id="allocationPersonAddForm">
+                                <input hidden="" id="allocationId">
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Zaposleni</span>
+                                        </div>
+                                        <select id="empAddAllocation" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Pozicija</span>
+                                        </div>
+                                        <select id="empPositionAddAllocation" class="form-control"></select>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="addEmpAllocation">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="allocation-edit-person-modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Dodaj zapolsenog</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <div id="allocationPersonAddError"></div>
+                            <form id="allocationPersonAddForm">
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Zaposleni</span>
+                                        </div>
+                                        <select id="empAddAllocation" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Pozicija</span>
+                                        </div>
+                                        <select id="empPositionAddAllocation" class="form-control"></select>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="addEmpAllocation">Sačuvaj</button>
                                 </div>
                             </form>
                         </div>

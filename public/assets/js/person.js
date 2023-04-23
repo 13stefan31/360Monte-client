@@ -7,11 +7,11 @@ $(document).ready(function() {
         data:{getSinglePerson:1,personId:personId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
-            var data = response.data.data;
-            if (data.error) {
-                $('#alertGetPerson').html(createWarningMessage(data.error));
+            if (response.error) {
+
+                $('#alertGetPerson').html(handleErrors(response.error));
             } else {
+                var data = response.data.data;
                 $('.personName').html(data.name);
                 $('.personEmail').html(data.email);
                 $('.personUsername').html(data.username);
@@ -44,12 +44,14 @@ $(document).ready(function() {
                     }
                 }),
                 success: function(response) {
+                    console.log(response)
                     var dataParse = JSON.parse(response);
-                    var data = dataParse.data.data;
-                    if (data.error) {
-                        $('#alertChangeUser').html(createWarningMessage(data.error));
+                    if (dataParse.error) {
+
+                        $('#alertSingleUser').html(handleErrors(dataParse.error));
                     } else {
-                        $('#alertChangeUser').html(createSuccessMessage('Uspješno ste izmijenili podatke o korisniku'));
+                        var data = dataParse.data.data;
+                        $('#alertSingleUser').html(createSuccessMessage('Uspješno ste izmijenili podatke o korisniku'));
                         $('.personName').html(data.name);
                         $('.personEmail').html(data.email);
                         $('.personUsername').html(data.username);
@@ -60,7 +62,7 @@ $(document).ready(function() {
                     }
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
-                    $('#alertChangeUser').html(createErrorMessage(error));
+                    $('#alertSingleUser').html(createErrorMessage(error));
                 }
             });
 
@@ -69,7 +71,6 @@ $(document).ready(function() {
 
     $('#personPasswordChange').click(function(e) {
         e.preventDefault();
-        $(this).prop('disabled', true); // disable the button
         var validated = validatePasswordData();
         if (validated){
 
@@ -88,10 +89,8 @@ $(document).ready(function() {
                 }),
                 success: function(response) {
                     var data = JSON.parse(response);
-                    console.log(data)
-
                     if (data.error) {
-                        $('#alertChangeUserPassword').html(createWarningMessage(data.error));
+                        $('#alertChangeUserPassword').html(handleErrors(data.error));
                     } else {
                         $('#alertChangeUserPassword').html(createSuccessMessage('Uspješno ste izmijenili lozinku'));
                     }
@@ -103,9 +102,7 @@ $(document).ready(function() {
                 },complete:function (){
                     $("#currentPassword").val("");
                     $("#newPassword").val("");
-                    $("#confirmPassword").val("");
-                    $('#personPasswordChange').prop('disabled', false); // enable the button
-                }
+                    $("#confirmPassword").val("");  }
             });
         }
     });

@@ -8,7 +8,7 @@ $(document).ready(function () {
         },
         dataType: 'json',
         success: function(response) {
-            console.log(response)
+            // console.log(response)
             if (response.status==200){
                 var data = response.data.data;
                 $('.loggedUserName').html(data.name)
@@ -21,7 +21,7 @@ $(document).ready(function () {
         }  ,
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
-            $('#alertVehicles').append(createWarningMessage(error));
+            $('#loginAlert').append(createWarningMessage(error));
         }
     });
     });

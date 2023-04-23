@@ -35,11 +35,11 @@ $(document).ready(function() {
                     } ,
                     success: function(response) {
                         var dataParse = JSON.parse(response);
-                        var data = dataParse.data.data;
-                        if (data.error){
-                            $('#alertAddUser').html(createWarningMessage(data.error));
-                        }else{
-                            var newRow = $('<tr>').attr('id', 'row-' + data.id);
+                        if (dataParse.error){
+                            $('#employeeAddError').html(handleErrors(dataParse.error));
+                         }else{
+                            var data = dataParse.data.data;
+                            var newRow = $('<tr>').attr('id', data.id);
                             newRow.append($('<td>').text(data.name));
                             newRow.append($('<td>').text(data.email));
                             newRow.append($('<td>').text(data.username));
@@ -48,15 +48,13 @@ $(document).ready(function() {
 
                             $('#alertAddUser').html(createSuccessMessage('Uspješno ste dodali novog korisnika'));
 
+                            $('#newPerson').modal('hide');
+                            $('#personAdd')[0].reset();
                         }
 
                     },  error: function(jqXHR) {
                         var error = generateAjaxError(jqXHR);
-                        $('#alertAddUser').html(createErrorMessage(error));
-                    },
-                    complete: function() {
-                        $('#newPerson').modal('hide');
-                        $('#personAdd')[0].reset();
+                        $('#employeeAddError').html(createErrorMessage(error));
                     }
                 });
             }
@@ -71,7 +69,7 @@ $(document).ready(function() {
 });
 $(document).on('click', '.user-delete', function() {
     var userId = $(this).data('userid');
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (confirm('Da li ste sigurni da želite da obrišete korisnika?')) {
 
         $.ajax({
             url: '/../../functions/persons.php',
@@ -81,7 +79,7 @@ $(document).on('click', '.user-delete', function() {
             success: function(response) {
                 var data = JSON.parse(response);
                 if (data.error){
-                    $('#alertDeleteUser').html(createWarningMessage(data.error));
+                    $('#alertDeleteUser').html(handleErrors(data.error));
                 }else{
                     var id = data.data.data.id;
                     var name = data.data.data.name;

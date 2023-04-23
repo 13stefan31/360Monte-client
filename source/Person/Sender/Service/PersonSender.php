@@ -34,6 +34,11 @@ class PersonSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field, '');
     }
 
+    public function getAllStuffForAllocation(){
+        $initialize_field = 'users' ;
+        return  $this->send_get_request($initialize_field, '');
+    }
+
 
     public function getSinglePerson($id) {
         $initialize_field = 'users' . '/' . $id;
@@ -77,7 +82,6 @@ class PersonSender extends \Main\SenderService
     public function deleteUser($id){
         $initialize_field = 'users/'.$id;
         return  $this->send_delete_request($initialize_field);
-
     }
 }
 

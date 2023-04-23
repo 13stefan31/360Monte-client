@@ -65,7 +65,7 @@ function getVehicles(filters){
         dataType: 'json',
         success: function(response) {
             if (response.error) {
-                $('#alertVehicles').append(createWarningMessage(response.error));
+                $('#alertVehicles').html(handleErrors(response.error));
             } else {
                 $('#vehicles-table tbody').empty();
                 var data = response.data.data;

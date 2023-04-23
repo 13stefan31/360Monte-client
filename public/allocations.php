@@ -136,12 +136,14 @@ $total_pages = ceil($total_items / $per_page);
                                         <span class="input-group-text" id="basic-addon3">Datum</span>
                                     </div>
                                     <input type="date" class="form-control" id="allocationDate" aria-describedby="basic-addon3">
-                                </div>
+                                 <p class="error"></p>
+                                  </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon3">Vozilo</span>
                                     </div>
                                     <select id="vehicleAdd" class="form-control"></select>
+                                    <p class="error"></p>
                                 </div>
                             </div>
                             </form>

@@ -10,7 +10,7 @@ $(document).ready(function() {
             console.log(response)
             var data = response.data.data;
             if (data.error) {
-                $('#alertGetVehicle').html(createWarningMessage(data.error));
+                $('#alertGetVehicle').html(handleErrors(data.error));
             } else {
                 $('.vehicleName').html(data.brand + ' ' + data.model);
                 $('.vehicleBrand').html(data.brand);

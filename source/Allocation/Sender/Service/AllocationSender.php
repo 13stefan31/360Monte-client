@@ -61,6 +61,31 @@ class AllocationSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field, $headers);
     }
 
+public function getAllStuffPositions(){
+    $initialize_field = 'allocation-stuff-positions' ;
+    return  $this->send_get_request($initialize_field, '');
+}
+
+public function addStuff($data){
+    $initialize_field = 'allocation/'.$data['allocationId'] .'/allocation-stuff' ;
+    $body = [
+        'employeeId' => $data['employeeId'],
+        'allocationStuffPositionId' => $data['allocationStuffPositionId']
+    ];
+
+    return  $this->send_post_request($initialize_field,$body );
+
+
+}
+public function getAllAllocationStuff($id){
+        $initialize_field = 'allocation' . '/' . $id.'/allocation-stuff';
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+        return  $this->send_get_request($initialize_field, $headers);
+    }
     public function insertNewAllocation($data){
         $body = [
             'vehicleId' => $data['vehicleId'],
@@ -76,6 +101,22 @@ class AllocationSender extends \Main\SenderService
         return  $this->send_post_request($initialize_field, $body,$headers);
 
     }
+    public function updateAllocationData($data){
+        $body = [
+            'allocationId' => $data['allocationId'],
+            'vehicleId' => $data['vehicleId'],
+            'allocationDate' => $data['allocationDate']
+        ];
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+        $initialize_field = 'allocation';
+
+        return  $this->send_put_request($initialize_field, $body,$headers);
+
+    }
     public function deleteAllocation($id){
         $initialize_field = 'allocation/'.$id;
         $token = $_COOKIE['token'];
@@ -84,6 +125,18 @@ class AllocationSender extends \Main\SenderService
             'Authorization' => 'Bearer ' . $token
         ];
         return  $this->send_delete_request($initialize_field,$headers);
+
+    }
+
+    public function deleteAllocationStuff($allocationId,$stuffId){
+        $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff/'.$stuffId;
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+        return  $this->send_delete_request($initialize_field,$headers);
+//        return  $this->send_delete_request($initialize_field,'');
 
     }
 }

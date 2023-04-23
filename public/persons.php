@@ -101,6 +101,7 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                             </div>
                             <form id="personAdd">
                             <div class="modal-body">
+                                <div id="employeeAddError"></div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"  >Ime i prezime</span>

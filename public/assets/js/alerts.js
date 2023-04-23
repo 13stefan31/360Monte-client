@@ -4,7 +4,7 @@ function createWarningMessage(message) {
         '<span class="alert-icon">' +
         '<i class="anticon anticon-exclamation-o"></i>' +
         '</span>' +
-        '<span><pre class="warrningAlert">' + message + '</pre></span>' +
+        '<span> ' + message + ' </span>' +
         '</div>' +
         '</div>';
 }

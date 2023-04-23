@@ -31,8 +31,8 @@ $(document).ready(function() {
 
     $('#addNewAllocation').click(function(e) {
         e.preventDefault();
-        // var validate = validateAllocation();
-        var validate = true;
+        var validate = validateAllocation();
+        // var validate = true;
         if (validate){
             const date = new Date($('#allocationDate').val());
             const yyyy = date.getFullYear();
@@ -56,7 +56,7 @@ $(document).ready(function() {
                     console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error){
-                        $('#alertAddAllocationError').html(createWarningMessage(dataParse.error));
+                        $('#alertAddAllocationError').html(handleErrors(dataParse.error));
                     }else{
                         var data = dataParse.data.data;
                         var newRow = $('<tr>').attr('id', data.id);
@@ -102,15 +102,14 @@ $(document).on('click', '.allocation-delete', function() {
                 console.log(response)
                 var data = JSON.parse(response);
                 if (data.error){
-                    $('#alertDeleteAllocation').html(createWarningMessage(data.error));
+                    $('#alertDeleteAllocation').html(handleErrors(data.error));
                 }else{
                     var id = data.data.data.id;
-                    console.log(id)
                     var datum = data.data.data.allocationDate;
                     var vehicle = data.data.data.vehicle.brand + ' ' +data.data.data.vehicle.model ;
                     var table = $('#allocation-table').DataTable();
-                    var row = table.row('#' + id);
-                    row.remove().draw();
+                    var rowRemove = table.row('#'+allocationId);
+                    rowRemove.remove().draw();
                     $('#alertDeleteAllocation').html(createSuccessMessage('Uspješno ste obrisali alokaciju za datum ' +datum + ' i vozilo ' +vehicle ));
                 }
 
@@ -165,9 +164,9 @@ function getAllocations(filters){
         data:data,
         dataType: 'json',
         success: function(response) {
-            console.log(response)
+            // console.log(response)
             if (response.error) {
-                $('#allocationAlert').append(createWarningMessage(response.error));
+                $('#allocationAlert').html(handleErrors(response.error));
             } else {
                 $('#allocations-table tbody').empty();
                 var data = response.data.data;
@@ -187,4 +186,29 @@ function getAllocations(filters){
             $('#allocationAlert').append(createWarningMessage(error));
         }
     });
+}
+function validateAllocation(){
+    var allocationDate = document.getElementById("allocationDate");
+    var vehicleAdd = document.getElementById("vehicleAdd");
+
+    // check input values
+    var isValid = true;
+    if (allocationDate.value === "") {
+        allocationDate.nextElementSibling.textContent = "Morate odabrati datum";
+        isValid = false;
+    } else {
+        allocationDate.nextElementSibling.textContent = "";
+    }
+    if (vehicleAdd.value === "") {
+        vehicleAdd.nextElementSibling.textContent = "Morate odabrati vozilo";
+        isValid = false;
+    } else {
+        vehicleAdd.nextElementSibling.textContent = "";
+    }
+    // submit form if valid
+    if (isValid) {
+        return true;
+    }else{
+        return false;
+    }
 }

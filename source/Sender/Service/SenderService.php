@@ -3,7 +3,8 @@
 namespace Main;
 
 use GuzzleHttp\Client;
-
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 class SenderService
 {
     private $url;
@@ -56,21 +57,14 @@ class SenderService
 
             return $this->check_response($response);
         } catch (\Exception $e) {
-            $error = json_decode($e->getResponse()->getBody(), true)['error'];
-            $errorMessages = [];
-            if (count($error) === 1) {
-                $errorMessages[] = reset($error);
-            } else {
-                foreach ($error as $key => $value) {
-                    $errorMessages[] = implode(', ', $value);
-                }
-            }
+            $error = handleServerError($e);
             $response_array = [
                 "success" => false,
-                "error" => implode("\n", $errorMessages),
+                "error" => $error,
                 "status" => intval($e->getCode())
             ];
             echo json_encode($response_array);
+
         }
 
     }
@@ -85,22 +79,15 @@ class SenderService
             ]);
             return $this->check_response($response);
         } catch (\Exception $e) {
-            $error = json_decode($e->getResponse()->getBody(), true)['error'];
-            $errorMessages = [];
-            if (count($error) === 1) {
-                $errorMessages[] = reset($error);
-            } else {
-                foreach ($error as $key => $value) {
-                    $errorMessages[] = implode(', ', $value);
-                }
-            }
+            $error = handleServerError($e);
             $response_array = [
                 "success" => false,
-                "error" => implode("\n", $errorMessages),
+                "error" => $error,
                 "status" => intval($e->getCode())
             ];
             echo json_encode($response_array);
         }
+
     }
 
     public function send_post_request($field,$data,$headers=null)
@@ -121,18 +108,10 @@ class SenderService
         ]);
         return $this->check_response($response);
         } catch (\Exception $e) {
-            $error = json_decode($e->getResponse()->getBody(), true)['error'];
-            $errorMessages = [];
-            if (count($error) === 1) {
-                $errorMessages[] = reset($error);
-            } else {
-                foreach ($error as $key => $value) {
-                    $errorMessages[] = implode(', ', $value);
-                }
-            }
+            $error = handleServerError($e);
             $response_array = [
                 "success" => false,
-                "error" => implode("\n", $errorMessages),
+                "error" => $error,
                 "status" => intval($e->getCode())
             ];
             echo json_encode($response_array);
@@ -140,25 +119,53 @@ class SenderService
 
     }
 
-    public function send_delete_request($field,$headers)
+    public function send_delete_request($field,$headers=null)
     {
 
         $client = new Client(['base_uri'=>$this->url]);
         try {
-            $response = $client->delete($field, ['headers' => $headers]);
-            return $this->check_response($response);
-        } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                return $responseBody;
-            } else {
-                return $e->getMessage();
+            if ($headers==null){
+
+                $response = $client->delete($field);
+            }else{
+                $response = $client->delete($field, ['headers' => $headers]);
+
             }
+            return $this->check_response($response);
+        } catch (RequestException | ServerException $e) {
+            $error = handleServerError($e);
+            $response_array = [
+                "success" => false,
+                "error" => $error,
+                "status" => intval($e->getCode())
+            ];
+            echo json_encode($response_array);
         }
 
     }
     public function getRoles() {
         return $this->send_get_request('roles/','');
     }
-}
+}function handleServerError($exception) {
+    $error = $exception->getResponse()->getBody()->getContents();
 
+    // Handle a JSON string error response
+    if (is_string($error)) {
+        $response = json_decode($error, true);
+        if (isset($response['error'])) {
+            return $response['error'];
+        }
+    }
+
+    // Handle an array or object error response
+    if (is_array($error) || is_object($error)) {
+        if (isset($error->error)) {
+            return $error->error;
+        } else if (isset($error['error'])) {
+            return $error['error'];
+        }
+    }
+
+    // Fallback to returning the entire error message as a string
+    return $error;
+}
