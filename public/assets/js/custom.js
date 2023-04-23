@@ -74,3 +74,27 @@ $(document).ready(function () {
         });
     });
 });
+
+function getVehiclesSelect(selectId, selectedValue = null){
+    $.ajax({
+        url: '/../../functions/vehicles.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{'getAllVehicles':1},
+        success: function(response) {
+            console.log(response)
+            var data = response.data.data;
+            var select = $('#'+selectId);
+            select.empty();
+            select.append('<option value="">Odaberite vozilo</option>');
+            $.each(data, function(key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.brand + ' ' + value.model + ' ' + value.year +'</option>');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
+
+}

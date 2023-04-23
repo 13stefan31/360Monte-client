@@ -28,45 +28,51 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Informacije</h4>
-                                    <div class="table-responsive">
-                                        <table class="product-info-table m-t-20">
-                                            <tbody>
-                                            <tr>
-                                                <td>Vozač:</td>
-                                                <td class="text-dark font-weight-semibold"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vodič:</td>
-                                                <td class="text-dark font-weight-semibold"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>U paru sa vozačem?</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Datum:</td>
-                                                <td class="text-dark font-weight-semibold allocationDate">23.06.2023</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vozilo:</td>
-                                                <td class="allocationVehicle"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Registraciona oznaka vozila:</td>
-                                                <td class="allocationVehicleRegNo"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Broj sjedišta vozila:</td>
-                                                <td class="allocationVehicleSeatsNo"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Status:</td>
-                                                <td>
-                                                    <span class="allocationStatus"></span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="card-group">
+                                        <div class="card">
+                                            <ul class="list-group list-group-flus">
+                                                <li class="list-group-item">
+                                                    <p>Status:</p><p class="allocationStatus m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-group">
+                                        <div class="card">
+                                            <ul class="list-group list-group-flus">
+                                                <li class="list-group-item">
+                                                        <p>Datum:</p><p class="allocationDate m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p>Vozilo:</p><p class="allocationVehicle m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p>Registraciona oznaka vozila:</p><p class="allocationVehicleRegNo m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p>Broj sjedišta vozila:</p><p class="allocationVehicleSeatsNo m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                            </ul>
+                                            <div class="card-footer">
+                                                <div class="text-center m-t-5">
+                                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
+                                                        <i class="anticon anticon-form"></i>Izmijeni podatke o datumu i vozilu
+                                                    </button>  </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <ul class="list-group list-group-flus">
+                                                <li class="list-group-item">
+                                                    <p>Vozač:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p>Vodič:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <p>U paru sa vozačem:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                            </ul>
+                                  </div>
                                     </div>
                                     <div class="alert alert-primary">
                                         <div class="d-flex justify-content-start">
@@ -87,6 +93,40 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="vehicle-date-change-modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Izmijeni podatke o datumu i vozilu</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <form id="allocationDataChange">
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Datum</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="dateChange" >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Vozilo</span>
+                                        </div>
+                                        <select id="vehicleChange" class="form-control"></select>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="addNewPerson">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>

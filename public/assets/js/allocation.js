@@ -7,7 +7,6 @@ $(document).ready(function() {
         data:{getSingleAllocation:1,allocationId:allocationId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             if (data.error) {
                 $('#alertGetAllocation').html(createWarningMessage(data.error));
@@ -23,6 +22,16 @@ $(document).ready(function() {
                 $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber  );
                 $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats  );
                 $('.allocationStatus').html(status);
+                var date = data.allocationDate;
+                var dateComponents = date.split('.');
+                var year = dateComponents[2];
+                var month = dateComponents[1];
+                var day = dateComponents[0];
+
+                var formattedDate = year + '-' + month + '-' + day;
+                $('#dateChange').val(formattedDate);
+
+                getVehiclesSelect('vehicleChange',data.vehicle.id);
 
             }
         }  ,
@@ -67,6 +76,7 @@ $(document).ready(function() {
 
         }
     });
+
 
 
 
