@@ -86,30 +86,8 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-<!--                                                <li class="list-group-item">-->
-<!--                                                    <p>Vozač:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
-<!--                                                </li>-->
-<!--                                                <li class="list-group-item">-->
-<!--                                                    <p>Vodič:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
-<!--                                                </li>-->
-<!--                                                <li class="list-group-item">-->
-<!--                                                    <p>U paru sa vozačem:</p><p class=" m-b-0 text-dark font-weight-semibold"></p>-->
-<!--                                                </li>-->
                                             </ul>
                                   </div>
-                                    </div>
-                                    <div class="alert alert-primary">
-                                        <div class="d-flex justify-content-start">
-                                            <span class="alert-icon m-r-20 font-size-30">
-                                                <i class="anticon anticon-info-circle"></i>
-                                            </span>
-                                            <div>
-                                                <h5 class="alert-heading">Promijeni status</h5>
-                                                <button class="btn btn-success btn-tone m-r-5">Prihvatam</button>
-                                                <button class="btn btn-warning btn-tone m-r-5">Na čekanju</button>
-                                                <button class="btn btn-danger btn-tone m-r-5">Odbijam</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -164,19 +142,20 @@
                             </div>
                             <div id="allocationPersonAddError"></div>
                             <form id="allocationPersonAddForm">
-                                <input hidden="" id="allocationId">
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Zaposleni</span>
                                         </div>
                                         <select id="empAddAllocation" class="form-control"></select>
+                                        <p class="error"></p>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" >Pozicija</span>
                                         </div>
                                         <select id="empPositionAddAllocation" class="form-control"></select>
+                                        <p class="error"></p>
 
                                     </div>
 
@@ -195,32 +174,73 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Dodaj zapolsenog</h5>
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Izmijeni</h5>
                                 <button type="button" class="close" data-dismiss="modal">
                                     <i class="anticon anticon-close"></i>
                                 </button>
                             </div>
-                            <div id="allocationPersonAddError"></div>
+                            <div id="allocationPersonEditError"></div>
                             <form id="allocationPersonAddForm">
+                                <input hidden="" id="stuffId">
+                                <input hidden="" id="allocationId">
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Zaposleni</span>
                                         </div>
-                                        <select id="empAddAllocation" class="form-control"></select>
+                                        <select id="empEditAllocation" class="form-control"></select>
+                                        <p class="error"></p>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" >Pozicija</span>
                                         </div>
-                                        <select id="empPositionAddAllocation" class="form-control"></select>
-
+                                        <select id="empPositionEditAllocation" class="form-control"></select>
+                                        <p class="error"></p>
                                     </div>
 
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                    <button type="submit" class="btn btn-primary" id="addEmpAllocation">Sačuvaj</button>
+                                    <button type="submit" class="btn btn-primary" id="updateEmpAllocation">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="allocation-status-update-person-modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Izmijeni status</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <div id="updatePersonAllocationStatusError"></div>
+                            <form id="updatePersonAllocationStatusForm">
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Status</span>
+                                        </div>
+                                        <input hidden="" id="allocationStuffId" value="">
+                                        <input hidden="" id="allocationId" value="">
+                                        <select id="empStatusAllocation" class="form-control">
+                                            <option value="">Odaberite status</option>
+                                            <option value="0">Pending</option>
+                                            <option value="1">Rejected</option>
+                                            <option value="2">Not answer</option>
+                                            <option value="3">Accepted</option>
+                                        </select>
+                                        <p class="error"></p>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="updatePersonStatusAllocation">Sačuvaj</button>
                                 </div>
                             </form>
                         </div>

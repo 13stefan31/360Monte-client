@@ -27,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if (isset($decoded_data['updateAllocationData'])){
         return $allocation_sender->updateAllocationData($decoded_data['data']);
     }
+    if (isset($decoded_data['updateAllocationStuffStatus'])){
+        return $allocation_sender->updateAllocationStuffStatus($decoded_data['data']);
+    }
+    if (isset($decoded_data['updateEmpAllocation'])){
+        return $allocation_sender->updateEmpAllocation($decoded_data['data']);
+    }
 
 }
 

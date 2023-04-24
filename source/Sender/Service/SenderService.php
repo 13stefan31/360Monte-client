@@ -146,18 +146,15 @@ class SenderService
     public function getRoles() {
         return $this->send_get_request('roles/','');
     }
-}function handleServerError($exception) {
+}
+function handleServerError($exception) {
     $error = $exception->getResponse()->getBody()->getContents();
-
-    // Handle a JSON string error response
     if (is_string($error)) {
         $response = json_decode($error, true);
         if (isset($response['error'])) {
             return $response['error'];
         }
     }
-
-    // Handle an array or object error response
     if (is_array($error) || is_object($error)) {
         if (isset($error->error)) {
             return $error->error;
@@ -165,7 +162,5 @@ class SenderService
             return $error['error'];
         }
     }
-
-    // Fallback to returning the entire error message as a string
     return $error;
 }

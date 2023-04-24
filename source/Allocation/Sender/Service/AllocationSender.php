@@ -117,6 +117,42 @@ public function getAllAllocationStuff($id){
         return  $this->send_put_request($initialize_field, $body,$headers);
 
     }
+    public function updateAllocationStuffStatus($data){
+        $body = [
+            'statusId' => (int) $data['statusId']
+        ];
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+        $allocationId = $data['allocationId'];
+        $allocationStuffId = $data['allocationStuffId'];
+        $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff/'.$allocationStuffId;
+
+        return  $this->send_put_request($initialize_field, $body,$headers);
+
+    }
+
+    public function updateEmpAllocation($data){
+        $body = [
+            'allocationStuffId' =>  $data['allocationStuffId'],
+            'employeeId' =>   $data['employeeId'],
+            'allocationStuffPositionId' =>   $data['allocationStuffPositionId'],
+            'statusId' => (int) $data['statusId'],
+        ];
+        $token = $_COOKIE['token'];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+        $allocationId = $data['allocationId'];
+        $allocationStuffId = $data['allocationStuffId'];
+        $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff';
+
+        return  $this->send_put_request($initialize_field, $body,$headers);
+
+    }
     public function deleteAllocation($id){
         $initialize_field = 'allocation/'.$id;
         $token = $_COOKIE['token'];

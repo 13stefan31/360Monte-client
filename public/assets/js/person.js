@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var url = window.location.href;
-    var personId = url.substring(url.lastIndexOf('/') + 1);
+    var id = url.substring(url.lastIndexOf('/') + 1);
+    var personId = id.match(/\d+/)[0];
     $.ajax({
         url: '/../../functions/person.php',
         type:'GET',
