@@ -15,15 +15,16 @@ $(document).ready(function() {
 
             } else {
                 if (data.status==1){
-                    var status ='<span class="badge badge-pill badge-cyan font-size-13">Confirmed</span>';
+                    var status ='<span class="badge badge-pill badge-cyan  font-size-15">Confirmed</span>';
                 }else  if (data.status==0){
-                    var status ='<span class="badge badge-pill badge-red font-size-13">Pending</span>';
+                    var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
                 }
+                $('.allocationStatus').html(status);
                 $('.allocationDate').html(data.allocationDate);
                 $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model  );
                 $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber  );
                 $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats  );
-                $('.allocationStatus').html(status);
+
                 var date = data.allocationDate;
                 var dateComponents = date.split('.');
                 var year = dateComponents[2];
@@ -143,7 +144,6 @@ $(document).ready(function() {
                         'employeeId': $('#empAddAllocation').val(),
                         'allocationStuffPositionId': $('#empPositionAddAllocation').val(),
                     }
-
                 },
                 success: function(response) {
                     var dataParse = JSON.parse(response);
@@ -152,7 +152,7 @@ $(document).ready(function() {
                     } else {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste dodali novog zaposlenog na alokaciji'));
                         var data = dataParse.data.data;
-                        var newRow = '<tr id="'+data.id+'"><td class="stuffPosition">' + data.allocationPosition + '</td><td class="stuffName">' + data.employee.name + '</td><td>' + data.status+' ' +
+                        var newRow = '<tr id="'+data.id+'"><td class="stuffPosition">' + data.allocationPositionName + '</td><td class="stuffName">' + data.employee.name + '</td><td>' + data.status+' ' +
                         '&nbsp;<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'"  data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
                         '<i class="anticon anticon-edit"></i>' +
                         '</button>'+
@@ -193,6 +193,7 @@ $(document).ready(function() {
                 }),
                 success: function(response) {
                     var dataParse = JSON.parse(response);
+                    // console.log(response)
                     if (dataParse.error) {
                         $('#updatePersonAllocationStatusError').html(handleErrors(dataParse.error));
                     } else {
@@ -202,6 +203,12 @@ $(document).ready(function() {
                             '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
                             '<i class="anticon anticon-edit"></i>' +
                             '</button>');
+                        if (data.allocation.status==1){
+                            var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
+                        }else  if (data.allocation.status==0){
+                            var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+                        }
+                        $('.allocationStatus').html(status);
 
                         $('#allocation-status-update-person-modal').modal('hide');
                         $('#allocationStuffId').val('')
@@ -246,7 +253,7 @@ $(document).ready(function() {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili zaposlenog'));
 
                         $("#allocation-stuff-tabele").find("#"+data.id).remove();
-                        var newRow = '<tr id="'+data.id+'"><td>' + data.allocationPosition + '</td><td>' + data.employee.name + '</td><td>' + data.status+' ' +
+                        var newRow = '<tr id="'+data.id+'"><td>' + data.allocationPositionName + '</td><td>' + data.employee.name + '</td><td>' + data.status+' ' +
                             '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
                             '<i class="anticon anticon-edit"></i>' +
                             '</button>'+

@@ -35,7 +35,7 @@ class PersonSender extends \Main\SenderService
     }
 
     public function getAllStuffForAllocation(){
-        $initialize_field = 'users' ;
+        $initialize_field = 'users/user/allocation-stuff-selection' ;
         return  $this->send_get_request($initialize_field, '');
     }
 
