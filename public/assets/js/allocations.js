@@ -1,17 +1,20 @@
 $(document).ready(function() {
     var savedFilters = localStorage.getItem('allocationsFilters');
+    var current_page=$('#current_page').val();
+        var per_page=$('#per_page').val();
     if (savedFilters) {
         savedFilters = JSON.parse(savedFilters);
-        getAllocations(savedFilters);
+        getAllocations(savedFilters,current_page,per_page);
         var selectedVehicleValue=$('#allocation_filter_vehicle').val();
         getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
     } else {
-        getAllocations('');
+        getAllocations('',current_page,per_page);
     }
 
 
     $('#clearFilters').on('click', function() {
-        getAllocations('');
+        var per_page=$('#per_page').val();
+        getAllocations('',1,per_page);
         localStorage.removeItem('allocationsFilters');
         $('#vehicleFilterId').val('');
         $('#dateFilter').val('');
@@ -53,7 +56,6 @@ $(document).ready(function() {
                     }
                 } ,
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error){
                         $('#alertAddAllocationError').html(handleErrors(dataParse.error));
@@ -99,7 +101,6 @@ $(document).on('click', '.allocation-delete', function() {
             contentType: 'application/json',
             data: JSON.stringify({ deleteAllocation: 1, allocationId: allocationId }),
             success: function(response) {
-                console.log(response)
                 var data = JSON.parse(response);
                 if (data.error){
                     $('#alertDeleteAllocation').html(handleErrors(data.error));
@@ -120,6 +121,8 @@ $(document).on('click', '.allocation-delete', function() {
             }
         });
     }
+
+
 });
 $(document).on('click', '#allocationsFilter', function() {
     var vehicle = $('#vehicleFilterId').val();
@@ -140,12 +143,16 @@ $(document).on('click', '#allocationsFilter', function() {
     };
 
     localStorage.setItem('allocationsFilters', JSON.stringify(filters));
-    getAllocations(filters);
+    var current_page=$('#current_page').val();
+    var per_page=$('#per_page').val();
+    getAllocations(filters,current_page,per_page);
     $('#clearFilters').show();
 });
-function getAllocations(filters){
+function getAllocations(filters,current_page,per_page){
     var data = {
-        getAllAllocations: 1
+        getAllAllocations: 1,
+        per_page:per_page,
+        current_page:current_page
     };
 
     if (filters !== '') {
@@ -157,14 +164,13 @@ function getAllocations(filters){
     $.each(paginationData, function(index, item) {
         data[item.name] = item.value;
     });
-
+    $('#allocations-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
         url: '/../../functions/allocations.php',
         type:'GET',
         data:data,
         dataType: 'json',
         success: function(response) {
-            // console.log(response)
             if (response.error) {
                 $('#allocationAlert').html(handleErrors(response.error));
             } else {
@@ -178,7 +184,10 @@ function getAllocations(filters){
                     }
                     $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td> <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacija/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
-                $('#allocations-table').DataTable();
+                var meta = response.data.meta;
+                var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);
+                $('#pagination').html(paginationHTML);
+                // $('#allocations-table').DataTable();
             }
         }  ,
         error: function(jqXHR) {
@@ -211,4 +220,60 @@ function validateAllocation(){
     }else{
         return false;
     }
+}
+function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+    var startPage, endPage;
+
+    if (totalPages <= 10) {
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        if (currentPage <= 6) {
+            startPage = 1;
+            endPage = 10;
+        } else if (currentPage + 4 >= totalPages) {
+            startPage = totalPages - 9;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
+        }
+    }
+
+    var paginationHTML = '<nav aria-label="Page navigation example"><ul class="pagination">';
+    if (currentPage === 1) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" tabindex="-1">Prethodna</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage-1)+')" tabindex="-1">Prethodna</a></li>';
+    }
+    for (var i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationHTML += '<li class="page-item active"><a class="page-link" href="javascript:void(0)">' + i + '</a></li>';
+        } else {
+            paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+i+')">' + i + '</a></li>';
+        }
+    }
+    if (currentPage === totalPages) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Sledeća</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage+1)+')">Sledeća</a></li>';
+    }
+    paginationHTML += '</ul></nav>';
+
+    return paginationHTML;
+}
+function handlePageClick(pageNumber) {
+    $('#current_page').val(pageNumber);
+    var per_page=$('#per_page').val();
+    var savedFilters = localStorage.getItem('allocationsFilters');
+    if (savedFilters) {
+        savedFilters = JSON.parse(savedFilters);
+        getAllocations(savedFilters,pageNumber,per_page);
+        var selectedVehicleValue=$('#allocation_filter_vehicle').val();
+        getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
+    } else {
+        getAllocations('',pageNumber,per_page);
+    }
+
 }

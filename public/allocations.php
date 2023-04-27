@@ -16,17 +16,8 @@ if(isset($_SESSION['allocation_filter_vehicle']) ||
     $statusFilters='';
 }
 
-$total_items = 10;
-$per_page=3;
+$itemsPerPage = 5;
 $current_page= 1;
-$offset = ($current_page - 1) * $per_page;
-$total_pages = ceil($total_items / $per_page);
-
-//"currentPage": 1,
-//        "from": 1,
-//        "lastPage": 2,
-//        "itemsPerPage": 4,
-//        "totalItems": 6
 
 
 ?>
@@ -57,7 +48,7 @@ $total_pages = ceil($total_items / $per_page);
                             <div id="alertAddAllocationSuccess">  </div>
                             <div id="allocationAlert"> </div>
                             <div id="alertDeleteAllocation"></div>
-                            <div class="m-t-25">
+                           <div class="m-t-25">
                                 <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newAllocationBtn" data-target="#newAllocation">
                                     Novi unos
                                 </button>
@@ -113,6 +104,9 @@ $total_pages = ceil($total_items / $per_page);
                                     <tbody>
                                     </tbody>
                                 </table>
+                               <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
+                               <input hidden="" id="current_page" value="<?=$current_page?>">
+                               <div id="pagination"></div>
                             </div>
                         </div>
                     </div>
