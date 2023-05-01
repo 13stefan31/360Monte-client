@@ -9,10 +9,10 @@ $(document).ready(function() {
         data:{getSingleAllocation:1,allocationId:allocationId},
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             var data = response.data.data;
             if (data.error) {
                 $('#alertGetAllocation').html(handleErrors(data.error));
-
             } else {
                 if (data.status==1){
                     var status ='<span class="badge badge-pill badge-cyan  font-size-15">Confirmed</span>';
@@ -21,6 +21,7 @@ $(document).ready(function() {
                 }
                 $('.allocationStatus').html(status);
                 $('.allocationDate').html(data.allocationDate);
+                $('.allocationTour').html(data.tour.name);
                 $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model  );
                 $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber  );
                 $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats  );
@@ -35,6 +36,7 @@ $(document).ready(function() {
                 $('#dateChange').val(formattedDate);
 
                 getVehiclesSelect('vehicleChange',data.vehicle.id);
+                getToursSelect('tourChange',data.tour.id);
 
             }
         }  ,
@@ -77,11 +79,11 @@ $(document).ready(function() {
         e.preventDefault();
         // var validated = validateUpdateUser();
         var validated = true;
-        var validated = true;
         if (validated){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+
             const date = new Date($('#dateChange').val());
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1;
@@ -98,11 +100,13 @@ $(document).ready(function() {
                     'data':{
                         'allocationId': allocationId,
                         'allocationDate': formattedToday,
-                        'vehicleId': $('#vehicleChange').val()
+                        'vehicleId': $('#vehicleChange').val(),
+                        'tourId': $('#tourChange').val()
                     }
 
                 }),
                 success: function(response) {
+                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
@@ -110,11 +114,13 @@ $(document).ready(function() {
                         var data = dataParse.data.data;
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili podatke o alokaciji'));
                         $('.allocationDate').html(data.allocationDate);
+                        $('.allocationTour').html(data.tour.name);
                         $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model);
                         $('.allocationVehicleRegNo').html(data.vehicle.allocationDate);
                         $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats);
 
                         $('#vehicle-date-change-modal').modal('hide');
+                        $('#allocationDataChangeError').html('');
 
                     }
                 },  error: function(jqXHR) {
@@ -424,3 +430,7 @@ function validateStatusChange() {
     return true;
 }
 
+$('#changeAllocationDataButton').on('click', function() {
+    $('#allocationDataChangeError').html('');
+
+});

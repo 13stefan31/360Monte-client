@@ -109,6 +109,7 @@ public function getAllAllocationStuff($id){
         $body = [
             'allocationId' => $data['allocationId'],
             'vehicleId' => $data['vehicleId'],
+            'tourId' => $data['tourId'],
             'allocationDate' => $data['allocationDate']
         ];
         $token = $_COOKIE['token'];

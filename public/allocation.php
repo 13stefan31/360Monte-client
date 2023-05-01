@@ -53,6 +53,9 @@
                                                         <p>Datum:</p><p class="allocationDate m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
                                                 <li class="list-group-item">
+                                                    <p>Tura:</p><p class="allocationTour m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
+                                                <li class="list-group-item">
                                                     <p>Vozilo:</p><p class="allocationVehicle m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
                                                 <li class="list-group-item">
@@ -118,9 +121,13 @@
                                             <span class="input-group-text" >Vozilo</span>
                                         </div>
                                         <select id="vehicleChange" class="form-control"></select>
-
                                     </div>
-
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Tura</span>
+                                        </div>
+                                        <select id="tourChange" class="form-control"></select>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>

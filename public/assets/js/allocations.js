@@ -51,8 +51,8 @@ $(document).ready(function() {
             let dd = date.getDate();
             if (dd < 10) dd = '0' + dd;
             if (mm < 10) mm = '0' + mm;
-
             const formattedToday = dd + '.' + mm + '.' + yyyy;
+
             $.ajax({
                 url: '/../../functions/allocations.php',
                 type:'POST',
