@@ -75,6 +75,9 @@ $(document).ready(function() {
 
     $('#editAllocationData').click(function(e) {
         e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         // var validated = validateUpdateUser();
         var validated = true;
         if (validated){
@@ -116,6 +119,10 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#allocationDataChangeError').html(createErrorMessage(error));
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
                 }
             });
 
@@ -130,6 +137,9 @@ $(document).ready(function() {
 
     $('#addEmpAllocation').click(function(e) {
         e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         var allocationId= $('#allocationId').val();
         // var validated = validateNewStaff();
         var validated = true;
@@ -169,6 +179,10 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#allocationPersonAddError').html(createErrorMessage(error));
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
                 }
             });
 
@@ -177,6 +191,9 @@ $(document).ready(function() {
 
     $('#updatePersonStatusAllocation').click(function(e) {
         e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         var validated = validateStatusChange();
         // var validated = true;
         if (validated){   $.ajax({
@@ -219,7 +236,11 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#updatePersonAllocationStatusError').html(createErrorMessage(error));
-                }
+                },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
             });
 
         }
@@ -228,6 +249,9 @@ $(document).ready(function() {
     $('#updateEmpAllocation').click(function(e) {
         e.preventDefault();
         // var validated = validateNewStaff();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         var validated = true;
         if (validated){   $.ajax({
                 url: '/../../functions/allocation.php',
@@ -270,7 +294,11 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#updatePersonAllocationStatusError').html(createErrorMessage(error));
-                }
+                },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
             });
 
         }
@@ -289,8 +317,12 @@ $(document).on('click', '.stuff-delete', function() {
     var allocationStuffId = $(this).data('allocationstuffid');
     var allocationStuffName = $(this).data('allocationstuffname');
     var allocationId = $(this).data('allocationid');
-    if (confirm('Da li ste sigutni da želite da uklonite ' + allocationStuffName + ' ?')) {
-        $.ajax({
+   if (confirm('Da li ste sigutni da želite da uklonite ' + allocationStuffName + ' ?')) {
+       var $btn = $(this);
+       $btn.addClass('is-loading').prop('disabled', true);
+       $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+       // var validated = validateUpdateUser();
+       $.ajax({
             url: '/../../functions/allocation.php',
             type: 'delete',
             contentType: 'application/json',
@@ -312,7 +344,11 @@ $(document).on('click', '.stuff-delete', function() {
 
                 var error = generateAjaxError(jqXHR);
                 $('#allocationAlert').html(createErrorMessage(error));
-            }
+            },
+           complete:function (){
+               $btn.removeClass('is-loading').prop('disabled', false);
+               $btn.find('.anticon-loading').remove();
+           }
         });
     }
 });
