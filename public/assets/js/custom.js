@@ -126,3 +126,24 @@ function handleErrors(error) {
     }
     return createWarningMessage('Unknown error occurred.');
 }
+
+//mark active tab in sideNav
+
+
+$(document).ready(function() {
+    // Get the current URL path and concatenate the leading slash
+    var currentPath = '/' + window.location.pathname.split('/')[1];
+
+    // Loop through the links in the side nav
+    $('.side-nav-menu a').each(function() {
+        var linkUrl = $(this).attr('href');
+        if (linkUrl && linkUrl === currentPath) {
+            // Add the active class to the parent li element
+            $(this).closest('li').addClass('active');
+            // If the link is in a dropdown menu, open the dropdown
+            $(this).parents('.dropdown').addClass('open');
+        }
+    });
+});
+
+

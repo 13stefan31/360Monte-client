@@ -76,7 +76,7 @@ function getVehicles(filters){
                     }else{
                         var readyForDrive ='<span class="badge badge-pill badge-red font-size-13">Neispravno</span>';
                     }
-                    $('#vehicles-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.brand + '</td><td>' + row.model + '</td><td>' + row.year + '</td><td>' + row.registrationNumber + '</td><td>' + row.numberOfSeats + '</td><td>' + readyForDrive + '</td><td><a class="btn btn-primary m-r-5 " href="/vozilo/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
+                    $('#vehicles-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.brand + '</td><td>' + row.model + '</td><td>' + row.year + '</td><td>' + row.registrationNumber + '</td><td>' + row.numberOfSeats + '</td><td>' + readyForDrive + '</td><td><a class="btn btn-primary m-r-5 " href="/vozila/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
                 });
                 $('#vehicles-table').DataTable();
             }

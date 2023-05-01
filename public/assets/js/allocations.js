@@ -74,7 +74,7 @@ $(document).ready(function() {
                         }
 
                         newRow.append($('<td>').html(status));
-                        newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/alokacija/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+data.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button>'));
+                        newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/alokacije/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+data.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button>'));
                         $('#allocations-table tbody').prepend(newRow);
 
                         $('#alertAddAllocationSuccess').html(createSuccessMessage('Uspješno ste kreirali novu alokaciju'));
@@ -182,7 +182,7 @@ function getAllocations(filters,current_page,per_page){
                     }else  if (row.status==1){
                         var status ='<span class="badge badge-pill badge-cyan font-size-13">Confirmed</span>';
                     }
-                    $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td> <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacija/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
+                    $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td> <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacije/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 var meta = response.data.meta;
                 var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);

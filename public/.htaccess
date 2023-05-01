@@ -19,11 +19,11 @@ RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]
 
 
 RewriteRule ^vozila/?$ vehicles.php
-RewriteRule ^vozilo/([0-9]+)/?$ vehicle.php?id=$1 [QSA]
+RewriteRule ^vozila/([0-9]+)/?$ vehicle.php?id=$1 [QSA]
 
 
 RewriteRule ^alokacije/?$ allocations.php
-RewriteRule ^alokacija/([0-9]+)/?$ allocation.php?id=$1 [QSA]
+RewriteRule ^alokacije/([0-9]+)/?$ allocation.php?id=$1 [QSA]
 
 
 RewriteRule ^([^/.]+)/kontakt/?$ kontakt.php?lang=$1

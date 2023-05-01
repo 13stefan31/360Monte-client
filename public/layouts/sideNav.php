@@ -13,7 +13,7 @@
                     <span class="arrow"> <i class="arrow-icon"></i> </span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="active">
+                    <li>
                         <a href="/zaposleni">
                             <span class="icon-holder">
                          <i class="anticon anticon-user-add"></i>
