@@ -75,12 +75,12 @@ $(document).ready(function() {
 
     $('#editAllocationData').click(function(e) {
         e.preventDefault();
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         // var validated = validateUpdateUser();
         var validated = true;
         if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
             const date = new Date($('#dateChange').val());
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1;
@@ -137,13 +137,13 @@ $(document).ready(function() {
 
     $('#addEmpAllocation').click(function(e) {
         e.preventDefault();
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-        var allocationId= $('#allocationId').val();
+       var allocationId= $('#allocationId').val();
         // var validated = validateNewStaff();
         var validated = true;
         if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
             $.ajax({
                 url: '/../../functions/allocation.php',
                 type:'post',
@@ -191,12 +191,13 @@ $(document).ready(function() {
 
     $('#updatePersonStatusAllocation').click(function(e) {
         e.preventDefault();
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         var validated = validateStatusChange();
         // var validated = true;
-        if (validated){   $.ajax({
+        if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+            $.ajax({
                 url: '/../../functions/allocation.php',
                 type:'put',
                 data:  JSON.stringify({
@@ -249,11 +250,13 @@ $(document).ready(function() {
     $('#updateEmpAllocation').click(function(e) {
         e.preventDefault();
         // var validated = validateNewStaff();
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-        var validated = true;
-        if (validated){   $.ajax({
+       var validated = true;
+        if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+
+            $.ajax({
                 url: '/../../functions/allocation.php',
                 type:'put',
                 data:  JSON.stringify({

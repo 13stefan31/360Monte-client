@@ -34,13 +34,12 @@ $(document).ready(function() {
 
     $('#addNewAllocation').click(function(e) {
         e.preventDefault();
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-
-        var validate = validateAllocation();
-
+       var validate = validateAllocation();
         if (validate){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+
             const date = new Date($('#allocationDate').val());
             const yyyy = date.getFullYear();
             let mm = date.getMonth() + 1;

@@ -19,8 +19,11 @@ $(document).ready(function() {
     });
     $('#addNewPerson').click(function(e) {
         e.preventDefault();
-            var validate = validateNewUser();
+        var validate = validateNewUser();
             if (validate){
+                var $btn = $(this);
+                $btn.addClass('is-loading').prop('disabled', true);
+                $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
                 $.ajax({
                     url: '/../../functions/persons.php',
                     type:'POST',
@@ -55,6 +58,10 @@ $(document).ready(function() {
                     },  error: function(jqXHR) {
                         var error = generateAjaxError(jqXHR);
                         $('#employeeAddError').html(createErrorMessage(error));
+                    },
+                    complete:function (){
+                        $btn.removeClass('is-loading').prop('disabled', false);
+                        $btn.find('.anticon-loading').remove();
                     }
                 });
             }
@@ -70,6 +77,9 @@ $(document).ready(function() {
 $(document).on('click', '.user-delete', function() {
     var userId = $(this).data('userid');
     if (confirm('Da li ste sigurni da želite da obrišete korisnika?')) {
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
 
         $.ajax({
             url: '/../../functions/persons.php',
@@ -95,6 +105,10 @@ $(document).on('click', '.user-delete', function() {
 
                 var error = generateAjaxError(jqXHR);
                 $('#alertDeleteUser').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
             }
         });
     }

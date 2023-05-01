@@ -33,6 +33,9 @@ $(document).ready(function() {
         e.preventDefault();
         var validated = validateUpdateUser();
         if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
             $.ajax({
                 url: '/../../functions/person.php',
                 type:'put',
@@ -64,6 +67,10 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#alertSingleUser').html(createErrorMessage(error));
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
                 }
             });
 
@@ -74,6 +81,9 @@ $(document).ready(function() {
         e.preventDefault();
         var validated = validatePasswordData();
         if (validated){
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
 
             $.ajax({
                 url: '/../../functions/person.php',
@@ -101,6 +111,8 @@ $(document).ready(function() {
                     var error = generateAjaxError(jqXHR);
                     $('#alertChangeUserPassword').html(createErrorMessage(error));
                 },complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
                     $("#currentPassword").val("");
                     $("#newPassword").val("");
                     $("#confirmPassword").val("");  }
