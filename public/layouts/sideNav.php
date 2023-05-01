@@ -32,6 +32,12 @@
                          </span> Alokacije</a>
                     </li>
                     <li>
+                        <a href="/ture">
+                             <span class="icon-holder">
+                         <i class="anticon anticon-deployment-unit"></i>
+                         </span>Ture</a>
+                    </li>
+                    <li>
                         <a href="/surveys.php">
                              <span class="icon-holder">
                          <i class="anticon anticon-question-circle"></i>

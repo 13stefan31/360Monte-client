@@ -18,6 +18,9 @@ require_once(dirname(__FILE__) . "/../source/Allocation/Sender/Service/Allocatio
 require_once(dirname(__FILE__) . "/../source/Allocation/Model/Allocation.php");
 
 
+require_once(dirname(__FILE__) . "/../source/Tour/Sender/Service/TourSender.php");
+require_once(dirname(__FILE__) . "/../source/Tour/Model/Tour.php");
+
 $person_sender = PersonSender::getInstance();
 $person = Person::getInstance();
 
@@ -29,3 +32,6 @@ $user = User::getInstance();
 
 $allocation_sender = AllocationSender::getInstance();
 $allocation = Allocation::getInstance();
+
+$tour_sender = TourSender::getInstance();
+$tour = Tour::getInstance();

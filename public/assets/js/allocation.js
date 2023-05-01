@@ -77,6 +77,7 @@ $(document).ready(function() {
         e.preventDefault();
         // var validated = validateUpdateUser();
         var validated = true;
+        var validated = true;
         if (validated){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);

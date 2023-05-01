@@ -26,6 +26,8 @@ RewriteRule ^alokacije/?$ allocations.php
 RewriteRule ^alokacije/([0-9]+)/?$ allocation.php?id=$1 [QSA]
 
 
+RewriteRule ^ture/?$ tours.php
+
 RewriteRule ^([^/.]+)/kontakt/?$ kontakt.php?lang=$1
 RewriteRule ^([^/.]+)/contact/?$ kontakt.php?lang=$1
 #RewriteRule ^aranzmani/?$ aranzmani.php
