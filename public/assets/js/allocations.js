@@ -34,8 +34,12 @@ $(document).ready(function() {
 
     $('#addNewAllocation').click(function(e) {
         e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+
         var validate = validateAllocation();
-        // var validate = true;
+
         if (validate){
             const date = new Date($('#allocationDate').val());
             const yyyy = date.getFullYear();
@@ -86,6 +90,10 @@ $(document).ready(function() {
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#alertAddAllocationError').html(createErrorMessage(error));
+                },
+                complete:function (){  $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
+
                 }
             });
         }
@@ -95,6 +103,9 @@ $(document).ready(function() {
 $(document).on('click', '.allocation-delete', function() {
     var allocationId = $(this).data('allocationid');
     if (confirm('Da li ste sigurni da želite da obrišete alokaciju ? ')) {
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         $.ajax({
             url: '/../../functions/allocations.php',
             type: 'delete',
@@ -118,6 +129,10 @@ $(document).on('click', '.allocation-delete', function() {
             error: function(jqXHR, textStatus, errorThrown) {
                 var error = generateAjaxError(jqXHR);
                 $('#alertDeleteUser').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
             }
         });
     }
