@@ -2,8 +2,10 @@
 require 'auth.php';
 if(isset($_SESSION['allocation_filter_vehicle']) ||
     isset($_SESSION['allocation_filter_status']) ||
+    isset($_SESSION['allocation_filter_tour']) ||
     isset($_SESSION['allocation_filter_date'])  ){
     $vehicleFilters = isset($_SESSION['allocation_filter_vehicle']) ? $_SESSION['allocation_filter_vehicle'] : '';
+    $toursFilters = isset($_SESSION['allocation_filter_tour']) ? $_SESSION['allocation_filter_tour'] : '';
     $statusFilters = isset($_SESSION['allocation_filter_status']) ? $_SESSION['allocation_filter_status'] : '';
     $dateFilters = isset($_SESSION['allocation_filter_date']) ? $_SESSION['allocation_filter_date'] : '';
     $showFilters = '';
@@ -12,6 +14,7 @@ if(isset($_SESSION['allocation_filter_vehicle']) ||
     $showFilters = 'display:none;';
     $clearFilters = 'display:none;';
     $vehicleFilters = '';
+    $toursFilters = '';
     $dateFilters = '';
     $statusFilters='';
 }
@@ -57,6 +60,7 @@ $current_page= 1;
                                 </button>
                                <div class="card" id="filterAllocations" style="<?=$showFilters?>">
                                    <input type="hidden" id="allocation_filter_vehicle" value="<?php echo isset($_SESSION['allocation_filter_vehicle']) ? $_SESSION['allocation_filter_vehicle'] : '' ?>">
+                                   <input type="hidden" id="allocation_filter_tour" value="<?php echo isset($_SESSION['allocation_filter_tour']) ? $_SESSION['allocation_filter_tour'] : '' ?>">
                                     <input type="hidden" id="allocation_filter_date" value="<?php echo isset($_SESSION['allocation_filter_date']) ? $_SESSION['allocation_filter_date'] : '' ?>">
                                    <div class="card-body">
                                         <h4>Filteri</h4>
@@ -66,6 +70,12 @@ $current_page= 1;
                                             </div>
                                             <select id="vehicleFilterId" class="form-control"></select>
                                         </div>
+                                       <div class="input-group mb-3">
+                                           <div class="input-group-prepend">
+                                               <span class="input-group-text" id="basic-addon1">Tura</span>
+                                           </div>
+                                           <select id="tourFilterId" class="form-control"></select>
+                                       </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">Datum</span>
@@ -97,6 +107,7 @@ $current_page= 1;
                                             <th>Datum</th>
                                             <th>Vozilo</th>
                                             <th>Registraciona oznaka vozila</th>
+                                            <th>Tura</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -137,6 +148,13 @@ $current_page= 1;
                                         <span class="input-group-text" id="basic-addon3">Vozilo</span>
                                     </div>
                                     <select id="vehicleAdd" class="form-control"></select>
+                                    <p class="error"></p>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">Tura</span>
+                                    </div>
+                                    <select id="tourAdd" class="form-control"></select>
                                     <p class="error"></p>
                                 </div>
                             </div>

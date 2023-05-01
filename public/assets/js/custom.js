@@ -98,6 +98,30 @@ function getVehiclesSelect(selectId, selectedValue = null){
     });
 
 }
+
+function getToursSelect(selectId, selectedValue = null){
+    $.ajax({
+        url: '/../../functions/tours.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{'getAllTours':1},
+        success: function(response) {
+            console.log(response)
+            var data = response.data.data;
+            var select = $('#'+selectId);
+            select.empty();
+            select.append('<option value="">Odaberite turu</option>');
+            $.each(data, function(key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
+
+}
 function handleErrors(error) {
     if (typeof error === 'string') {
         return createWarningMessage(error);

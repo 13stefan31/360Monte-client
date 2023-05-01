@@ -4,6 +4,7 @@ require_once(dirname(__FILE__). '/../../common/functions.inc');
 if(isset($_GET) && isset($_GET['getAllAllocations'])){
     $status = isset($_GET['status']) ? $_GET['status'] : null;
     $vehicle = isset($_GET['vehicle']) ? $_GET['vehicle'] : null;
+    $tour = isset($_GET['tour']) ? $_GET['tour'] : null;
     $allocationDate = isset($_GET['allocationDate']) ? $_GET['allocationDate'] : null;
 
     $limit = isset($_GET['per_page']) ? $_GET['per_page'] : null;
@@ -14,6 +15,11 @@ if(isset($_GET) && isset($_GET['getAllAllocations'])){
         $_SESSION['allocation_filter_vehicle'] = $vehicle;
     }else{
         $_SESSION['allocation_filter_vehicle'] = null;
+    }
+    if (isset($tour)){
+        $_SESSION['allocation_filter_tour'] = $tour;
+    }else{
+        $_SESSION['allocation_filter_tour'] = null;
     }
     if (isset($status)){
         $_SESSION['allocation_filter_status'] = $status;
@@ -27,7 +33,7 @@ if(isset($_GET) && isset($_GET['getAllAllocations'])){
     }
 
 
-    return $allocation_sender->getAllAllocations($vehicle,$status,$allocationDate,$limit,$page);
+    return $allocation_sender->getAllAllocations($vehicle,$status,$allocationDate,$tour,$limit,$page);
 }
 
 

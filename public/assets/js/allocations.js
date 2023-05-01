@@ -6,7 +6,9 @@ $(document).ready(function() {
         savedFilters = JSON.parse(savedFilters);
         getAllocations(savedFilters,current_page,per_page);
         var selectedVehicleValue=$('#allocation_filter_vehicle').val();
+        var selectedTourValue=$('#allocation_filter_tour').val();
         getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
+        getToursSelect('tourFilterId',selectedTourValue)
     } else {
         getAllocations('',current_page,per_page);
     }
@@ -17,19 +19,22 @@ $(document).ready(function() {
         getAllocations('',1,per_page);
         localStorage.removeItem('allocationsFilters');
         $('#vehicleFilterId').val('');
+        $('#tourFilterId').val('');
         $('#dateFilter').val('');
         $('#statusFilter').val('');
         $('#clearFilters').hide();
-        $('#filterVehicles').hide();
+        $('#filterAllocations').hide();
     });
 
     $('#showAllocationsFilter').click(function(e) {
         e.preventDefault();
         getVehiclesSelect('vehicleFilterId');
+        getToursSelect('tourFilterId')
     });
     $('#newAllocationBtn').click(function(e) {
         e.preventDefault();
         getVehiclesSelect('vehicleAdd');
+        getToursSelect('tourAdd');
     });
 
     $('#addNewAllocation').click(function(e) {
@@ -55,10 +60,12 @@ $(document).ready(function() {
                     'addNewAllocation': 1,
                     'data':{
                         'vehicleId': $('#vehicleAdd').val(),
+                        'tourId': $('#tourAdd').val(),
                         'allocationDate':formattedToday
                     }
                 } ,
                 success: function(response) {
+                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error){
                         $('#alertAddAllocationError').html(handleErrors(dataParse.error));
@@ -68,6 +75,7 @@ $(document).ready(function() {
                         newRow.append($('<td>').text(data.allocationDate));
                         newRow.append($('<td>').text(data.vehicle.brand +' ' +data.vehicle.model));
                         newRow.append($('<td>').text(data.vehicle.registrationNumber));
+                        newRow.append($('<td>').text(data.tour.name));
                         if (data.status==0){
                             var status ='<span class="badge badge-pill badge-red font-size-13">Pending</span>';
                         }else  if (data.status==1){
@@ -140,24 +148,30 @@ $(document).on('click', '.allocation-delete', function() {
 });
 $(document).on('click', '#allocationsFilter', function() {
     var vehicle = $('#vehicleFilterId').val();
+    var tour = $('#tourFilterId').val();
     var status = $('#statusFilter').val();
 
-    const date = new Date($('#dateFilter').val());
-    const yyyy = date.getFullYear();
-    let mm = date.getMonth() + 1;
-    let dd = date.getDate();
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = '0' + mm;
+    let date = null;
+    const dateValue = $('#dateFilter').val();
+    if (dateValue) {
+        date = new Date(dateValue);
+        const yyyy = date.getFullYear();
+        let mm = date.getMonth() + 1;
+        let dd = date.getDate();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        date = dd + '.' + mm + '.' + yyyy;
+    }
 
-    const formattedToday = dd + '.' + mm + '.' + yyyy;
     var filters = {
         vehicle: vehicle,
-        allocationDate: formattedToday,
+        tour: tour,
+        allocationDate: date,
         status: status,
     };
 
     localStorage.setItem('allocationsFilters', JSON.stringify(filters));
-    var current_page=$('#current_page').val();
+    var current_page=1;
     var per_page=$('#per_page').val();
     getAllocations(filters,current_page,per_page);
     $('#clearFilters').show();
@@ -172,6 +186,7 @@ function getAllocations(filters,current_page,per_page){
     if (filters !== '') {
         data.status= filters.status;
         data.vehicle= filters.vehicle;
+        data.tour= filters.tour;
         data.allocationDate= filters.allocationDate;
     }
     var paginationData = $('#pagination-form').serializeArray();
@@ -196,7 +211,15 @@ function getAllocations(filters,current_page,per_page){
                     }else  if (row.status==1){
                         var status ='<span class="badge badge-pill badge-cyan font-size-13">Confirmed</span>';
                     }
-                    $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td> <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacije/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
+
+                    //dok se ne obirsu stare ture
+                    if (row.tour){
+                        var tour = row.tour.name;
+                    }else{
+                        var tour='';
+                    }
+
+                    $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td><td>' + tour + '</td>  <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacije/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 var meta = response.data.meta;
                 var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);
@@ -213,6 +236,7 @@ function getAllocations(filters,current_page,per_page){
 function validateAllocation(){
     var allocationDate = document.getElementById("allocationDate");
     var vehicleAdd = document.getElementById("vehicleAdd");
+    var tourAdd = document.getElementById("tourAdd");
 
     // check input values
     var isValid = true;
@@ -227,6 +251,12 @@ function validateAllocation(){
         isValid = false;
     } else {
         vehicleAdd.nextElementSibling.textContent = "";
+    }
+    if (tourAdd.value === "") {
+        tourAdd.nextElementSibling.textContent = "Morate odabrati turu";
+        isValid = false;
+    } else {
+        tourAdd.nextElementSibling.textContent = "";
     }
     // submit form if valid
     if (isValid) {

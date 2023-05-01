@@ -19,12 +19,15 @@ class AllocationSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllAllocations($vehicle=null,$status=null,$allocationDate=null, $limit,$page){
+    public function getAllAllocations($vehicle=null,$status=null,$allocationDate=null,$tour=null, $limit,$page){
         $initialize_field = 'allocation' ;
 
         $filters = array();
         if (!empty($vehicle)) {
             $filters[] = 'vehicle=' . urlencode($vehicle);
+        }
+        if (!empty($tour)) {
+            $filters[] = 'tour=' . urlencode($tour);
         }
         if (!empty($allocationDate)) {
             $filters[] = 'allocationDate=' . urlencode($allocationDate);
@@ -89,6 +92,7 @@ public function getAllAllocationStuff($id){
     public function insertNewAllocation($data){
         $body = [
             'vehicleId' => $data['vehicleId'],
+            'tourId' => $data['tourId'],
             'allocationDate' => $data['allocationDate']
         ];
         $token = $_COOKIE['token'];
