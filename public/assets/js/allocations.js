@@ -65,7 +65,6 @@ $(document).ready(function() {
                     }
                 } ,
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error){
                         $('#alertAddAllocationError').html(handleErrors(dataParse.error));

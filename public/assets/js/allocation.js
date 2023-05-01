@@ -9,7 +9,6 @@ $(document).ready(function() {
         data:{getSingleAllocation:1,allocationId:allocationId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             if (data.error) {
                 $('#alertGetAllocation').html(handleErrors(data.error));
@@ -106,7 +105,6 @@ $(document).ready(function() {
 
                 }),
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
@@ -163,6 +161,7 @@ $(document).ready(function() {
                     }
                 },
                 success: function(response) {
+                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         $('#allocationPersonAddError').html(handleErrors(dataParse.error));
@@ -367,6 +366,8 @@ $(document).on('click', '.stuff-edit', function() {
     var allocationId = $(this).data('allocationid');
     var allocationStuffId = $(this).data('allocationstuffid');
     var allocationstuffposition = $(this).data('allocationstuffposition');
+
+
     $('#stuffId').val(stuffId);
     $('#allocationId').val(allocationId);
     getStuffPositionAllocation('empPositionEditAllocation',allocationstuffposition);
@@ -402,6 +403,7 @@ function getStuffAllocation(selectId, selectedValue = null){
         dataType: 'json',
         data:{'getAllStuffAdd':1},
         success: function(response) {
+            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();

@@ -7,7 +7,6 @@ $(document).ready(function() {
         data:{getSingleVehicle:1,vehicleId:vehicleId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             if (data.error) {
                 $('#alertGetVehicle').html(handleErrors(data.error));

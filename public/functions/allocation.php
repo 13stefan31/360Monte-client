@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if (isset($decoded_data['updateEmpAllocation'])){
         return $allocation_sender->updateEmpAllocation($decoded_data['data']);
     }
-
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {

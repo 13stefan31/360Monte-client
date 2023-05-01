@@ -31,7 +31,6 @@ $(document).ready(function () {
                 }
             },
             success: function(response) {
-                console.log(response)
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
                     // $('#loginAlert').html(createWarningMessage(data.error));
@@ -56,7 +55,6 @@ $(document).ready(function () {
                 'logout': 1
             },
             success: function(response) {
-                console.log(response)
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
                     alert('Doslo je do greske, pokusajte ponovo');
@@ -82,7 +80,6 @@ function getVehiclesSelect(selectId, selectedValue = null){
         dataType: 'json',
         data:{'getAllVehicles':1},
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();
@@ -106,7 +103,6 @@ function getToursSelect(selectId, selectedValue = null){
         dataType: 'json',
         data:{'getAllTours':1},
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();
