@@ -57,6 +57,7 @@ function getVehicles(filters){
     $.each(paginationData, function(index, item) {
         data[item.name] = item.value;
     });
+    $('#vehicles-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
 
     $.ajax({
         url: '/../../functions/vehicles.php',

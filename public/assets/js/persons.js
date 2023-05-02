@@ -136,6 +136,7 @@ function getUsers(filters){
         data.rolaId = filters.rolaId;
     }
 
+    $('#persons-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
         url: '/../../functions/persons.php',
         type:'GET',
