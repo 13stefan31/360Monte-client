@@ -45,7 +45,8 @@ class SenderService
             $client = new Client(['base_uri'=>$this->url]);
             if ($headers==null){
                 $head = [
-                    'Content-Type'=>'application/json'
+                    'Content-Type'=>'application/json',
+                    'Authorization' => 'Bearer ' . $_COOKIE['token'],
                 ];
             }else{
                 $head=$headers;
