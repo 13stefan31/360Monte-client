@@ -48,7 +48,6 @@ class SenderService
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $token
             ];
-
             $response = $client->request('GET', $field, [
                 'headers' => $head
             ]);
