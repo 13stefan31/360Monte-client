@@ -12,3 +12,23 @@ p.error {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.text-truncate {
+    max-width: 330px;
+    white-space: normal;
+}
+.newNotification{
+    background-color: #f2f2f2;
+    box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 4px;
+
+}
+.pop-notification {
+    width: 420px!important;
+}

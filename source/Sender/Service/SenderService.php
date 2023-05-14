@@ -66,7 +66,7 @@ class SenderService
 
     }
 
-    public function send_put_request($field,$data) {
+    public function send_put_request($field,$data=null) {
 
         try {
             $token = $_COOKIE['token'];

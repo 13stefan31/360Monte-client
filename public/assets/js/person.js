@@ -8,6 +8,7 @@ $(document).ready(function() {
         data:{getSinglePerson:1,personId:personId},
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             if (response.error) {
 
                 $('#alertGetPerson').html(handleErrors(response.error));

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var ajaxExecuted = false;
     $.ajax({
         url: '/../../functions/user.php',
         type:'post',

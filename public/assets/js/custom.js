@@ -47,6 +47,10 @@ $(document).ready(function () {
                     var expirationDate = new Date(expirationTime);
                     document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
 
+                    var parts = accessToken.split('.');
+                    var sub = JSON.parse(atob(parts[1])).sub;
+                    document.cookie = "userid=" + sub;
+
                     window.location ='/pocetna';
                 }
 

@@ -27,9 +27,9 @@
         </ul>
         <ul class="nav-right">
             <li class="dropdown dropdown-animated scale-left">
-                <a href="javascript:void(0);" data-toggle="dropdown">
+                <a href="javascript:void(0);" data-toggle="dropdown" id="showNotifications">
                     <i class="anticon anticon-bell notification-badge"></i>
-                    <span class="badge badge-indicator badge-danger"></span>
+                    <span class="badge badge-indicator badge-danger notificationIndicator" style="display: none"></span>
                 </a>
                 <?php  include ('notification.php')?>
             </li>
@@ -67,4 +67,6 @@
     </div>
 </div>
 </div>
+<input hidden="" id="loggedUserId" value="<?=$_COOKIE['userid']?>">
+<div class="notification-toast top-right" id="notification-toast"></div>
 <!-- Header END -->

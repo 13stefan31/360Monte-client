@@ -17,9 +17,12 @@ require_once(dirname(__FILE__) . "/../source/User/Model/User.php");
 require_once(dirname(__FILE__) . "/../source/Allocation/Sender/Service/AllocationSender.php");
 require_once(dirname(__FILE__) . "/../source/Allocation/Model/Allocation.php");
 
-
 require_once(dirname(__FILE__) . "/../source/Tour/Sender/Service/TourSender.php");
 require_once(dirname(__FILE__) . "/../source/Tour/Model/Tour.php");
+
+
+require_once(dirname(__FILE__) . "/../source/Notification/Sender/Service/NotificationSender.php");
+require_once(dirname(__FILE__) . "/../source/Notification/Model/Notification.php");
 
 $person_sender = PersonSender::getInstance();
 $person = Person::getInstance();
@@ -35,3 +38,7 @@ $allocation = Allocation::getInstance();
 
 $tour_sender = TourSender::getInstance();
 $tour = Tour::getInstance();
+
+
+$notification_sender = NotificationSender::getInstance();
+$notification = Notification::getInstance();
