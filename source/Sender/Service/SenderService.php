@@ -39,17 +39,15 @@ class SenderService
 
         echo json_encode($response_array);
     }
-    public function send_get_request($field,$headers=null) {
+    public function send_get_request($field) {
 
         try{
             $client = new Client(['base_uri'=>$this->url]);
-            if ($headers==null){
-                $head = [
-                    'Content-Type'=>'application/json'
-                ];
-            }else{
-                $head=$headers;
-            }
+            $token = $_COOKIE['token'];
+            $head = [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
 
             $response = $client->request('GET', $field, [
                 'headers' => $head
@@ -69,13 +67,19 @@ class SenderService
 
     }
 
-    public function send_put_request($field,$data,$headers=null) {
+    public function send_put_request($field,$data) {
 
         try {
+            $token = $_COOKIE['token'];
+            $head = [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
+
             $client = new Client(['base_uri' => $this->url]);
             $response = $client->put($field, [
                 'json' => $data,
-                'headers' => array_filter($headers),
+                'headers' => array_filter($head),
             ]);
             return $this->check_response($response);
         } catch (\Exception $e) {
@@ -90,18 +94,16 @@ class SenderService
 
     }
 
-    public function send_post_request($field,$data,$headers=null)
+    public function send_post_request($field,$data=null)
     {
         try{
         $client = new Client(['base_uri'=>$this->url]);
-        if ($headers==null){
-            $head = [
-                'Content-Type'=>'application/json'
-            ];
-        }else{
-            $head=$headers;
-        }
 
+            $token = $_COOKIE['token'];
+            $head = [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
         $response = $client->post($field,[
            'headers'=>$head,
            'json'=>$data
@@ -119,18 +121,18 @@ class SenderService
 
     }
 
-    public function send_delete_request($field,$headers=null)
+    public function send_delete_request($field)
     {
 
         $client = new Client(['base_uri'=>$this->url]);
         try {
-            if ($headers==null){
 
-                $response = $client->delete($field);
-            }else{
-                $response = $client->delete($field, ['headers' => $headers]);
-
-            }
+            $token = $_COOKIE['token'];
+            $headers = [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ];
+              $response = $client->delete($field, ['headers' => $headers]);
             return $this->check_response($response);
         } catch (RequestException | ServerException $e) {
             $error = handleServerError($e);

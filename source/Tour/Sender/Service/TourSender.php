@@ -21,7 +21,7 @@ class TourSender extends \Main\SenderService
 
     public function getAllTours(){
         $initialize_field = 'tours' ;
-        return  $this->send_get_request($initialize_field, '');
+        return  $this->send_get_request($initialize_field);
     }
 
 }

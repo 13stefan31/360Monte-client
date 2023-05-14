@@ -31,12 +31,22 @@ $(document).ready(function () {
                 }
             },
             success: function(response) {
+                console.log(response)
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
                     // $('#loginAlert').html(createWarningMessage(data.error));
                     $('#loginAlert').html('Kredencijali nisu dobri');
                 }else{
-                    document.cookie = 'token='+dataParse.data.access_token +'; path=/';
+                    var dataParse = JSON.parse(response);
+
+                    var accessToken = dataParse.data.access_token;
+
+                    var expiresIn = dataParse.data.expires_in;
+                    var expirationTime = new Date().getTime() + (expiresIn * 1000);
+
+                    var expirationDate = new Date(expirationTime);
+                    document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
+
                     window.location ='/pocetna';
                 }
 

@@ -45,23 +45,13 @@ class AllocationSender extends \Main\SenderService
         if (!empty($filterString)) {
             $initialize_field .= '?' . $filterString;
         }
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
-        return  $this->send_get_request($initialize_field, $headers);
+        return  $this->send_get_request($initialize_field);
     }
 
 
     public function getSingleAllocation($id) {
         $initialize_field = 'allocation' . '/' . $id;
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
-        return  $this->send_get_request($initialize_field, $headers);
+        return  $this->send_get_request($initialize_field);
     }
 
 public function getAllStuffPositions(){
@@ -82,12 +72,7 @@ public function addStuff($data){
 }
 public function getAllAllocationStuff($id){
         $initialize_field = 'allocation' . '/' . $id.'/allocation-stuff';
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
-        return  $this->send_get_request($initialize_field, $headers);
+        return  $this->send_get_request($initialize_field);
     }
     public function insertNewAllocation($data){
         $body = [
@@ -95,14 +80,8 @@ public function getAllAllocationStuff($id){
             'tourId' => $data['tourId'],
             'allocationDate' => $data['allocationDate']
         ];
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $initialize_field = 'allocation';
-
-        return  $this->send_post_request($initialize_field, $body,$headers);
+        return  $this->send_post_request($initialize_field, $body);
 
     }
     public function updateAllocationData($data){
@@ -112,30 +91,20 @@ public function getAllAllocationStuff($id){
             'tourId' => $data['tourId'],
             'allocationDate' => $data['allocationDate']
         ];
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $initialize_field = 'allocation';
 
-        return  $this->send_put_request($initialize_field, $body,$headers);
+        return  $this->send_put_request($initialize_field, $body);
 
     }
     public function updateAllocationStuffStatus($data){
         $body = [
             'statusId' => (int) $data['statusId']
         ];
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $allocationId = $data['allocationId'];
         $allocationStuffId = $data['allocationStuffId'];
         $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff/'.$allocationStuffId;
 
-        return  $this->send_put_request($initialize_field, $body,$headers);
+        return  $this->send_put_request($initialize_field, $body);
 
     }
 
@@ -146,38 +115,22 @@ public function getAllAllocationStuff($id){
             'allocationStuffPositionId' =>   $data['allocationStuffPositionId'],
             'statusId' => (int) $data['statusId'],
         ];
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $allocationId = $data['allocationId'];
         $allocationStuffId = $data['allocationStuffId'];
         $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff';
 
-        return  $this->send_put_request($initialize_field, $body,$headers);
+        return  $this->send_put_request($initialize_field, $body);
 
     }
     public function deleteAllocation($id){
         $initialize_field = 'allocation/'.$id;
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
-        return  $this->send_delete_request($initialize_field,$headers);
+        return  $this->send_delete_request($initialize_field);
 
     }
 
     public function deleteAllocationStuff($allocationId,$stuffId){
         $initialize_field = 'allocation/'.$allocationId.'/allocation-stuff/'.$stuffId;
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
-        return  $this->send_delete_request($initialize_field,$headers);
-//        return  $this->send_delete_request($initialize_field,'');
+        return  $this->send_delete_request($initialize_field);
 
     }
 }

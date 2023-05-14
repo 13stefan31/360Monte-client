@@ -32,23 +32,13 @@ class UserSender extends \Main\SenderService
 
     }
     public function logoutUser(){
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $initialize_field = 'logout';
-        return $this->send_post_request($initialize_field,$body,$headers);
+        return $this->send_post_request($initialize_field);
     }
 
     public function loggedUser(){
-        $token = $_COOKIE['token'];
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ];
         $initialize_field = 'users/user/logged';
-        return  $this->send_get_request($initialize_field, $headers);
+        return  $this->send_get_request($initialize_field);
 
     }
 

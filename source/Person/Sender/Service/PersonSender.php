@@ -31,18 +31,18 @@ class PersonSender extends \Main\SenderService
                 $initialize_field .='?roleId='.$rolaId;
             }
         }
-        return  $this->send_get_request($initialize_field, '');
+        return  $this->send_get_request($initialize_field);
     }
 
     public function getAllStuffForAllocation(){
         $initialize_field = 'users/user/allocation-stuff-selection' ;
-        return  $this->send_get_request($initialize_field, '');
+        return  $this->send_get_request($initialize_field);
     }
 
 
     public function getSinglePerson($id) {
         $initialize_field = 'users' . '/' . $id;
-        return  $this->send_get_request($initialize_field, '');
+        return  $this->send_get_request($initialize_field);
     }
 
     public function updatePerson($data){

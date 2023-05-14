@@ -55,7 +55,7 @@ class VehicleSender extends \Main\SenderService
 
     public function getSingleVehicle($id) {
         $initialize_field = 'vehicles' . '/' . $id;
-        return  $this->send_get_request($initialize_field, '');
+        return  $this->send_get_request($initialize_field);
 
     }
 }
