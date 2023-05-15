@@ -1,107 +1,136 @@
+var page = 1;
+var perPage = 10;
+var loaderElement = $('<div class="loader"><div class="spinner-border centered-loader" role="status"><span class="sr-only">Učitavanje...</span></div></div>');
+
+
 $(document).ready(function() {
-        var data = {
-            getAllNotifications: 1
-        };
-        $('#notification-dropdown').html('<p><div class="spinner-border" role="status"><span class="sr-only">Učitavanje...</span></div></p>');
-        $.ajax({
-            url: '/../../functions/notifications.php',
-            type:'POST',
-            data:data,
-            dataType: 'json',
-            success: function(response) {
-                var data = response.data.data;
-                $('#notification-dropdown').html('');
-                var unSeen=0;
-                $.each(data, function(index, row) {
-                    var seenClass='';
-                    if (row.seen !== true) {
-                        seenClass = 'newNotification';
-                        unSeen++;
-                    }
-                    var notificationHTML=
-                        `<a href="javascript:void(0)" data-link="` + row.link + `"  data-id="` + row.id + `" data-seen="` + row.seen + `"   class=" dropdown-item d-flex align-items-center p-15 border-bottom openNotification ` + seenClass + `">
-                           <div class="avatar avatar-blue  avatar-icon mr-3">
-                            <i class="anticon anticon-mail"></i>
-                           
-                        </div>
-                        <div class="flex-grow-1 text-truncate">
-                              <div class="text-dark" style="word-wrap: break-word;">`+row.notification_text+`</div>
-                         </div>
-                        </a>`;
-                    $('#notification-dropdown').prepend(notificationHTML);
-               });
-                var moreBtton = '<button class="btn btn-default m-r-5 w-100">Više</button>';
-                $('#notification-dropdown').append(moreBtton);
-                if (unSeen>0){
-                    $('.notificationIndicator').show();
-                }
-            }  ,
-            error: function(jqXHR) {
-                var error = generateAjaxError(jqXHR);
-                $('#alert').append(createWarningMessage(error));
-            }
-        });
+    getAllNotification(page);
+});
 
-    $(document).on('click', '.openNotification', function() {
-        var link = $(this).data('link');
-        var id = $(this).data('id');
-        var data = {
-            markAsRead: 1,
-            id:id
-        };
-        $.ajax({
-            url: '/../../functions/notifications.php',
-            type:'POST',
-            data:data,
-            dataType: 'json',
-            success: function(response) {
-                console.log(response)
-                if (response.status==200){
-                    window.location.href=link;
-                }else{
-                    alert('Došlo je do greške')
-                }
+$('#notification-dropdown').on('click', '.load-more', function(e) {
+    e.stopPropagation();
+    $(this).remove();
+    page++;
+    getAllNotification(page);
+});
 
-            }  ,
-            error: function(jqXHR) {
-                var error = generateAjaxError(jqXHR);
-                $('#alert').append(createWarningMessage(error));
+function getAllNotification(page) {
+    var data = {
+        getAllNotifications: 1,
+        page: page
+    };
+
+    $('#notification-dropdown').append(loaderElement);
+    $.ajax({
+        url: '/../../functions/notifications.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function(response) {
+            loaderElement.remove();
+
+            var data = response.data.data;
+            var unSeen = 0;
+            $.each(data, function(index, row) {
+                var seenClass = '';
+                if (row.seen !== true) {
+                    seenClass = 'newNotification';
+                    unSeen++;
+                }
+                var notificationHTML =
+                    `<a href="javascript:void(0)" data-link="` + row.link + `"  data-id="` + row.id + `" data-seen="` + row.seen + `"   class=" dropdown-item d-flex align-items-center p-15 border-bottom openNotification ` + seenClass + `">
+                       <div class="avatar avatar-blue  avatar-icon mr-3">
+                        <i class="anticon anticon-car"></i>
+                       
+                    </div>
+                    <div class="flex-grow-1 text-truncate">
+                          <div class="text-dark" style="word-wrap: break-word;">` + row.notification_text + `</div>
+                     </div>
+                    </a>`;
+                $('#notification-dropdown').append(notificationHTML);
+            });
+
+            var lastPage = response.data.meta.lastPage;
+            var totalItems = response.data.meta.totalItems;
+            if (page < lastPage && totalItems > page * perPage) {
+                var moreButton = '<button class="btn btn-primary btn-tone m-r-5 w-100 load-more pt-3 pb-3">Prikaži više</button>';
+                $('#notification-dropdown').append(moreButton);
+            }else  {
+                var noNotificationsMessage = '<div class="loader"><div class=" centered-loader">Nema više notifikacija</div></div>';
+                $('#notification-dropdown').append(noNotificationsMessage);
             }
-        });
+            if (unSeen > 0) {
+                $('.notificationIndicator').show();
+            }
+        },
+        error: function(jqXHR) {
+            var error = generateAjaxError(jqXHR);
+            $('#alert').append(createWarningMessage(error));
+        }
+    });
+}
+
+
+$(document).on('click', '.openNotification', function() {
+
+    var link = $(this).data('link');
+    var id = $(this).data('id');
+    var data = {
+        markAsRead: 1,
+        id:id
+    };
+    $.ajax({
+        url: '/../../functions/notifications.php',
+        type:'POST',
+        data:data,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status==200){
+                window.location.href=link;
+            }else{
+                alert('Došlo je do greške')
+            }
+
+        }  ,
+        error: function(jqXHR) {
+            var error = generateAjaxError(jqXHR);
+            $('#alert').append(createWarningMessage(error));
+        }
+    });
+});
+
+$(document).one('click', '#showNotifications', function() {
+    $('.notificationIndicator').hide()
+    var ids = [];
+    $("#notification-dropdown a[data-seen='false']").each(function(){
+        ids.push($(this).data("id"));
     });
 
-    $(document).one('click', '#showNotifications', function() {
-        $('.notificationIndicator').hide()
-        var ids = [];
-        $("#notification-dropdown a[data-seen='false']").each(function(){
-            ids.push($(this).data("id"));
-        });
+    if (ids.length > 0) {
         var data = {
             markAsSeen: 1,
-            notificationsIds:ids
+            notificationsIds: ids
         };
         $.ajax({
             url: '/../../functions/notifications.php',
-            type:'POST',
-            data:data,
+            type: 'POST',
+            data: data,
             dataType: 'json',
-            success: function(response) {
-                console.log(response)
-                if (response.status=200){
-                    ids.forEach(function(id){
+            success: function (response) {
+                if (response.status = 200) {
+                    ids.forEach(function (id) {
                         $("#notification-dropdown a[data-id='" + id + "']").removeClass("newNotification");
                     });
                 }
 
-            }  ,
-            error: function(jqXHR) {
+            },
+            error: function (jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#alert').append(createWarningMessage(error));
             }
         });
-    });
+    }
 });
-
 
 
 
@@ -131,7 +160,7 @@ $(document).ready(function() {
             var notificationHTML =
                 `<a href="javascript:void(0)" data-link="` + data.link + `"  data-id="` + data.notificationId + `" data-seen="` + data.isSeen + `"   class=" dropdown-item d-flex align-items-center p-15 border-bottom openNotification newNotification">
             <div class="avatar avatar-blue avatar-icon mr-3">
-                <i class="anticon anticon-mail"></i>
+                <i class="anticon anticon-car"></i>
             </div>
             <div class="flex-grow-1 text-truncate">
                   <div class="text-dark" style="word-wrap: break-word;">` + data.message + `</div>
@@ -141,9 +170,9 @@ $(document).ready(function() {
             $('#notification-dropdown').prepend(notificationHTML);
 
             var toastHTML =
-                `<a href=" ` + data.link + `">
-          <div class="toast fade hide" data-delay="10000"> 
-<!--          <div class="toast fade hide" > -->
+                `<a href="javascript:void(0)" data-link="` + data.link + `"  data-id="` + data.notificationId + `" data-seen="` + data.isSeen + `"   class="openNotification">
+                 
+          <div class="toast fade hide" data-delay="10000000"> 
             <div class="toast-header">
               <i class="anticon anticon-info-circle text-primary m-r-5"></i>
               <strong class="mr-auto">` + (data.title ? data.title : '') + `</strong>
@@ -161,7 +190,7 @@ $(document).ready(function() {
             $('#notification-toast .toast').toast('show');
             setTimeout(function () {
                 $('#notification-toast .toast:first-child').remove();
-            }, 10000);
+            }, 10000000);
             $('.notificationIndicator').show()
         }
 });

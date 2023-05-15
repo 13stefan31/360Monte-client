@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__). '/../../common/functions.inc');
 
 if(isset($_POST) && isset($_POST['getAllNotifications'])){
-    return $notification_sender->getAllNotifications();
+    return $notification_sender->getAllNotifications($_POST['page']);
 }
 if(isset($_POST) && isset($_POST['markAsRead'])){
     return $notification_sender->markAsRead($_POST['id']);

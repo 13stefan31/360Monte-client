@@ -32,3 +32,15 @@ p.error {
 .pop-notification {
     width: 420px!important;
 }
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.centered-loader {
+    margin: 0 auto;
+}
+

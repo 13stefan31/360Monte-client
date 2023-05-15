@@ -19,8 +19,8 @@ class NotificationSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllNotifications(){
-        $initialize_field = 'notifications';
+    public function getAllNotifications($page){
+        $initialize_field = 'notifications?page='.$page;
         return  $this->send_get_request($initialize_field);
 
     }
