@@ -92,8 +92,12 @@ function getVehiclesSelect(selectId, selectedValue = null){
         url: '/../../functions/vehicles.php',
         type: 'GET',
         dataType: 'json',
-        data:{'getAllVehicles':1},
+        data:{
+            'getAllVehicles':1,
+            'status':true
+        },
         success: function(response) {
+            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();

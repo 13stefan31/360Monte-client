@@ -33,8 +33,9 @@ class VehicleSender extends \Main\SenderService
             $filters[] = 'registration_number=' . urlencode($regNo);
         }
         if (!empty($status)) {
-            $filters[] = 'ready_to_drive=' . urlencode($status);
+            $filters[] = 'readyToDrive=' . urlencode($status);
         }
+
         if (!empty($seatsNo)) {
             $filters[] = 'seats=' . urlencode($seatsNo);
         }
