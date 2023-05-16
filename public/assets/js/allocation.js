@@ -110,7 +110,9 @@ $(document).ready(function() {
 
                 }),
                 success: function(response) {
+
                     var dataParse = JSON.parse(response);
+                    console.log(dataParse)
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
                      } else {
@@ -119,7 +121,7 @@ $(document).ready(function() {
                         $('.allocationDate').html(data.allocationDate);
                         $('.allocationTour').html(data.tour.name);
                         $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model);
-                        $('.allocationVehicleRegNo').html(data.vehicle.allocationDate);
+                        $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber);
                         $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats);
 
                         $('#vehicle-date-change-modal').modal('hide');
