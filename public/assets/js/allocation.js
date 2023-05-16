@@ -55,16 +55,21 @@ $(document).ready(function() {
                 $('#allocationAlert').html(handleErrors(data.error));
             } else {
                 response.data.data.forEach(function(item) {
+                    console.log(item)
+                    if (item.statusId == 0) {
+                        // var actionHtml = '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal"> <i class="anticon anticon-check"></i></button>';
+                        var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                    }else{
+                        var actionHtml='';
+                    }
+
                     var newRow = '<tr id="'+item.id+'"><td class="stuffPosition">' + item.allocationPositionName + '</td><td class="stuffName">' + item.employee.name + '</td>' +
-                        '<td class="stuffStatus">' + item.status +
-                        '&nbsp;<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+item.statusId+'" data-allocationstuffid="'+item.id+'" data-allocationid="'+item.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
-                        '<i class="anticon anticon-edit"></i>' +
-                        '</button></td><td>' +
+                        '<td class="stuffStatus">' + item.status + actionHtml + '</td><td>' +
                         ' <button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid = "'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
                         ' <i class="anticon anticon-edit"></i>' +
                         '</button> ' +
-                        '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="'+item.allocation.id+'" data-allocationstuffid="'+item.id+'" ><i class="anticon anticon-delete"></i></button></td></tr>';
-                    $('#allocation-stuff-tabele tbody').append(newRow);
+                        '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="'+item.allocation.id+'" data-allocationstuffid="'+item.id+'"data-allocationstuffname="'+item.employee.name+'" ><i class="anticon anticon-delete"></i></button></td></tr>';
+                        $('#allocation-stuff-tabele tbody').append(newRow);
                 });
             }
         }  ,
@@ -168,11 +173,15 @@ $(document).ready(function() {
                     } else {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste dodali novog zaposlenog na alokaciji'));
                         var data = dataParse.data.data;
-                        var newRow = '<tr id="'+data.id+'"><td class="stuffPosition">' + data.allocationPositionName + '</td><td class="stuffName">' + data.employee.name + '</td><td>' + data.status+' ' +
-                        '&nbsp;<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'"  data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
-                        '<i class="anticon anticon-edit"></i>' +
-                        '</button>'+
-                        '</td><td>' +
+                        if (data.statusId == 0) {
+                            // var actionHtml = '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal"> <i class="anticon anticon-check"></i></button>';
+                            var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + data.statusId + '" data-allocationstuffid="' + data.id + '" data-allocationid="' + data.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                        }else{
+                            var actionHtml='';
+                        }
+
+                        var newRow = '<tr id="'+data.id+'"><td class="stuffPosition">' + data.allocationPositionName + '</td><td class="stuffName">' + data.employee.name + '</td>' +
+                        '<td>' + data.status+ actionHtml+ '</td><td>' +
                             ' <button type="button" class="btn btn-primary m-r-5 stuff-edit"  data-allocationid = "'+data.allocation.id+'" data-stuffid="'+data.id+'" data-allocationstuffid="'+data.employee.id+'" data-allocationstuffposition="'+data.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
                             ' <i class="anticon anticon-edit"></i>' +
                             '</button> ' +
@@ -195,63 +204,63 @@ $(document).ready(function() {
         }
     });
 
-    $('#updatePersonStatusAllocation').click(function(e) {
-        e.preventDefault();
-        var validated = validateStatusChange();
-        // var validated = true;
-        if (validated){
-            var $btn = $(this);
-            $btn.addClass('is-loading').prop('disabled', true);
-            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-            $.ajax({
-                url: '/../../functions/allocation.php',
-                type:'put',
-                data:  JSON.stringify({
-                    'updateAllocationStuffStatus': 1,
-                    'data':{
-                        'allocationId': $('#allocationId').val(),
-                        'allocationStuffId': $('#allocationStuffId').val(),
-                        'statusId': $('#empStatusAllocation').val()
-                    }
-
-                }),
-                success: function(response) {
-                    var dataParse = JSON.parse(response);
-                    // console.log(response)
-                    if (dataParse.error) {
-                        $('#updatePersonAllocationStatusError').html(handleErrors(dataParse.error));
-                    } else {
-                        var data = dataParse.data.data;
-                        $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili status'));
-                        $('#'+data.id).find('.stuffStatus').html(data.status + '' +
-                            '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
-                            '<i class="anticon anticon-edit"></i>' +
-                            '</button>');
-                        if (data.allocation.status==1){
-                            var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
-                        }else  if (data.allocation.status==0){
-                            var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
-                        }
-                        $('.allocationStatus').html(status);
-
-                        $('#allocation-status-update-person-modal').modal('hide');
-                        $('#allocationStuffId').val('')
-                        $('#allocationId').val('')
-                        $('#empStatusAllocation').val('')
-
-                    }
-                },  error: function(jqXHR) {
-                    var error = generateAjaxError(jqXHR);
-                    $('#updatePersonAllocationStatusError').html(createErrorMessage(error));
-                },
-            complete:function (){
-                $btn.removeClass('is-loading').prop('disabled', false);
-                $btn.find('.anticon-loading').remove();
-            }
-            });
-
-        }
-    });
+    // $('#updatePersonStatusAllocation').click(function(e) {
+    //     e.preventDefault();
+    //     var validated = validateStatusChange();
+    //     // var validated = true;
+    //     if (validated){
+    //         var $btn = $(this);
+    //         $btn.addClass('is-loading').prop('disabled', true);
+    //         $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+    //         $.ajax({
+    //             url: '/../../functions/allocation.php',
+    //             type:'put',
+    //             data:  JSON.stringify({
+    //                 'updateAllocationStuffStatus': 1,
+    //                 'data':{
+    //                     'allocationId': $('#allocationId').val(),
+    //                     'allocationStuffId': $('#allocationStuffId').val(),
+    //                     'statusId': $('#empStatusAllocation').val()
+    //                 }
+    //
+    //             }),
+    //             success: function(response) {
+    //                 var dataParse = JSON.parse(response);
+    //                 // console.log(response)
+    //                 if (dataParse.error) {
+    //                     $('#updatePersonAllocationStatusError').html(handleErrors(dataParse.error));
+    //                 } else {
+    //                     var data = dataParse.data.data;
+    //                     $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili status'));
+    //                     $('#'+data.id).find('.stuffStatus').html(data.status + '' +
+    //                         '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
+    //                         '<i class="anticon anticon-edit"></i>' +
+    //                         '</button>');
+    //                     if (data.allocation.status==1){
+    //                         var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
+    //                     }else  if (data.allocation.status==0){
+    //                         var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+    //                     }
+    //                     $('.allocationStatus').html(status);
+    //
+    //                     $('#allocation-status-update-person-modal').modal('hide');
+    //                     $('#allocationStuffId').val('')
+    //                     $('#allocationId').val('')
+    //                     $('#empStatusAllocation').val('')
+    //
+    //                 }
+    //             },  error: function(jqXHR) {
+    //                 var error = generateAjaxError(jqXHR);
+    //                 $('#updatePersonAllocationStatusError').html(createErrorMessage(error));
+    //             },
+    //         complete:function (){
+    //             $btn.removeClass('is-loading').prop('disabled', false);
+    //             $btn.find('.anticon-loading').remove();
+    //         }
+    //         });
+    //
+    //     }
+    // });
 
     $('#updateEmpAllocation').click(function(e) {
         e.preventDefault();
@@ -286,10 +295,14 @@ $(document).ready(function() {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili zaposlenog'));
 
                         $("#allocation-stuff-tabele").find("#"+data.id).remove();
+                        if (data.statusId == 0) {
+                            var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + data.statusId + '" data-allocationstuffid="' + data.id + '" data-allocationid="' + data.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                        }else{
+                            var actionHtml='';
+                        }
+
                         var newRow = '<tr id="'+data.id+'"><td>' + data.allocationPositionName + '</td><td>' + data.employee.name + '</td><td>' + data.status+' ' +
-                            '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="'+data.statusId+'" data-allocationstuffid="'+data.id+'" data-allocationid="'+data.allocation.id+'" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal">' +
-                            '<i class="anticon anticon-edit"></i>' +
-                            '</button>'+
+                            actionHtml+
                             '</td><td>' +
                             ' <button type="button" class="btn btn-primary m-r-5" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
                             ' <i class="anticon anticon-edit"></i>' +
@@ -314,14 +327,70 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', '.update-status', function() {
+// $(document).on('click', '.update-status', function() {
+//     var allocationStuffId = $(this).data('allocationstuffid');
+//     var allocationStatus = $(this).data('allocationstuffstatus');
+//     var allocationId = $(this).data('allocationid');
+//     $('#allocationStuffId').val(allocationStuffId)
+//     $('#allocationId').val(allocationId)
+//     $('#empStatusAllocation').val(allocationStatus)
+// });
+$(document).on('click', '.update-status', function(e) {
+    e.preventDefault();
     var allocationStuffId = $(this).data('allocationstuffid');
-    var allocationStatus = $(this).data('allocationstuffstatus');
     var allocationId = $(this).data('allocationid');
-    $('#allocationStuffId').val(allocationStuffId)
-    $('#allocationId').val(allocationId)
-    $('#empStatusAllocation').val(allocationStatus)
+         if (confirm('Da li ste sigurni da želite da potvrdite dodijeljenu alokaciju?')) {
+            $.ajax({
+                url: '/../../functions/allocation.php',
+                type:'put',
+                data:  JSON.stringify({
+                    'updateAllocationStuffStatus': 1,
+                    'data':{
+                        'allocationId': allocationId,
+                        'allocationStuffId': allocationStuffId,
+                        'statusId': 3
+                    }
+
+                }),
+                success: function(response) {
+                    var dataParse = JSON.parse(response);
+                    if (dataParse.error) {
+                        alert(dataParse.error);
+                        // $('#allocationDataChangeError').html(handleErrors(dataParse.error));
+                    } else {
+                        var data = dataParse.data.data;
+                        $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili status'));
+                        if (data.statusId == 0) {
+                            var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                        }else{
+                            var actionHtml='';
+                        }
+
+
+                        $('#'+data.id).find('.stuffStatus').html(data.status + actionHtml);
+                        if (data.allocation.status==1){
+                            var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
+                        }else  if (data.allocation.status==0){
+                            var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+                        }
+                        $('.allocationStatus').html(status);
+
+                        // $('#allocation-status-update-person-modal').modal('hide');
+                        $('#allocationStuffId').val('')
+                        $('#allocationId').val('')
+                        $('#empStatusAllocation').val('')
+
+                    }
+                },  error: function(jqXHR) {
+                    var error = generateAjaxError(jqXHR);
+                    alert(error);
+                    // $('#allocationDataChangeError').html(createErrorMessage(error));
+                }
+            });
+
+        }
 });
+
 $(document).on('click', '.stuff-delete', function() {
     var allocationStuffId = $(this).data('allocationstuffid');
     var allocationStuffName = $(this).data('allocationstuffname');
@@ -420,17 +489,17 @@ function getStuffAllocation(selectId, selectedValue = null){
 
 }
 
-function validateStatusChange() {
-    const selectedValue = $('#empStatusAllocation').val();
-    const errorMessage = $('#empStatusAllocation').next('p');
-
-    if (selectedValue === '') {
-        errorMessage.text('Odaberite status'); // Display error message
-        return false;
-    }
-        errorMessage.text('');
-    return true;
-}
+// function validateStatusChange() {
+//     const selectedValue = $('#empStatusAllocation').val();
+//     const errorMessage = $('#empStatusAllocation').next('p');
+//
+//     if (selectedValue === '') {
+//         errorMessage.text('Odaberite status'); // Display error message
+//         return false;
+//     }
+//         errorMessage.text('');
+//     return true;
+// }
 
 $('#changeAllocationDataButton').on('click', function() {
     $('#allocationDataChangeError').html('');

@@ -216,43 +216,43 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="allocation-status-update-person-modal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Izmijeni status</h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <i class="anticon anticon-close"></i>
-                                </button>
-                            </div>
-                            <div id="updatePersonAllocationStatusError"></div>
-                            <form id="updatePersonAllocationStatusForm">
-                                <div class="modal-body">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Status</span>
-                                        </div>
-                                        <input hidden="" id="allocationStuffId" value="">
-                                        <input hidden="" id="allocationId" value="">
-                                        <select id="empStatusAllocation" class="form-control">
-                                            <option value="">Odaberite status</option>
-                                            <option value="0">Pending</option>
-                                            <option value="1">Rejected</option>
-                                            <option value="2">Not answer</option>
-                                            <option value="3">Accepted</option>
-                                        </select>
-                                        <p class="error"></p>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                    <button type="submit" class="btn btn-primary" id="updatePersonStatusAllocation">Sačuvaj</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="modal fade" id="allocation-status-update-person-modal">-->
+<!--                    <div class="modal-dialog modal-dialog-centered">-->
+<!--                        <div class="modal-content">-->
+<!--                            <div class="modal-header">-->
+<!--                                <h5 class="modal-title" id="exampleModalCenterTitle">Izmijeni status</h5>-->
+<!--                                <button type="button" class="close" data-dismiss="modal">-->
+<!--                                    <i class="anticon anticon-close"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div id="updatePersonAllocationStatusError"></div>-->
+<!--                            <form id="updatePersonAllocationStatusForm">-->
+<!--                                <div class="modal-body">-->
+<!--                                    <div class="input-group mb-3">-->
+<!--                                        <div class="input-group-prepend">-->
+<!--                                            <span class="input-group-text">Status</span>-->
+<!--                                        </div>-->
+<!--                                        <input hidden="" id="allocationStuffId" value="">-->
+<!--                                        <input hidden="" id="allocationId" value="">-->
+<!--                                        <select id="empStatusAllocation" class="form-control">-->
+<!--                                            <option value="">Odaberite status</option>-->
+<!--                                            <option value="0">Pending</option>-->
+<!--                                            <option value="1">Rejected</option>-->
+<!--                                            <option value="2">Not answer</option>-->
+<!--                                            <option value="3">Accepted</option>-->
+<!--                                        </select>-->
+<!--                                        <p class="error"></p>-->
+<!--                                    </div>-->
+<!---->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>-->
+<!--                                    <button type="submit" class="btn btn-primary" id="updatePersonStatusAllocation">Sačuvaj</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>
