@@ -44,3 +44,10 @@ p.error {
     margin: 0 auto;
 }
 
+.swal2-styled.swal2-confirm {
+    background-color: #00c9a7!important;
+}
+.swal2-title {
+     font-weight: unset!important;
+     font-size: unset!important;
+}

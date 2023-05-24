@@ -17,6 +17,6 @@
     <!-- page css -->
     <link href="/assets/vendors/select2/select2.css" rel="stylesheet">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>

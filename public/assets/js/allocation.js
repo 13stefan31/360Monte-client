@@ -341,7 +341,14 @@ $(document).on('click', '.update-status', function(e) {
     e.preventDefault();
     var allocationStuffId = $(this).data('allocationstuffid');
     var allocationId = $(this).data('allocationid');
-         if (confirm('Da li ste sigurni da želite da potvrdite dodijeljenu alokaciju?')) {
+    Swal.fire({
+        title: 'Da li ste sigurni da želite da prihvatite alokaciju?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Prihvati',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 url: '/../../functions/allocation.php',
                 type:'put',
@@ -361,6 +368,7 @@ $(document).on('click', '.update-status', function(e) {
                         // $('#allocationDataChangeError').html(handleErrors(dataParse.error));
                     } else {
                         var data = dataParse.data.data;
+                        Swal.fire('Alokacija prihvaćena!', '', 'success')
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili status'));
                         if (data.statusId == 0) {
                             var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
@@ -385,12 +393,67 @@ $(document).on('click', '.update-status', function(e) {
                     }
                 },  error: function(jqXHR) {
                     var error = generateAjaxError(jqXHR);
-                    alert(error);
+                    // alert(error);
+                    Swal.fire(error, '', 'error')
                     // $('#allocationDataChangeError').html(createErrorMessage(error));
                 }
             });
 
-        }
+
+        } else if (result.isDenied) {   }
+    })
+
+
+        //  if (confirm('Da li ste sigurni da želite da potvrdite dodijeljenu alokaciju?')) {
+        //     $.ajax({
+        //         url: '/../../functions/allocation.php',
+        //         type:'put',
+        //         data:  JSON.stringify({
+        //             'updateAllocationStuffStatus': 1,
+        //             'data':{
+        //                 'allocationId': allocationId,
+        //                 'allocationStuffId': allocationStuffId,
+        //                 'statusId': 3
+        //             }
+        //
+        //         }),
+        //         success: function(response) {
+        //             var dataParse = JSON.parse(response);
+        //             if (dataParse.error) {
+        //                 alert(dataParse.error);
+        //                 // $('#allocationDataChangeError').html(handleErrors(dataParse.error));
+        //             } else {
+        //                 var data = dataParse.data.data;
+        //                 $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili status'));
+        //                 if (data.statusId == 0) {
+        //                     var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+        //                 }else{
+        //                     var actionHtml='';
+        //                 }
+        //
+        //
+        //                 $('#'+data.id).find('.stuffStatus').html(data.status + actionHtml);
+        //                 if (data.allocation.status==1){
+        //                     var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
+        //                 }else  if (data.allocation.status==0){
+        //                     var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+        //                 }
+        //                 $('.allocationStatus').html(status);
+        //
+        //                 // $('#allocation-status-update-person-modal').modal('hide');
+        //                 $('#allocationStuffId').val('')
+        //                 $('#allocationId').val('')
+        //                 $('#empStatusAllocation').val('')
+        //
+        //             }
+        //         },  error: function(jqXHR) {
+        //             var error = generateAjaxError(jqXHR);
+        //             alert(error);
+        //             // $('#allocationDataChangeError').html(createErrorMessage(error));
+        //         }
+        //     });
+        //
+        // }
 });
 
 $(document).on('click', '.stuff-delete', function() {
