@@ -36,11 +36,22 @@ class UserSender extends \Main\SenderService
         return $this->send_post_request($initialize_field);
     }
 
-    public function loggedUser(){
-        $initialize_field = 'users/user/logged';
-        return  $this->send_get_request($initialize_field);
 
+    public function loggedUser() {
+        $initialize_field = 'users/user/logged';
+
+        ob_start();
+        $this->send_get_request($initialize_field);
+        $output = ob_get_contents();
+        ob_end_clean();
+        $decodedResponse = json_decode($output);
+        if ($decodedResponse->success) {
+            return $decodedResponse->data->data;
+        } else {
+            return null;
+        }
     }
+
 
 }
 

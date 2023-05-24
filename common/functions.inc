@@ -5,6 +5,8 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 //define("P_API_URL", $_ENV['P_API_URL']);
 
+
+
 require_once(dirname(__FILE__) . "/../source/Person/Sender/Service/PersonSender.php");
 require_once(dirname(__FILE__) . "/../source/Person/Model/Person.php");
 
@@ -42,3 +44,4 @@ $tour = Tour::getInstance();
 
 $notification_sender = NotificationSender::getInstance();
 $notification = Notification::getInstance();
+

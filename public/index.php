@@ -12,7 +12,9 @@
                 <!-- Content Wrapper START -->
                 <div class="main-content">
                     <div class="row">
-                        <div class="col-md-6 col-lg-3">
+
+                        <?php if (in_array($authRole,$personAllowedRoles)) { ?>
+                            <div class="col-md-6 col-lg-3">
                             <a href="/zaposleni">
                             <div class="card">
                                 <div class="card-body">
@@ -28,6 +30,9 @@
                             </div>
                             </a>
                         </div>
+                        <?php }?>
+
+                        <?php if (in_array($authRole,$vehiclesAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/vozila">
                             <div class="card">
@@ -44,6 +49,9 @@
                             </div>
                             </a>
                         </div>
+
+                        <?php }?>
+                        <?php if (in_array($authRole,$surveysAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="">
                             <div class="card">
@@ -60,6 +68,9 @@
                             </div>
                             </a>
                         </div>
+
+                        <?php }?>
+                        <?php if (in_array($authRole,$allocationAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/alokacije">
                             <div class="card">
@@ -76,6 +87,8 @@
                             </div>
                             </a>
                         </div>
+                        <?php }?>
+
                         <div class="col-md-6 col-lg-3">
                             <a href="/ture">
                                 <div class="card">
@@ -104,7 +117,7 @@
 
 
     <?php  include ('layouts/scripts.php')?>
-    <script src="/assets/js/userAuth.js"></script>
+<!--    <script src="/assets/js/userAuth.js"></script>-->
 
 </body>
 

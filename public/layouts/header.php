@@ -41,9 +41,9 @@
                     <div class="p-h-20 p-b-15 m-b-10 border-bottom">
                         <div class="d-flex m-r-50">
                             <div class="m-l-10">
-                                <p class="m-b-0 text-dark font-weight-semibold loggedUserName"></p>
-                                <p class="m-b-0 opacity-07 loggedUserEmail"></p>
-                                <p class="m-b-0 opacity-07 loggedUserRole"></p>
+                                <p class="m-b-0 text-dark font-weight-semibold loggedUserName"><?=$authUser->name?></p>
+                                <p class="m-b-0 opacity-07 loggedUserEmail"><?=$authUser->email?></p>
+                                <p class="m-b-0 opacity-07 loggedUserRole"><?=$authUser->roleId?></p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-                                <span class="m-l-10">Logout</span>
+                                <span class="m-l-10">Odjavi se</span>
                             </div>
                             <i class="anticon font-size-10 anticon-right"></i>
                         </div>
@@ -67,6 +67,6 @@
     </div>
 </div>
 </div>
-<input hidden="" id="loggedUserId" value="<?=$_COOKIE['userid']?>">
+<input hidden="" id="loggedUserId" value="<?=$authUser->id?>">
 <div class="notification-toast top-right" id="notification-toast"></div>
 <!-- Header END -->
