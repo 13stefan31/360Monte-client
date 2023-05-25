@@ -36,12 +36,15 @@ if (!in_array($authRole,$personAllowedRoles)){
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Opšte informacije</a>
                                 </li>
+
+                                <?php if (in_array($authRole,$personEdit)){?>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Izmijeni podatke</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">Izmijeni lozinku</a>
                                 </li>
+                                <?php }?>
                             </ul>
                             <div class="tab-content m-t-15" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -68,6 +71,8 @@ if (!in_array($authRole,$personAllowedRoles)){
                                         </div>
                                     </div>
                                 </div>
+
+                                <?php if (in_array($authRole,$personEdit)){?>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div id="alertSingleUser"></div>
                                     <div class="card">
@@ -128,6 +133,7 @@ if (!in_array($authRole,$personAllowedRoles)){
                                         </form>
                                     </div>
                                 </div>
+                                <?php }?>
                             </div>
                         </div>
                     </div>

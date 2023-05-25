@@ -45,9 +45,11 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                         <div class="card-body">
                             <div id="alert"></div>
                             <div class="m-t-25">
-                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newPersonButton" data-target="#newPerson">
-                                    Novi unos
-                                </button>
+                                <?php if (in_array($authRole,$personEdit)){?>
+                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newPersonButton" data-target="#newPerson">
+                                        Novi unos
+                                    </button>
+                                <?php }?>
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showPersonsFilter" >
                                     Filteri
                                 </button>
@@ -93,6 +95,8 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                         </div>
                     </div>
                 </div>
+
+                <?php if (in_array($authRole,$personEdit)){?>
                 <div class="modal fade" id="newPerson">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -135,6 +139,7 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                         </div>
                     </div>
                 </div>
+                <?php }?>
                 <!-- Content Wrapper END -->
              <?php include ('layouts/footer.php')?>
             </div>

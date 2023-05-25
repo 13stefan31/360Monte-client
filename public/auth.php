@@ -56,7 +56,10 @@ $surveysAllowedRoles = array(
     P_GENERAL_MANAGER_ROLE_ID
 );
 
-
+$personEdit = array(
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID
+);
 
 
 ?>
