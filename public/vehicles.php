@@ -1,5 +1,9 @@
 <?php
 require 'auth.php';
+if (!in_array($authRole,$vehiclesAllowedRoles)){
+    header('HTTP/1.0 403 Forbidden');
+    exit();
+}
 if(isset($_SESSION['vehicle_filter_brand']) ||
     isset($_SESSION['vehicle_filter_model']) ||
     isset($_SESSION['vehicle_filter_regNo']) ||

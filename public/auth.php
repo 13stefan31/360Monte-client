@@ -28,7 +28,7 @@ define("P_DRIVER_ROLE_ID",3);
 define("P_OFFICE_ADMIN_ROLE_ID", 4);
 define("P_MEHANIC_ROLE_ID", 5);
 define("P_GENERAL_MANAGER_ROLE_ID",6);
-define("P_HR_MANAGER_ROLE_ID",6);
+define("P_HR_MANAGER_ROLE_ID",7);
 
 $allocationAllowedRoles = array(
     P_ADMIN_ROLE_ID,
@@ -55,6 +55,8 @@ $surveysAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID
 );
+
+
 
 
 ?>

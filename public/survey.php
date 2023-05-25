@@ -1,3 +1,10 @@
+<?php
+require 'auth.php';
+if (!in_array($authRole,$surveysAllowedRoles)){
+    header('HTTP/1.0 403 Forbidden');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>

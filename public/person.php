@@ -1,4 +1,9 @@
-<?php require 'auth.php'; ?>
+<?php require 'auth.php';
+if (!in_array($authRole,$personAllowedRoles)){
+    header('HTTP/1.0 403 Forbidden');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include ('layouts/head.php')?>

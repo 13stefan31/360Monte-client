@@ -1,6 +1,9 @@
 <?php
 require 'auth.php';
-
+if (!in_array($authRole,$personAllowedRoles)){
+    header('HTTP/1.0 403 Forbidden');
+    exit();
+}
 if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola_id'])){
     $nameFilters = isset($_SESSION['person_filter_name']) ? $_SESSION['person_filter_name'] : '';
     $roleIdFilters = isset($_SESSION['person_filter_rola_id']) ? $_SESSION['person_filter_rola_id'] : '';
