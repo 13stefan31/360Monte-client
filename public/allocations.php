@@ -56,9 +56,12 @@ $current_page= 1;
                             <div id="allocationAlert"> </div>
                             <div id="alertDeleteAllocation"></div>
                            <div class="m-t-25">
+
+                               <?php if (in_array($authRole,$allocationEditRoles)){?>
                                 <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newAllocationBtn" data-target="#newAllocation">
                                     Novi unos
                                 </button>
+                               <?php }?>
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showAllocationsFilter" >
                                     Filteri
                                 </button>
@@ -126,7 +129,7 @@ $current_page= 1;
                         </div>
                     </div>
                 </div>
-
+<?php if (in_array($authRole,$allocationEditRoles)){?>
                 <div class="modal fade" id="newAllocation">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -170,6 +173,7 @@ $current_page= 1;
                         </div>
                     </div>
                 </div>
+                <?php }?>
                 <!-- Content Wrapper END -->
              <?php include ('layouts/footer.php')?>
             </div>

@@ -59,7 +59,8 @@ $surveysAllowedRoles = array(
 $allocationEditRoles = array(
     P_ADMIN_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
-    P_GENERAL_MANAGER_ROLE_ID
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_HR_MANAGER_ROLE_ID
 );
 
 $allocationEditRolesString = json_encode($allocationEditRoles);
