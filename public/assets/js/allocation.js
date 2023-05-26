@@ -56,20 +56,34 @@ $(document).ready(function() {
             } else {
                 response.data.data.forEach(function(item) {
                     console.log(item)
-                    if (item.statusId == 0) {
-                        // var actionHtml = '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal"> <i class="anticon anticon-check"></i></button>';
-                        var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
-                    }else{
-                        var actionHtml='';
+                    var adminButton='';
+                    var confirmAllocation='';
+
+                    var allocationEditRoles = $("#allocationEditRoles").val();
+                    var allocationUpdateRoles = $("#allocationUpdateRoles").val();
+                    var authRole = $("#authRole").val();
+                    var loggedUser = $("#loggedUser").val();
+
+                    if (item.statusId == 0 && allocationEditRoles.indexOf(authRole) !== -1){
+                        adminButton = '<button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid="'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">' +
+                            ' <i class="anticon anticon-edit"></i> </button>' +
+                            '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="' + item.allocation.id + '" data-allocationstuffid="' + item.id + '"data-allocationstuffname="' + item.employee.name + '"><i class="anticon anticon-delete"></i></button>';
+
+                    }
+                    if (item.statusId == 1 && allocationUpdateRoles.indexOf(authRole) !== -1){
+                        adminButton = '<button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid="'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">' +
+                            ' <i class="anticon anticon-edit"></i> </button>' +
+                            '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="' + item.allocation.id + '" data-allocationstuffid="' + item.id + '"data-allocationstuffname="' + item.employee.name + '"><i class="anticon anticon-delete"></i></button>';
+
                     }
 
+                    if (item.statusId == 0 && loggedUser == item.employee.id) {
+                        confirmAllocation = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                    }
                     var newRow = '<tr id="'+item.id+'"><td class="stuffPosition">' + item.allocationPositionName + '</td><td class="stuffName">' + item.employee.name + '</td>' +
-                        '<td class="stuffStatus">' + item.status + actionHtml + '</td><td>' +
-                        ' <button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid = "'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
-                        ' <i class="anticon anticon-edit"></i>' +
-                        '</button> ' +
-                        '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="'+item.allocation.id+'" data-allocationstuffid="'+item.id+'"data-allocationstuffname="'+item.employee.name+'" ><i class="anticon anticon-delete"></i></button></td></tr>';
-                        $('#allocation-stuff-tabele tbody').append(newRow);
+                        '<td class="stuffStatus">' + item.status + confirmAllocation + '</td><td>'+ adminButton + '</td></tr>';
+                    $('#allocation-stuff-tabele tbody').append(newRow);
+
                 });
             }
         }  ,
@@ -82,8 +96,8 @@ $(document).ready(function() {
     $('#editAllocationData').click(function(e) {
         e.preventDefault();
         // var validated = validateUpdateUser();
-        var validated = true;
-        if (validated){
+        // var validated = true;
+        // if (validated) {
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
@@ -98,10 +112,10 @@ $(document).ready(function() {
             const formattedToday = dd + '.' + mm + '.' + yyyy;
             $.ajax({
                 url: '/../../functions/allocation.php',
-                type:'put',
-                data:  JSON.stringify({
+                type: 'put',
+                data: JSON.stringify({
                     'updateAllocationData': 1,
-                    'data':{
+                    'data': {
                         'allocationId': allocationId,
                         'allocationDate': formattedToday,
                         'vehicleId': $('#vehicleChange').val(),
@@ -109,13 +123,13 @@ $(document).ready(function() {
                     }
 
                 }),
-                success: function(response) {
+                success: function (response) {
 
                     var dataParse = JSON.parse(response);
                     console.log(dataParse)
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
-                     } else {
+                    } else {
                         var data = dataParse.data.data;
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili podatke o alokaciji'));
                         $('.allocationDate').html(data.allocationDate);
@@ -128,17 +142,17 @@ $(document).ready(function() {
                         $('#allocationDataChangeError').html('');
 
                     }
-                },  error: function(jqXHR) {
+                }, error: function (jqXHR) {
                     var error = generateAjaxError(jqXHR);
                     $('#allocationDataChangeError').html(createErrorMessage(error));
                 },
-                complete:function (){
+                complete: function () {
                     $btn.removeClass('is-loading').prop('disabled', false);
                     $btn.find('.anticon-loading').remove();
                 }
             });
 
-        }
+        // }
     });
 
     $('#addEmpAllocationButton').click(function(e) {
@@ -151,8 +165,8 @@ $(document).ready(function() {
         e.preventDefault();
        var allocationId= $('#allocationId').val();
         // var validated = validateNewStaff();
-        var validated = true;
-        if (validated){
+        // var validated = true;
+        // if (validated){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
@@ -175,21 +189,21 @@ $(document).ready(function() {
                     } else {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste dodali novog zaposlenog na alokaciji'));
                         var data = dataParse.data.data;
-                        if (data.statusId == 0) {
-                            // var actionHtml = '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal"> <i class="anticon anticon-check"></i></button>';
-                            var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + data.statusId + '" data-allocationstuffid="' + data.id + '" data-allocationid="' + data.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
-                        }else{
-                            var actionHtml='';
-                        }
+                        // if (data.statusId == 0) {
+                        //     // var actionHtml = '<button class="btn btn-icon btn-primary btn-rounded btn-tone update-status" data-allocationstuffstatus="' + item.statusId + '" data-allocationstuffid="' + item.id + '" data-allocationid="' + item.allocation.id + '" data-toggle="modal" id="updatePersonAllocationStatusButton" data-target="#allocation-status-update-person-modal"> <i class="anticon anticon-check"></i></button>';
+                        //     var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + data.statusId + '" data-allocationstuffid="' + data.id + '" data-allocationid="' + data.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
+                        // }else{
+                        //     var actionHtml='';
+                        // }
 
                         var newRow = '<tr id="'+data.id+'"><td class="stuffPosition">' + data.allocationPositionName + '</td><td class="stuffName">' + data.employee.name + '</td>' +
-                        '<td>' + data.status+ actionHtml+ '</td><td>' +
+                        '<td>' + data.status+ '</td><td>' +
+                        // '<td>' + data.status+ actionHtml+ '</td><td>' +
                             ' <button type="button" class="btn btn-primary m-r-5 stuff-edit"  data-allocationid = "'+data.allocation.id+'" data-stuffid="'+data.id+'" data-allocationstuffid="'+data.employee.id+'" data-allocationstuffposition="'+data.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
                             ' <i class="anticon anticon-edit"></i>' +
                             '</button> ' +
                             '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="'+data.allocation.id+'" data-allocationstuffid="'+data.id+'" data-allocationstuffname="'+data.employee.name+'"><i class="anticon anticon-delete"></i></button></td></tr>';
                         $('#allocation-stuff-tabele tbody').append(newRow);
-
                         $('#allocation-add-person-modal').modal('hide');
 
                     }
@@ -203,7 +217,7 @@ $(document).ready(function() {
                 }
             });
 
-        }
+        // }
     });
 
     // $('#updatePersonStatusAllocation').click(function(e) {
@@ -267,8 +281,8 @@ $(document).ready(function() {
     $('#updateEmpAllocation').click(function(e) {
         e.preventDefault();
         // var validated = validateNewStaff();
-       var validated = true;
-        if (validated){
+       // var validated = true;
+       //  if (validated){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
@@ -297,14 +311,14 @@ $(document).ready(function() {
                         $('#allocationAlert').html(createSuccessMessage('Uspješno ste izmijenili zaposlenog'));
 
                         $("#allocation-stuff-tabele").find("#"+data.id).remove();
-                        if (data.statusId == 0) {
+                      /*  if (data.statusId == 0) {
                             var actionHtml = '&nbsp;<button class="btn btn-icon btn-success btn-rounded  update-status" data-allocationstuffstatus="' + data.statusId + '" data-allocationstuffid="' + data.id + '" data-allocationid="' + data.allocation.id + '"   > <i class="anticon anticon-check"></i></button>';
                         }else{
                             var actionHtml='';
-                        }
+                        }*/
 
                         var newRow = '<tr id="'+data.id+'"><td>' + data.allocationPositionName + '</td><td>' + data.employee.name + '</td><td>' + data.status+' ' +
-                            actionHtml+
+                            // actionHtml+
                             '</td><td>' +
                             ' <button type="button" class="btn btn-primary m-r-5" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">\n' +
                             ' <i class="anticon anticon-edit"></i>' +
@@ -325,7 +339,7 @@ $(document).ready(function() {
             }
             });
 
-        }
+        // }
     });
 });
 
@@ -362,6 +376,7 @@ $(document).on('click', '.update-status', function(e) {
 
                 }),
                 success: function(response) {
+                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         alert(dataParse.error);
@@ -375,8 +390,6 @@ $(document).on('click', '.update-status', function(e) {
                         }else{
                             var actionHtml='';
                         }
-
-
                         $('#'+data.id).find('.stuffStatus').html(data.status + actionHtml);
                         if (data.allocation.status==1){
                             var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';

@@ -48,12 +48,14 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                     <div class="card-group">
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
+                                                <?php if (in_array($authRole,$allocationEditRoles)){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
                                                             <i class="anticon anticon-form"></i>Izmijeni podatke o datumu i vozilu
                                                         </button>  </div>
                                                 </div>
+                                                <?php }?>
                                                 <li class="list-group-item">
                                                         <p>Datum:</p><p class="allocationDate m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
@@ -74,12 +76,15 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                         </div>
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
+                                                <?php if (in_array($authRole,$allocationEditRoles)){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="addEmpAllocationButton" data-target="#allocation-add-person-modal">
                                                             <i class="anticon anticon-usergroup-add"></i>Dodaj osobe
-                                                        </button>  </div>
+                                                        </button>
+                                                    </div>
                                                 </div>
+                                                <?php } ?>
                                                 <div class="table-responsive">
                                                     <table id="allocation-stuff-tabele" class="table">
                                                         <thead>
@@ -95,7 +100,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                     </table>
                                                 </div>
                                             </ul>
-                                  </div>
+                                       </div>
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +108,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                     </div>
                 </div>
 
+                <?php if (in_array($authRole,$allocationEditRoles)){?>
                 <div class="modal fade" id="vehicle-date-change-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -142,7 +148,6 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade" id="allocation-add-person-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -180,8 +185,6 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                         </div>
                     </div>
                 </div>
-
-
                 <div class="modal fade" id="allocation-edit-person-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -220,7 +223,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                         </div>
                     </div>
                 </div>
-
+                <?php }?>
 <!--                <div class="modal fade" id="allocation-status-update-person-modal">-->
 <!--                    <div class="modal-dialog modal-dialog-centered">-->
 <!--                        <div class="modal-content">-->
@@ -261,11 +264,13 @@ if (!in_array($authRole,$allocationAllowedRoles)){
             <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>
-        <!-- Page Container END -->
         <?php  include ('layouts/themeConfig.php')?>
     </div>
 </div>
-
+    <input hidden="" value="<?=$authUser->id?>" id="loggedUser">
+    <input hidden="" value="<?=$authRole?>" id="authRole">
+    <input hidden value="<?= htmlspecialchars($allocationEditRolesString) ?>" id="allocationEditRoles">
+    <input hidden value="<?= htmlspecialchars($allocationUpdateRolesString) ?>" id="allocationUpdateRoles">
 
 
 

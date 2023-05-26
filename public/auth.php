@@ -55,11 +55,28 @@ $surveysAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID
 );
-
-$personEdit = array(
+//za alokacije kojima je status 0
+$allocationEditRoles = array(
     P_ADMIN_ROLE_ID,
+    P_OFFICE_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID
 );
 
+$allocationEditRolesString = json_encode($allocationEditRoles);
 
+
+//za alokacije kojima je status 1
+$allocationUpdateRoles = array(
+    P_GENERAL_MANAGER_ROLE_ID
+);
+
+$allocationUpdateRolesString = json_encode($allocationUpdateRoles);
+
+$vehiclesEditRoles = array(
+    P_ADMIN_ROLE_ID,
+    P_OFFICE_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID
+);
+
+$vehicleEditRolesString = json_encode($vehiclesEditRoles);
 ?>
