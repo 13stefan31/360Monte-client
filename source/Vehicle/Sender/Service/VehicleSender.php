@@ -59,5 +59,11 @@ class VehicleSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
 
     }
+
+    public function getSingleVehicleComment($id,$limit,$page) {
+        $initialize_field = 'vehicle-comment/' . $id . '?limit='.$limit.'&page='.$page;
+        return  $this->send_get_request($initialize_field);
+
+    }
 }
 

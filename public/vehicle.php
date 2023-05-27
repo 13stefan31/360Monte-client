@@ -3,6 +3,10 @@ if (!in_array($authRole,$vehiclesAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
     exit();
 }
+
+$itemsPerPage = 10;
+$current_page= 1;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +17,7 @@ if (!in_array($authRole,$vehiclesAllowedRoles)){
     <div class="layout">
         <?php include ('layouts/header.php')?>
         <?php include ('layouts/sideNav.php')?>
-        <!-- Page Container START -->
         <div class="page-container">
-            <!-- Content Wrapper START -->
             <div class="main-content">
                 <div class="page-header">
                     <h2 class="header-title vehicleName"></h2>
@@ -96,30 +98,19 @@ if (!in_array($authRole,$vehiclesAllowedRoles)){
                                     <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity">
                                         Novi unos
                                     </button>
-                                    <table id="data-table" class="table">
+                                    <table id="vehicle-comment-table" class="table">
                                         <thead>
                                         <tr>
+                                            <th>Zaposleni</th>
                                             <th>Komentar</th>
-                                            <th>Status</th>
+                                            <th>Ocjena</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Komentar 1</td>
-                                            <td>Status 1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Komentar 2</td>
-                                            <td>Status 2</td>
-                                        </tr>
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <th>Komentar</th>
-                                            <th>Status</th>
-                                        </tr>
-                                        </tfoot>
+                                        <tbody>  </tbody>
                                     </table>
+                                    <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
+                                    <input hidden="" id="current_page" value="<?=$current_page?>">
+                                    <div id="pagination"></div>
                                 </div>
                             </div>
                         </div>

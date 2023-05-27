@@ -188,10 +188,6 @@ function getAllocations(filters,current_page,per_page){
         data.tour= filters.tour;
         data.allocationDate= filters.allocationDate;
     }
-    var paginationData = $('#pagination-form').serializeArray();
-    $.each(paginationData, function(index, item) {
-        data[item.name] = item.value;
-    });
     $('#allocations-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
         url: '/../../functions/allocations.php',
