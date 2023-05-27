@@ -65,5 +65,17 @@ class VehicleSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
 
     }
+
+    public function addVehicleComment($data){
+        $initialize_field = 'vehicle-comment';
+        $body = [
+            'vehicleId' => $data['vehicleId'],
+            'comment' => $data['comment'],
+            'mark' => $data['mark']
+        ];
+
+        return  $this->send_post_request($initialize_field,$body);
+
+    }
 }
 

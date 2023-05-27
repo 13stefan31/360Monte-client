@@ -62,22 +62,18 @@ $allocationEditRoles = array(
     P_GENERAL_MANAGER_ROLE_ID,
     P_HR_MANAGER_ROLE_ID
 );
-
 $allocationEditRolesString = json_encode($allocationEditRoles);
-
 
 //za alokacije kojima je status 1
 $allocationUpdateRoles = array(
     P_GENERAL_MANAGER_ROLE_ID
 );
-
 $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
 
-$vehiclesEditRoles = array(
-    P_ADMIN_ROLE_ID,
-    P_OFFICE_ADMIN_ROLE_ID,
-    P_GENERAL_MANAGER_ROLE_ID
+
+//ko moze da unosi komentar na vozila
+$vehicleCommentRoles = array(
+    P_MEHANIC_ROLE_ID
 );
 
-$vehicleEditRolesString = json_encode($vehiclesEditRoles);
 ?>

@@ -72,6 +72,7 @@ $current_page= 1;
                                                         <td>Ispravnost:</td>
                                                         <td class="vehicleReadyForDrive"></td>
                                                     </tr>
+                                                    <input hidden="" class="vehicleId" value="">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -79,25 +80,12 @@ $current_page= 1;
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="alert alert-success">
-                                        <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-check-o"></i>
-                                        </span>
-                                            <span>Uspješno ste unijeli novi komentar</span>
-                                        </div>
-                                    </div>
-                                    <div class="alert alert-danger">
-                                        <div class="d-flex align-items-center justify-content-start">
-                                        <span class="alert-icon">
-                                            <i class="anticon anticon-close-o"></i>
-                                        </span>
-                                            <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>
-                                        </div>
-                                    </div>
+                                    <div id="commentAlert"></div>
+                                    <?php if (in_array($authRole,$vehicleCommentRoles)){?>
                                     <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity">
                                         Novi unos
                                     </button>
+                                    <?php }?>
                                     <table id="vehicle-comment-table" class="table">
                                         <thead>
                                         <tr>
@@ -118,9 +106,11 @@ $current_page= 1;
                 </div>
             </div>
 
+            <?php if (in_array($authRole,$vehicleCommentRoles)){?>
             <div class="modal fade" id="newIrregularity">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
+
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Novi unos</h5>
                             <button type="button" class="close" data-dismiss="modal">
@@ -128,31 +118,29 @@ $current_page= 1;
                             </button>
                         </div>
 
+                        <div id="vehicleCommentError"></div>
                         <div class="modal-body">
                             <div class="input-group m-b-10">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Komentar</span>
                                 </div>
-                                <textarea class="form-control" aria-label="With textarea"></textarea>
+                                <textarea class="form-control" id="vehicleComment"></textarea>
                             </div>
-                            <div class="input-group mb-3">
+                            <div class="input-group m-b-10">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon3">Status</span>
+                                    <span class="input-group-text">Ocjena (1-5)</span>
                                 </div>
-                                <select class="form-control" name="">
-                                    <option value=""></option>
-                                    <option value="">Ispravno</option>
-                                    <option value="">Neispravno</option>
-                                </select>
+                                <input type="number" class="form-control" id="vehicleRate" min="1" max="5">
                             </div>
                          </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                            <button type="button" class="btn btn-primary">Sačuvaj</button>
+                            <button type="button" class="btn btn-primary" id="addVehicleComment">Sačuvaj</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php }?>
             <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>

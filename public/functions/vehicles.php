@@ -45,8 +45,13 @@ if(isset($_GET) && isset($_GET['getSingleVehicle']) && isset($_GET['vehicleId'])
     return $vehicle_sender->getSingleVehicle($_GET['vehicleId']);
 }
 if(isset($_GET) && isset($_GET['getSingleVehicleComment']) && isset($_GET['getSingleVehicleComment'])){
+
     $limit = isset($_GET['per_page']) ? $_GET['per_page'] : null;
     $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
 
     return $vehicle_sender->getSingleVehicleComment($_GET['vehicleId'],$limit,$page);
 }
+if(isset($_POST) && isset($_POST['addVehicleComment'])){
+    return $vehicle_sender->addVehicleComment($_POST['data']);
+}
+

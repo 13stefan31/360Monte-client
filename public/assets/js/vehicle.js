@@ -17,6 +17,7 @@ $(document).ready(function() {
                 $('.vehicleNumberOfSeats').html(data.numberOfSeats);
                 $('.vehicleRegistrationNumber').html(data.registrationNumber);
                 $('.vehicleYear').html(data.year);
+                $('.vehicleId').val(data.id);
 
                 if (data.readyForDrive==true){
                     $('.vehicleReadyForDrive').html('<span class="badge badge-pill badge-cyan font-size-13">Ispravno</span>');
@@ -35,7 +36,56 @@ $(document).ready(function() {
     var per_page=$('#per_page').val();
     getVehicleComment(current_page,per_page);
 
+    $('#addVehicleComment').click(function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+        vehicleId= $('.vehicleId').val();
+        $.ajax({
+            url: '/../../functions/vehicles.php',
+            type:'post',
+            data:  {
+                'addVehicleComment': 1,
+                'data':{
+                    'vehicleId': vehicleId,
+                    'comment': $('#vehicleComment').val(),
+                    'mark': $('#vehicleRate').val(),
+                }
+            },
+            success: function(response) {
+                console.log(response)
+                var dataParse = JSON.parse(response);
+                if (dataParse.error) {
+                    $('#vehicleCommentError').html(handleErrors(dataParse.error));
+                } else {
+                    $('#commentAlert').html(createSuccessMessage('Uspješno ste dodali novi komentar'));
+                    var data = dataParse.data.data;
 
+
+                    var newRow = '<tr id="'+data.id+'"><td>' + data.user.name + '</td><td>' + data.comment + '</td>' +
+                        '<td>' + data.mark+ '</td><td>';
+                    $('#vehicle-comment-table tbody').prepend(newRow);
+                    $('#newIrregularity').modal('hide');
+
+                }
+            },  error: function(jqXHR) {
+                var error = generateAjaxError(jqXHR);
+                $('#allocationPersonAddError').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
+        });
+
+    });
+    $('#vehicleRate').on('input', function() {
+        var value = $(this).val();
+        if (value < 1 || value > 5 || isNaN(value)) {
+            $(this).val('');
+        }
+    });
 });
 
 function getVehicleComment(current_page,per_page){
