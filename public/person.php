@@ -1,6 +1,8 @@
 <?php require 'auth.php';
-if (!in_array($authRole,$personAllowedRoles)){
+if (!in_array($authRole,$personAllowedRoles) && $_GET['id'] != $authUser->id){
+
     header('HTTP/1.0 403 Forbidden');
+    header('Location: /403');
     exit();
 }
 ?>
@@ -41,6 +43,9 @@ if (!in_array($authRole,$personAllowedRoles)){
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Izmijeni podatke</a>
                                 </li>
+                                <?php }?>
+
+                                <?php if ($_GET['id'] == $authUser->id){?>
                                 <li class="nav-item">
                                     <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">Izmijeni lozinku</a>
                                 </li>
@@ -103,7 +108,10 @@ if (!in_array($authRole,$personAllowedRoles)){
                                         </form>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <?php }?>
+                                <?php if ($_GET['id'] == $authUser->id){?>
+                                    <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="profile-tab">
                                     <div id="alertChangeUserPassword"></div>
                                     <div class="card">
                                         <form id="updatePasswordForm">

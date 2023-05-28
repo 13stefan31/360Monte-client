@@ -41,8 +41,10 @@
                     <div class="p-h-20 p-b-15 m-b-10 border-bottom">
                         <div class="d-flex m-r-50">
                             <div class="m-l-10">
+                                <a   href="/zaposleni/<?=$authUser->id?>"  >
                                 <p class="m-b-0 text-dark font-weight-semibold loggedUserName"><?=$authUser->name?></p>
                                 <p class="m-b-0 opacity-07 loggedUserEmail"><?=$authUser->email?></p>
+                                </a>
 <!--                                <p class="m-b-0 opacity-07 loggedUserRole">--><?php //=$authUser->roleId?><!--</p>-->
                             </div>
                         </div>

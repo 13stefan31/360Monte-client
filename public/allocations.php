@@ -2,6 +2,8 @@
 require 'auth.php';
 if (!in_array($authRole,$allocationAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
+    header('Location: /pocetna');
+
     exit();
 }
 if(isset($_SESSION['allocation_filter_vehicle']) ||

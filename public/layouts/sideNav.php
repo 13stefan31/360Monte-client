@@ -13,30 +13,39 @@
                     <span class="arrow"> <i class="arrow-icon"></i> </span>
                 </a>
                 <ul class="dropdown-menu">
+
+                    <?php if (in_array($authRole,$personAllowedRoles)) { ?>
                     <li>
                         <a href="/zaposleni">
                             <span class="icon-holder">
                          <i class="anticon anticon-user-add"></i>
                          </span>  Zaposleni</a>
                     </li>
+                    <?php }?>
+
+                    <?php if (in_array($authRole,$vehiclesAllowedRoles)){?>
                     <li>
                         <a href="/vozila">
                             <span class="icon-holder">
                          <i class="anticon anticon-car"></i>
                          </span> Vozila</a>
                     </li>
+                    <?php }?>
+                    <?php if (in_array($authRole,$allocationAllowedRoles)){?>
                     <li>
                         <a href="/alokacije">
                              <span class="icon-holder">
                          <i class="anticon anticon-deployment-unit"></i>
                          </span> Alokacije</a>
                     </li>
+                    <?php }?>
                     <li>
                         <a href="/ture">
                              <span class="icon-holder">
                          <i class="anticon anticon-deployment-unit"></i>
                          </span>Ture</a>
                     </li>
+                    <?php if (in_array($authRole,$surveysAllowedRoles)){?>
                     <li>
                         <a href="/surveys.php">
                              <span class="icon-holder">
@@ -44,17 +53,12 @@
                          </span>
                             Ankete</a>
                     </li>
+
+                    <?php }?>
                 </ul>
             </li>
             <hr/>
-            <li class="nav-item">
-                <a class="dropdown-toggle" href="javascript:void(0);">
-                    <span class="icon-holder">
-                        <i class="anticon anticon-logout"></i>
-                    </span>
-                    <span class="title">Odjavi se</span>
-                </a>
-            </li>
+
         </ul>
     </div>
 </div>
