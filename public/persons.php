@@ -102,7 +102,7 @@ $current_page= 1;
                     </div>
                 </div>
 
-                <?php if (in_array($authRole,$personEdit)){?>
+                <?php if (in_array($authRole,$personAllowedRoles)){?>
                 <div class="modal fade" id="newPerson">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
