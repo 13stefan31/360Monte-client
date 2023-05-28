@@ -22,6 +22,8 @@ require_once(dirname(__FILE__) . "/../source/Allocation/Model/Allocation.php");
 require_once(dirname(__FILE__) . "/../source/Tour/Sender/Service/TourSender.php");
 require_once(dirname(__FILE__) . "/../source/Tour/Model/Tour.php");
 
+require_once(dirname(__FILE__) . "/../source/Survey/Sender/Service/SurveySender.php");
+require_once(dirname(__FILE__) . "/../source/Survey/Model/Survey.php");
 
 require_once(dirname(__FILE__) . "/../source/Notification/Sender/Service/NotificationSender.php");
 require_once(dirname(__FILE__) . "/../source/Notification/Model/Notification.php");
@@ -40,6 +42,9 @@ $allocation = Allocation::getInstance();
 
 $tour_sender = TourSender::getInstance();
 $tour = Tour::getInstance();
+
+$survey_sender = SurveySender::getInstance();
+$survey = Survey::getInstance();
 
 
 $notification_sender = NotificationSender::getInstance();

@@ -53,7 +53,7 @@
                         <?php }?>
                         <?php if (in_array($authRole,$surveysAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
-                            <a href="">
+                            <a href="/ankete">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="media align-items-center">

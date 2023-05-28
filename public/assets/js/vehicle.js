@@ -54,7 +54,6 @@ $(document).ready(function() {
                 }
             },
             success: function(response) {
-                console.log(response)
                 var dataParse = JSON.parse(response);
                 if (dataParse.error) {
                     $('#vehicleCommentError').html(handleErrors(dataParse.error));
@@ -71,7 +70,7 @@ $(document).ready(function() {
                 }
             },  error: function(jqXHR) {
                 var error = generateAjaxError(jqXHR);
-                $('#allocationPersonAddError').html(createErrorMessage(error));
+                $('#vehicleCommentError').html(createErrorMessage(error));
             },
             complete:function (){
                 $btn.removeClass('is-loading').prop('disabled', false);

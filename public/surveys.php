@@ -29,28 +29,10 @@ if (!in_array($authRole,$surveysAllowedRoles)){
                 </div>
                 <div class="card">
                     <div class="card-body">
-<!--                        <div class="alert alert-success">-->
-<!--                            <div class="d-flex align-items-center justify-content-start">-->
-<!--                                        <span class="alert-icon">-->
-<!--                                            <i class="anticon anticon-check-o"></i>-->
-<!--                                        </span>-->
-<!--                                <span>Uspješno ste unijeli novog zaposlenog</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="alert alert-danger">-->
-<!--                            <div class="d-flex align-items-center justify-content-start">-->
-<!--                                        <span class="alert-icon">-->
-<!--                                            <i class="anticon anticon-close-o"></i>-->
-<!--                                        </span>-->
-<!--                                <span>Došlo je do greške prilikom unosa, pokušajte ponovo</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div id="surveysError"></div>
                         <div class="m-t-25">
 
-<!--                            <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newPerson">-->
-<!--                                Novi unos-->
-<!--                            </button>-->
-                            <table id="data-table" class="table">
+                            <table id="surveysTable" class="table">
                                 <thead>
                                 <tr>
                                     <th>Komentarisao</th>
@@ -60,12 +42,6 @@ if (!in_array($authRole,$surveysAllowedRoles)){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Marko Markovic</td>
-                                    <td>Kristina Orlandić</td>
-                                    <td>23.12.2022</td>
-                                    <td><a class="btn btn-primary m-r-5" href="survey.php"><i class="anticon anticon-plus"></i>Detalji</a></td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -122,6 +98,8 @@ if (!in_array($authRole,$surveysAllowedRoles)){
 
 
 <?php include ('layouts/scripts.php')?>
+<script src="/assets/js/userAuth.js"></script>
+<script src="/assets/js/survey.js"></script>
 </body>
 
 </html>
