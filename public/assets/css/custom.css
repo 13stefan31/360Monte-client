@@ -74,4 +74,12 @@ p.error {
     .table {
         width: 100% !important;
     }
+    .pop-notification {
+        position: fixed!important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 362px!important;
+    }
+
 }
