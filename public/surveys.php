@@ -4,6 +4,9 @@ if (!in_array($authRole,$surveysAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
     exit();
 }
+
+$itemsPerPage = 10;
+$current_page= 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,8 +38,9 @@ if (!in_array($authRole,$surveysAllowedRoles)){
                             <table id="surveysTable" class="table">
                                 <thead>
                                 <tr>
-                                    <th>Komentarisao</th>
-                                    <th>Koga</th>
+                                    <th>Komentariše</th>
+                                    <th>Tip ankete</th>
+                                    <th>Status</th>
                                     <th>Datum</th>
                                     <th></th>
                                 </tr>
@@ -44,6 +48,9 @@ if (!in_array($authRole,$surveysAllowedRoles)){
                                 <tbody>
                                 </tbody>
                             </table>
+                            <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
+                            <input hidden="" id="current_page" value="<?=$current_page?>">
+                            <div id="pagination"></div>
                         </div>
                     </div>
                 </div>

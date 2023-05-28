@@ -51,3 +51,6 @@ p.error {
      font-weight: unset!important;
      font-size: unset!important;
 }
+.card-header.employeeSurveyName {
+    background: #ecf0f1;
+}

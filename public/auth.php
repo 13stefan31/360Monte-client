@@ -35,8 +35,7 @@ $allocationAllowedRoles = array(
     P_TOUR_GUIDE_ROLE_ID,
     P_DRIVER_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
-    P_GENERAL_MANAGER_ROLE_ID,
-    P_HR_MANAGER_ROLE_ID
+    P_GENERAL_MANAGER_ROLE_ID
 );
 $vehiclesAllowedRoles = array(
     P_ADMIN_ROLE_ID,

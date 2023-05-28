@@ -1,46 +1,103 @@
 $(document).ready(function() {
     var url = window.location.href;
-    var surveyId = url.substring(url.lastIndexOf('/') + 1);
-    $('#surveysTable tbody').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
+    var token = url.substring(url.lastIndexOf('/') + 1);
+    $('#surveyData').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
     $.ajax({
         url: '/../../functions/survey.php',
         type:'GET',
         data:{
-            getSingleSurveys:1,
-            surveyId:surveyId
+            getSingleSurvey:1,
+            token:token
         },
         dataType: 'json',
         success: function(response) {
-            $('#surveysTable tbody').empty();
+            $('#surveyData').empty();
             if (response.error) {
                 $('#surveysError').html(handleErrors(response.error));
             } else {
+                console.log(response)
                 var data = response.data.data;
-                console.log(data)
-                // data.forEach(function(item) {
-                //     console.log(item)
-                //     var surveyItem='';
-                //     if (Array.isArray(item.surveyData)) {
-                //         item.surveyData.forEach(function (i, index) {
-                //             surveyItem += i.username;
-                //             if (index < item.surveyData.length - 1) {
-                //                 surveyItem += ', ';
-                //             }
-                //         });
-                //     } else {
-                //         surveyItem = item.surveyData.brand + ' ' + item.surveyData.model + ' '+item.surveyData.registrationNumber;
-                //     }
-                //     var newRow =
-                //         '<tr id="'+item.id+'">' +
-                //         '<td>' + item.user.name + '</td>' +
-                //         '<td>'+surveyItem+'</td>' +
-                //         '<td>' + item.createdAt +'</td>' +
-                //         '<td><a class="btn btn-primary m-r-5 " href="/anketa/'+item.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td>' +
-                //         '</tr>';
-                //     $('#surveysTable tbody').append(newRow);
-                //
-                // });
 
+                var surveyTypeP='';
+                var surveyTypeS='';
+                var emptySurvey='';
+                if (data.type==1) {
+                    surveyTypeP='Saradnici';
+                    surveyTypeS='Saradnik';
+                    emptySurvey='Na komentar i ocjenu čekaju sledeći saradnici:';
+                //
+                // } else if (data.type==2) {
+                //     surveyTypeP=surveyTypeS='Vozilo';
+                //     emptySurvey='Na komentar i ocjenu čeka sledeće vozilo:';
+                }
+
+                $('.surveyPersonName').html(data.user.name)
+                $('.surveyType').html(surveyTypeP)
+                if (data.status==0){
+                    if (data.type==1) {
+                        var wait = '';
+                        for (var i = 0; i < data.surveyData.length; i++) {
+                            wait += data.surveyData[i].username;
+                            console.log(data.surveyData[i].username)
+                            if (i < data.surveyData.length - 1) {
+                                wait += ', ';
+                            }
+                        }
+                    }
+                    // else if (data.type==2) {
+                    //     surveyTypeP=surveyTypeS='Vozilo';
+                    //     emptySurvey='Na komentar i ocjenu čeka sledeće vozilo:';
+                    // }
+
+                    var newRow =
+                        '  <div class="card">' +
+                        '    <div class="card-header employeeSurveyName">' +
+                        '      <h4 class="card-title ">Anketa još uvijek nije popunjena. '+emptySurvey+'</h4>' +
+                        '    </div>' +
+                        '    <div class="card-body">' +
+                        '      <span>'+wait+'</span>' +
+                        '    </div>' +
+                        '    <br>' +
+                        '  </div>';
+                    $('.surveyData').append(newRow);
+
+                    $('.surveyTime').html('-')
+                }else{
+                    data.result.forEach(function(item) {
+                        console.log(item)
+                        $('.surveyTime').html(item.createdAt)
+                        var rating = item.rating;
+
+                        var starRatingHTML = '<div class="star-rating m-t-5">';
+
+                        for (var i = 1; i <= 5; i++) {
+                            if (i <= rating) {
+                                starRatingHTML += '<input type="radio" id="star3-' + i + '" name="rating-3" value="' + i + '" checked disabled/><label for="star3-' + i + '" title="' + i + ' star"></label>';
+                            } else {
+                                starRatingHTML += '<input type="radio" id="star3-' + i + '" name="rating-3" value="' + i + '" disabled/><label for="star3-' + i + '" title="' + i + ' star"></label>';
+                            }
+                        }
+
+                        starRatingHTML += '</div>';
+
+                        var newRow =
+                            '  <div class="card">' +
+                            '    <div class="card-header employeeSurveyName">' +
+                            '      <h4 class="card-title ">'+surveyTypeS+': <span> '+item.target.name+'</span></h4>' +
+                            '    </div>' +
+                            '    <div class="card-header">' +
+                            '      <h4 class="card-title">Ocjena:  <span>'+starRatingHTML+'</span></h4>' +
+                            '    </div>' +
+                            '    <div class="card-header">' +
+                            '      <h4 class="card-title">Komentar</h4>' +
+                            '      <span>'+item.comment+'</span>' +
+                            '    </div>' +
+                            '    <br>' +
+                            '  </div>';
+                        $('.surveyData').append(newRow);
+
+                    });
+                }
             }
         }  ,
         error: function(jqXHR) {

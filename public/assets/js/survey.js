@@ -1,10 +1,19 @@
 $(document).ready(function() {
+    var current_page=$('#current_page').val();
+    var per_page=$('#per_page').val();
+    getAllSurveys(current_page,per_page);
+
+});
+
+function getAllSurveys(current_page,per_page){
     $('#surveysTable tbody').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
     $.ajax({
         url: '/../../functions/survey.php',
         type:'GET',
         data:{
-            getAllSurveys:1
+            getAllSurveys:1,
+            per_page:per_page,
+            current_page:current_page
         },
         dataType: 'json',
         success: function(response) {
@@ -12,31 +21,38 @@ $(document).ready(function() {
             if (response.error) {
                 $('#surveysError').html(handleErrors(response.error));
             } else {
+                $('#surveysTable tbody').empty();
                 var data = response.data.data;
-
                 data.forEach(function(item) {
                     console.log(item)
                     var surveyItem='';
-                    if (Array.isArray(item.surveyData)) {
-                        item.surveyData.forEach(function (i, index) {
-                            surveyItem += i.username;
-                            if (index < item.surveyData.length - 1) {
-                                surveyItem += ', ';
-                            }
-                        });
-                    } else {
-                        surveyItem = item.surveyData.brand + ' ' + item.surveyData.model + ' '+item.surveyData.registrationNumber;
-                    }
-                    var newRow =
-                        '<tr id="'+item.id+'">' +
-                        '<td>' + item.user.name + '</td>' +
-                        '<td>'+surveyItem+'</td>' +
-                        '<td>' + item.createdAt +'</td>' +
-                        '<td><a class="btn btn-primary m-r-5 " href="/anketa/'+item.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td>' +
-                        '</tr>';
-                    $('#surveysTable tbody').append(newRow);
+                    var filled='';
 
+                    if (item.type==1) {
+                        surveyItem='Saradnici';
+                        if (item.status==1){
+                            filled='Popunjena';
+                        }else if(item.status==0){
+                            filled='Nije popunjena';
+
+                        }
+                        var newRow =
+                            '<tr id="'+item.id+'">' +
+                            '<td>' + item.user.name + '</td>' +
+                            '<td>'+surveyItem+'</td>' +
+                            '<td>' +filled +'</td>' +
+                            '<td>' + item.createdAt +'</td>' +
+                            '<td><a class="btn btn-primary m-r-5 " href="/anketa/'+item.token+'"   ><i class="anticon anticon-plus"></i>Više detalja</a></td>' +
+                            '</tr>';
+                        $('#surveysTable tbody').append(newRow);
+                    }
+                    // else if (item.type==2) {
+                    //     surveyItem='Vozilo -' +item.surveyData.brand + ' ' + item.surveyData.model + ' '+item.surveyData.registrationNumber ;
+                    // }
                 });
+                var meta = response.data.meta;
+                var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);
+                $('#pagination').html(paginationHTML);
 
             }
         }  ,
@@ -45,8 +61,7 @@ $(document).ready(function() {
             $('#surveysError').html(createWarningMessage(error));
         }
     });
-
-});
+}
 $(document).on('click', '#saveSurveyResults', function(e) {
     e.preventDefault();
     var $btn = $(this);
@@ -125,3 +140,53 @@ $(document).on('click', '#saveSurveyResults', function(e) {
 
 
 });
+
+function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+    var startPage, endPage;
+
+    if (totalPages <= 10) {
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        if (currentPage <= 6) {
+            startPage = 1;
+            endPage = 10;
+        } else if (currentPage + 4 >= totalPages) {
+            startPage = totalPages - 9;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
+        }
+    }
+
+    var paginationHTML = '<nav aria-label="Page navigation example"><ul class="pagination">';
+    if (currentPage === 1) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" tabindex="-1">Prethodna</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage-1)+')" tabindex="-1">Prethodna</a></li>';
+    }
+    for (var i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationHTML += '<li class="page-item active"><a class="page-link" href="javascript:void(0)">' + i + '</a></li>';
+        } else {
+            paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+i+')">' + i + '</a></li>';
+        }
+    }
+    if (currentPage === totalPages) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Sledeća</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage+1)+')">Sledeća</a></li>';
+    }
+    paginationHTML += '</ul></nav>';
+
+    return paginationHTML;
+}
+function handlePageClick(pageNumber) {
+    $('#current_page').val(pageNumber);
+    var per_page=$('#per_page').val();
+    getAllSurveys(pageNumber,per_page);
+
+}
+
