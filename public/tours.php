@@ -31,8 +31,8 @@ require 'auth.php';
                             <table id="tours-table" class="table">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Naziv</th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>

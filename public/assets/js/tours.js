@@ -17,7 +17,7 @@ function getTours(filters){
                 $('#tours-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#tours-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td></tr>');
+                    $('#tours-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.id + '</td><td>' + row.name + '</td></tr>');
                 });
                 $('#tours-table').DataTable();
             }
