@@ -43,7 +43,7 @@
                             <div class="m-l-10">
                                 <p class="m-b-0 text-dark font-weight-semibold loggedUserName"><?=$authUser->name?></p>
                                 <p class="m-b-0 opacity-07 loggedUserEmail"><?=$authUser->email?></p>
-                                <p class="m-b-0 opacity-07 loggedUserRole"><?=$authUser->roleId?></p>
+<!--                                <p class="m-b-0 opacity-07 loggedUserRole">--><?php //=$authUser->roleId?><!--</p>-->
                             </div>
                         </div>
                     </div>

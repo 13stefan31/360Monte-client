@@ -46,7 +46,7 @@ $current_page= 1;
                         <div class="card-body">
                             <div id="alert"></div>
                             <div class="m-t-25">
-                                <?php if (in_array($authRole,$personEdit)){?>
+                                <?php if (in_array($authRole,$personAllowedRoles)){?>
                                     <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newPersonButton" data-target="#newPerson">
                                         Novi unos
                                     </button>

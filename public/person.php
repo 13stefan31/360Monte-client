@@ -37,7 +37,7 @@ if (!in_array($authRole,$personAllowedRoles)){
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Opšte informacije</a>
                                 </li>
 
-                                <?php if (in_array($authRole,$personEdit)){?>
+                                <?php if (in_array($authRole,$personAllowedRoles)){?>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Izmijeni podatke</a>
                                 </li>
@@ -72,7 +72,7 @@ if (!in_array($authRole,$personAllowedRoles)){
                                     </div>
                                 </div>
 
-                                <?php if (in_array($authRole,$personEdit)){?>
+                                <?php if (in_array($authRole,$personAllowedRoles)){?>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div id="alertSingleUser"></div>
                                     <div class="card">
