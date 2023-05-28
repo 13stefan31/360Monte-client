@@ -17,7 +17,8 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
     $roleIdFilters = '';
 
 }
-
+$itemsPerPage = 10;
+$current_page= 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,17 +81,22 @@ if(isset($_SESSION['person_filter_name']) || isset($_SESSION['person_filter_rola
                                 </div>
                                 <div id="alertAddUser"></div>
                                 <div id="alertDeleteUser"></div>
-                                <table id="persons-table" class="table">
-                                    <thead>
+                                <div class="table-container">
+                                    <table id="persons-table" class="table">
+                                        <thead>
                                         <tr>
                                             <th>Ime i prezime</th>
                                             <th>Email</th>
                                             <th>Username</th>
                                             <th></th>
                                         </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
+                                    <input hidden="" id="current_page" value="<?=$current_page?>">
+                                    <div id="pagination"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

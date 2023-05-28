@@ -54,3 +54,17 @@ p.error {
 .card-header.employeeSurveyName {
     background: #ecf0f1;
 }
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.table th,
+.table td {
+    white-space: nowrap;
+}

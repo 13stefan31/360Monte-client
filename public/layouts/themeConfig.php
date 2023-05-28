@@ -34,19 +34,19 @@
                     </div>
                 </div>
                 <hr>
-                <div>
-                    <h5 class="m-b-0">Navigacioni meni</h5>
-                    <p>Tamna tema</p>
-                    <div class="switch d-inline">
-                        <input type="checkbox" name="side-nav-theme-toogle" id="side-nav-theme-toogle">
-                        <label for="side-nav-theme-toogle"></label>
-                    </div>
-                    <p>Zatvori navigacioni meni</p>
-                    <div class="switch d-inline">
-                        <input type="checkbox" name="side-nav-fold-toogle" id="side-nav-fold-toogle">
-                        <label for="side-nav-fold-toogle"></label>
-                    </div>
-                </div>
+<!--                <div>-->
+<!--                    <h5 class="m-b-0">Navigacioni meni</h5>-->
+<!--                    <p>Tamna tema</p>-->
+<!--                    <div class="switch d-inline">-->
+<!--                        <input type="checkbox" name="side-nav-theme-toogle" id="side-nav-theme-toogle">-->
+<!--                        <label for="side-nav-theme-toogle"></label>-->
+<!--                    </div>-->
+<!--                    <p>Zatvori navigacioni meni</p>-->
+<!--                    <div class="switch d-inline">-->
+<!--                        <input type="checkbox" name="side-nav-fold-toogle" id="side-nav-fold-toogle">-->
+<!--                        <label for="side-nav-fold-toogle"></label>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>

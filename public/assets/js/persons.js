@@ -1,12 +1,14 @@
 $(document).ready(function() {
     var savedFilters = localStorage.getItem('personFilters');
+    var current_page=$('#current_page').val();
+    var per_page=$('#per_page').val();
     if (savedFilters) {
         savedFilters = JSON.parse(savedFilters);
-        getUsers(savedFilters);
+        getUsers(savedFilters,current_page,per_page);
         var selectedValue=$('#person_filter_rola_id').val();
         getRoles('rolaFilterId',selectedValue);
     } else {
-        getUsers('');
+        getUsers('',current_page,per_page);
     }
 
     $('#showPersonsFilter').click(function(e) {
@@ -67,7 +69,8 @@ $(document).ready(function() {
             }
     });
     $('#clearFilters').on('click', function() {
-        getUsers('');
+        var per_page=$('#per_page').val();
+        getUsers('',1,per_page);
         localStorage.removeItem('personFilters');
         $('#personFilterName').val('');
         $('#rolaFilterId').val('');
@@ -123,12 +126,16 @@ $(document).on('click', '#persosnsFilter', function() {
     };
 
     localStorage.setItem('personFilters', JSON.stringify(filters));
-    getUsers(filters);
+    var current_page=1;
+    var per_page=$('#per_page').val();
+    getUsers(filters,current_page,per_page);
     $('#clearFilters').show();
 });
-function getUsers(filters){
+function getUsers(filters,current_page,per_page){
     var data = {
-        getAllPersons: 1
+        getAllPersons: 1,
+        per_page:per_page,
+        current_page:current_page
     };
 
     if (filters !== '') {
@@ -152,7 +159,9 @@ function getUsers(filters){
                     $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                         '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
-                $('#persons-table').DataTable();
+                var meta = response.data.meta;
+                var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);
+                $('#pagination').html(paginationHTML);
             }
         }  ,
         error: function(jqXHR) {
@@ -209,3 +218,57 @@ function validateNewUser(){
         return false;
     }
 };
+function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+    var startPage, endPage;
+
+    if (totalPages <= 10) {
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        if (currentPage <= 6) {
+            startPage = 1;
+            endPage = 10;
+        } else if (currentPage + 4 >= totalPages) {
+            startPage = totalPages - 9;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
+        }
+    }
+
+    var paginationHTML = '<nav aria-label="Page navigation example"><ul class="pagination">';
+    if (currentPage === 1) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" tabindex="-1">Prethodna</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage-1)+')" tabindex="-1">Prethodna</a></li>';
+    }
+    for (var i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationHTML += '<li class="page-item active"><a class="page-link" href="javascript:void(0)">' + i + '</a></li>';
+        } else {
+            paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+i+')">' + i + '</a></li>';
+        }
+    }
+    if (currentPage === totalPages) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Sledeća</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick('+(currentPage+1)+')">Sledeća</a></li>';
+    }
+    paginationHTML += '</ul></nav>';
+
+    return paginationHTML;
+}
+function handlePageClick(pageNumber) {
+    $('#current_page').val(pageNumber);
+    var per_page=$('#per_page').val();
+    var savedFilters = localStorage.getItem('personFilters');
+    if (savedFilters) {
+        savedFilters = JSON.parse(savedFilters);
+        getUsers(savedFilters,pageNumber,per_page);
+    } else {
+        getUsers('',pageNumber,per_page);
+    }
+
+}

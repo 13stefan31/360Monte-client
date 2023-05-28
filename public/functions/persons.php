@@ -14,7 +14,11 @@ if(isset($_GET) && isset($_GET['getAllPersons'])){
     }else{
         $_SESSION['person_filter_rola_id'] = null;
     }
-    return $person_sender->getAllPersons($name, $rolaId);
+    $limit = isset($_GET['per_page']) ? $_GET['per_page'] : null;
+    $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
+
+
+    return $person_sender->getAllPersons($name, $rolaId,$limit,$page);
 }
 
 if(isset($_POST) && isset($_POST['addNewPerson'])){

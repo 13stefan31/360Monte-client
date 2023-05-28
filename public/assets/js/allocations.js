@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var savedFilters = localStorage.getItem('allocationsFilters');
     var current_page=$('#current_page').val();
-        var per_page=$('#per_page').val();
+    var per_page=$('#per_page').val();
     if (savedFilters) {
         savedFilters = JSON.parse(savedFilters);
         getAllocations(savedFilters,current_page,per_page);
