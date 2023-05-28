@@ -55,16 +55,23 @@ p.error {
     background: #ecf0f1;
 }
 
-.table-container {
-    overflow-x: auto;
-}
-
+/* Default styles for the table */
 .table {
-    width: 100%;
-    table-layout: fixed;
+    /*table-layout: fixed;*/
 }
 
 .table th,
 .table td {
     white-space: nowrap;
+}
+
+/* Styles for mobile devices */
+@media (max-width: 767px) {
+    .table-container {
+        overflow-x: auto!important;
+    }
+
+    .table {
+        width: 100% !important;
+    }
 }

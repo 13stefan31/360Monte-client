@@ -108,6 +108,7 @@ $current_page= 1;
                                         </div>
                                     </div>
                                 </div>
+                               <div class="table-container">
                                 <table id="allocations-table" class="table">
                                     <thead>
                                         <tr>
@@ -122,9 +123,10 @@ $current_page= 1;
                                     <tbody>
                                     </tbody>
                                 </table>
-                               <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
-                               <input hidden="" id="current_page" value="<?=$current_page?>">
-                               <div id="pagination"></div>
+                                   <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
+                                   <input hidden="" id="current_page" value="<?=$current_page?>">
+                                   <div id="pagination"></div>
+                               </div>
                             </div>
                         </div>
                     </div>
