@@ -13,7 +13,7 @@ include('layouts/head.php') ?>
                         <div class="card shadow-lg">
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between m-b-30">
-                                    <img class="img-fluid" alt="" src="/assets/images/logo/logo.png">
+                                   <a href="/pocetna"> <img class="img-fluid" alt="" src="/assets/images/logo/logo.png"></a>
                                 </div>
 
                                     <div id="surveyError"></div>
