@@ -473,40 +473,52 @@ $(document).on('click', '.stuff-delete', function() {
     var allocationStuffId = $(this).data('allocationstuffid');
     var allocationStuffName = $(this).data('allocationstuffname');
     var allocationId = $(this).data('allocationid');
-   if (confirm('Da li ste sigutni da želite da uklonite ' + allocationStuffName + ' ?')) {
-       var $btn = $(this);
-       $btn.addClass('is-loading').prop('disabled', true);
-       $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-       // var validated = validateUpdateUser();
-       $.ajax({
-            url: '/../../functions/allocation.php',
-            type: 'delete',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                  deleteAllocation: 1
-                , allocationStuffId: allocationStuffId
-                , allocationId: allocationId
-            }),
-            success: function(response) {
-                var data = JSON.parse(response);
-                if (data.error){
-                    $('#allocationAlert').html(createWarningMessage(data.error));
-                }else{
-                    $('#'+data.data.data.id).remove();
-                    $('#allocationAlert').html(createSuccessMessage('Uspješno ste uklonili osobu '+data.data.data.employee.name));
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
+    Swal.fire({
+        title: 'Da li ste sigutni da želite da uklonite ' + allocationStuffName + ' ?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Ukloni',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
 
-                var error = generateAjaxError(jqXHR);
-                $('#allocationAlert').html(createErrorMessage(error));
-            },
-           complete:function (){
-               $btn.removeClass('is-loading').prop('disabled', false);
-               $btn.find('.anticon-loading').remove();
-           }
-        });
-    }
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+            // var validated = validateUpdateUser();
+            $.ajax({
+                url: '/../../functions/allocation.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deleteAllocation: 1
+                    , allocationStuffId: allocationStuffId
+                    , allocationId: allocationId
+                }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        // $('#allocationAlert').html(createWarningMessage(data.error));
+                        Swal.fire( data.error,'','error');
+                    }else{
+                        $('#'+data.data.data.id).remove();
+                        Swal.fire('Uspješno ste uklonili osobu '+data.data.data.employee.name,'','success');
+                        // $('#allocationAlert').html(createSuccessMessage('Uspješno ste uklonili osobu '+data.data.data.employee.name));
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    var error = generateAjaxError(jqXHR);
+                    // $('#allocationAlert').html(createErrorMessage(error));
+                    Swal.fire( error,'','error');
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
+                }
+            });
+        } else if (result.isDenied) {   }
+    })
 });
 $(document).on('click', '.stuff-edit', function() {
     var stuffId = $(this).data('stuffid');

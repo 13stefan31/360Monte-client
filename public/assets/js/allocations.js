@@ -108,40 +108,57 @@ $(document).ready(function() {
 
 $(document).on('click', '.allocation-delete', function() {
     var allocationId = $(this).data('allocationid');
-    if (confirm('Da li ste sigurni da želite da obrišete alokaciju ? ')) {
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-        $.ajax({
-            url: '/../../functions/allocations.php',
-            type: 'delete',
-            contentType: 'application/json',
-            data: JSON.stringify({ deleteAllocation: 1, allocationId: allocationId }),
-            success: function(response) {
-                var data = JSON.parse(response);
-                if (data.error){
-                    $('#alertDeleteAllocation').html(handleErrors(data.error));
-                }else{
-                    var id = data.data.data.id;
-                    var datum = data.data.data.allocationDate;
-                    var vehicle = data.data.data.vehicle.brand + ' ' +data.data.data.vehicle.model ;
-                    var table = $('#allocation-table').DataTable();
-                    var rowRemove = table.row('#'+allocationId);
-                    rowRemove.remove().draw();
-                    $('#alertDeleteAllocation').html(createSuccessMessage('Uspješno ste obrisali alokaciju za datum ' +datum + ' i vozilo ' +vehicle ));
-                }
+    Swal.fire({
+        title: 'Da li ste sigurni da želite da obrišete alokaciju ?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Obriši',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
 
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                var error = generateAjaxError(jqXHR);
-                $('#alertDeleteUser').html(createErrorMessage(error));
-            },
-            complete:function (){
-                $btn.removeClass('is-loading').prop('disabled', false);
-                $btn.find('.anticon-loading').remove();
-            }
-        });
-    }
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+            $.ajax({
+                url: '/../../functions/allocations.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({ deleteAllocation: 1, allocationId: allocationId }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        // $('#alertDeleteAllocation').html(handleErrors(data.error));
+                        Swal.fire(data.error,'','error')
+                    }else{
+                        var id = data.data.data.id;
+                        var datum = data.data.data.allocationDate;
+                        var vehicle = data.data.data.vehicle.brand + ' ' +data.data.data.vehicle.model ;
+                        var table = $('#allocation-table').DataTable();
+                        var rowRemove = table.row('#'+allocationId);
+                        // rowRemove.remove().draw();
+                        // row.parentNode.removeChild(rowRemove);
+                        var row = document.getElementById(allocationId);
+                        row.parentNode.removeChild(row);
+                        Swal.fire('Uspješno ste obrisali alokaciju za datum ' +datum + ' i vozilo ' +vehicle ,'','success')
+                        // $('#alertDeleteAllocation').html(createSuccessMessage('Uspješno ste obrisali alokaciju za datum ' +datum + ' i vozilo ' +vehicle ));
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var error = generateAjaxError(jqXHR);
+                    // $('#alertDeleteUser').html(createErrorMessage(error));
+                    Swal.fire(error,'','error')
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
+                }
+            });
+
+        } else if (result.isDenied) {   }
+    })
+
 
 
 });

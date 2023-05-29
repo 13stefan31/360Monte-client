@@ -79,42 +79,56 @@ $(document).ready(function() {
 });
 $(document).on('click', '.user-delete', function() {
     var userId = $(this).data('userid');
-    if (confirm('Da li ste sigurni da želite da obrišete korisnika?')) {
-        var $btn = $(this);
-        $btn.addClass('is-loading').prop('disabled', true);
-        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+    Swal.fire({
+        title: 'Da li ste sigurni da želite da obrišete korisnika?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Obriši',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
 
-        $.ajax({
-            url: '/../../functions/persons.php',
-            type: 'delete',
-            contentType: 'application/json',
-            data: JSON.stringify({ deleteUser: 1, userId: userId }),
-            success: function(response) {
-                var data = JSON.parse(response);
-                if (data.error){
-                    $('#alertDeleteUser').html(handleErrors(data.error));
-                }else{
-                    var id = data.data.data.id;
-                    var name = data.data.data.name;
-                    var table = $('#persons-table').DataTable();
-                    var row = table.row('#'+id);
-                    row.remove().draw();
+            $.ajax({
+                url: '/../../functions/persons.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({ deleteUser: 1, userId: userId }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        // $('#alertDeleteUser').html(handleErrors(data.error));
+                        Swal.fire(data.error, '', 'error')
+                    }else{
+                        var id = data.data.data.id;
+                        var name = data.data.data.name;
+                        var table = $('#persons-table').DataTable();
+                        var row = table.row('#'+id);
+                        row.remove().draw();
+                        Swal.fire('Uspješno ste obrisali korisnika '+name, '', 'success')
 
-                    $('#alertDeleteUser').html(createSuccessMessage('Uspješno ste obrisali korisnika '+name));
+                        // $('#alertDeleteUser').html(createSuccessMessage('Uspješno ste obrisali korisnika '+name));
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    var error = generateAjaxError(jqXHR);
+                    Swal.fire(error, '', 'error')
+                    // $('#alertDeleteUser').html(createErrorMessage(error));
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
                 }
+            });
 
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
 
-                var error = generateAjaxError(jqXHR);
-                $('#alertDeleteUser').html(createErrorMessage(error));
-            },
-            complete:function (){
-                $btn.removeClass('is-loading').prop('disabled', false);
-                $btn.find('.anticon-loading').remove();
-            }
-        });
-    }
+        } else if (result.isDenied) {   }
+    })
+
 });
 
 $(document).on('click', '#persosnsFilter', function() {
