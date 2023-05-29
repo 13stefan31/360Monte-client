@@ -15,7 +15,7 @@ $(document).ready(function() {
             if (response.error) {
                 $('#surveysError').html(handleErrors(response.error));
             } else {
-                console.log(response)
+                console.log(JSON.stringify(response))
                 var data = response.data.data;
 
                 var surveyTypeP='';
@@ -64,39 +64,64 @@ $(document).ready(function() {
                     $('.surveyTime').html('-')
                 }else{
                     data.result.forEach(function(item) {
-                        console.log(item)
-                        $('.surveyTime').html(item.createdAt)
-                        var rating = item.rating;
+                        console.log(item);
+                        $('.surveyTime').html(item.createdAt);
+                        // var rating = Math.round(item.rating);
+                        //
+                        // var starRatingHTML = '<div class="star-rating m-t-5">';
+                        //
+                        // for (var i = 1; i <= 5; i++) {
+                        //     if (i <= rating) {
+                        //         starRatingHTML +=
+                        //             '<input type="radio " checked /><label class="star-selected" for="star' +
+                        //             item.id +
+                        //             '-' +
+                        //             i +
+                        //             '" title="' +
+                        //             i +
+                        //             ' star"></label>';
+                        //     } else {
+                        //         starRatingHTML +=
+                        //             '<input type="radio"  /><label class="star-unselected" for="star' +
+                        //             item.id +
+                        //             '-' +
+                        //             i +
+                        //             '" title="' +
+                        //             i +
+                        //             ' star"></label>';
+                        //     }
+                        // }
 
-                        var starRatingHTML = '<div class="star-rating m-t-5">';
-
-                        for (var i = 1; i <= 5; i++) {
-                            if (i <= rating) {
-                                starRatingHTML += '<input type="radio" id="star3-' + i + '" name="rating-3" value="' + i + '" checked disabled/><label for="star3-' + i + '" title="' + i + ' star"></label>';
-                            } else {
-                                starRatingHTML += '<input type="radio" id="star3-' + i + '" name="rating-3" value="' + i + '" disabled/><label for="star3-' + i + '" title="' + i + ' star"></label>';
-                            }
-                        }
-
-                        starRatingHTML += '</div>';
+                        // starRatingHTML += '</div>';
 
                         var newRow =
                             '  <div class="card">' +
                             '    <div class="card-header employeeSurveyName">' +
-                            '      <h4 class="card-title ">'+surveyTypeS+': <span> '+item.target.name+'</span></h4>' +
+                            '      <h4 class="card-title ">' +
+                            surveyTypeS +
+                            ': <span> ' +
+                            item.target.name +
+                            '</span></h4>' +
                             '    </div>' +
                             '    <div class="card-header">' +
-                            '      <h4 class="card-title">Ocjena:  <span>'+starRatingHTML+'</span></h4>' +
+                            '      <h4 class="card-title">Ocjena:  <span>' +
+                            item.rating +
+                            '</span></h4>' +
                             '    </div>' +
                             '    <div class="card-header">' +
                             '      <h4 class="card-title">Komentar</h4>' +
-                            '      <span>'+item.comment+'</span>' +
+                            '      <span>' +
+                            item.comment +
+                            '</span>' +
                             '    </div>' +
                             '    <br>' +
                             '  </div>';
-                        $('.surveyData').append(newRow);
 
+                        $('.surveyData').append(newRow);
                     });
+
+
+
                 }
             }
         }  ,

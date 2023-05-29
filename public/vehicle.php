@@ -1,6 +1,7 @@
 <?php require 'auth.php';
 if (!in_array($authRole,$vehiclesAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
+    header('Location: /403');
     exit();
 }
 

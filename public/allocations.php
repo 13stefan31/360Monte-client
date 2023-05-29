@@ -2,7 +2,7 @@
 require 'auth.php';
 if (!in_array($authRole,$allocationAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
-    header('Location: /pocetna');
+    header('Location: /403');
 
     exit();
 }
