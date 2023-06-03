@@ -76,9 +76,6 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                 <li class="list-group-item">
                                                     <p>Broj sjedišta vozila:</p><p class="allocationVehicleSeatsNo m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
-                                                <li class="list-group-item">
-                                                    <p>Komentar:</p><p class="allocationNote m-b-0 text-dark font-weight-semibold"></p>
-                                                </li>
                                             </ul>
 
                                         </div>
@@ -93,6 +90,11 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                     </div>
                                                 </div>
                                                 <?php } ?>
+                                                <div class="card-footer">
+                                                    <div class="alert alert-info">
+                                                        <p>Komentar:</p><p class="allocationNote m-b-0 text-dark font-weight-semibold"></p>
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive">
                                                     <table id="allocation-stuff-tabele" class="table">
                                                         <thead>
