@@ -65,7 +65,6 @@ function getVehicles(filters){
         data:data,
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             if (response.error) {
                 $('#alertVehicles').html(handleErrors(response.error));
             } else {

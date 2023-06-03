@@ -3,16 +3,18 @@ $(document).ready(function() {
     var id = url.substring(url.lastIndexOf('/') + 1);
     var allocationId = id.match(/\d+/)[0];
     $('#allocationId').val(allocationId)
+    // $('#alertGetAllocation').html('<div class="spinner-border mb-2" role="status"><span class="sr-only">Loading...</span></div>');
     $.ajax({
         url: '/../../functions/allocation.php',
         type:'GET',
         data:{getSingleAllocation:1,allocationId:allocationId},
         dataType: 'json',
         success: function(response) {
-            var data = response.data.data;
-            if (data.error) {
-                $('#alertGetAllocation').html(handleErrors(data.error));
+            if (response.error) {
+                $('#alertGetAllocation').html(handleErrors(response.error));
+                $('.allocationDivCard').hide()
             } else {
+                var data = response.data.data;
                 if (data.status==1){
                     var status ='<span class="badge badge-pill badge-cyan  font-size-15">Confirmed</span>';
                 }else  if (data.status==0){
@@ -42,6 +44,9 @@ $(document).ready(function() {
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#alertGetAllocation').html(createWarningMessage(error));
+        },
+        complete:function (){
+            $('#loader-overlay').hide();
         }
     });
 
@@ -55,7 +60,6 @@ $(document).ready(function() {
                 $('#allocationAlert').html(handleErrors(data.error));
             } else {
                 response.data.data.forEach(function(item) {
-                    console.log(item)
                     var adminButton='';
                     var confirmAllocation='';
 
@@ -126,7 +130,6 @@ $(document).ready(function() {
                 success: function (response) {
 
                     var dataParse = JSON.parse(response);
-                    console.log(dataParse)
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
                     } else {
@@ -182,7 +185,6 @@ $(document).ready(function() {
                     }
                 },
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         $('#allocationPersonAddError').html(handleErrors(dataParse.error));
@@ -360,7 +362,7 @@ $(document).on('click', '.update-status', function(e) {
         showDenyButton: true,
         showCancelButton: false,
         confirmButtonText: 'Prihvati',
-        denyButtonText: `Odustani`,
+        denyButtonText: `Zatvori`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -376,7 +378,6 @@ $(document).on('click', '.update-status', function(e) {
 
                 }),
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         alert(dataParse.error);
@@ -562,7 +563,6 @@ function getStuffAllocation(selectId, selectedValue = null){
         dataType: 'json',
         data:{'getAllStuffAdd':1},
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();

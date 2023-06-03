@@ -14,10 +14,9 @@ $(document).ready(function() {
             $('#surveyData').empty();
             if (response.error) {
                 $('#surveysError').html(handleErrors(response.error));
+                $('.surveyDatacard').hide();
             } else {
-                console.log(JSON.stringify(response))
                 var data = response.data.data;
-
                 var surveyTypeP='';
                 var surveyTypeS='';
                 var emptySurvey='';
@@ -38,7 +37,6 @@ $(document).ready(function() {
                         var wait = '';
                         for (var i = 0; i < data.surveyData.length; i++) {
                             wait += data.surveyData[i].username;
-                            console.log(data.surveyData[i].username)
                             if (i < data.surveyData.length - 1) {
                                 wait += ', ';
                             }
@@ -64,7 +62,6 @@ $(document).ready(function() {
                     $('.surveyTime').html('-')
                 }else{
                     data.result.forEach(function(item) {
-                        console.log(item);
                         $('.surveyTime').html(item.createdAt);
                         // var rating = Math.round(item.rating);
                         //
@@ -128,6 +125,9 @@ $(document).ready(function() {
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#surveysError').html(createWarningMessage(error));
+        },
+        complete:function (){
+            $('#loader-overlay').hide();
         }
     });
 
@@ -182,7 +182,6 @@ $(document).on('click', '#saveSurveyResults', function(e) {
             'data':data
         },
         success: function(response) {
-            console.log(response)
             var dataParse = JSON.parse(response);
             if (dataParse.error) {
                 $('#surveyError').html(handleErrors(dataParse.error));

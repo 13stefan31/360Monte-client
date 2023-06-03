@@ -2,7 +2,6 @@ function themeConfigurator() {
 
     $(document).on('change', 'input[name="header-theme"]', ()=>{
         const context = $('input[name="header-theme"]:checked').val();
-        console.log(context)
         $(".app").removeClass (function (index, className) {
             return (className.match (/(^|\s)is-\S+/g) || []).join(' ');
         }).addClass( 'is-'+ context );

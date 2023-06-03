@@ -27,8 +27,6 @@ $(document).ready(function() {
                     } else {
                         if (data.type == 1) {
                             data.surveyData.forEach(function (item) {
-                                console.log(item)
-
                                 var pesronSurvey = '<div class="card-body employeeSurvey">' +
                                     '<div class="form-group">' +
                                     '<label class="font-weight-semibold" for="password">Ocijenite zaposlenog <b>' + item.username + '</b>:</label>' +
@@ -135,7 +133,6 @@ $(document).on('click', '#saveSurveyResults', function(e) {
             'data':data
         },
         success: function(response) {
-            console.log(response)
             var dataParse = JSON.parse(response);
             if (dataParse.error) {
                 $('#surveyError').html(handleErrors(dataParse.error));

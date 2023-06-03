@@ -31,7 +31,6 @@ $(document).ready(function () {
                 }
             },
             success: function(response) {
-                console.log(response)
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
                     // $('#loginAlert').html(createWarningMessage(data.error));
@@ -97,7 +96,6 @@ function getVehiclesSelect(selectId, selectedValue = null){
             'status':true
         },
         success: function(response) {
-            console.log(response)
             var data = response.data.data;
             var select = $('#'+selectId);
             select.empty();

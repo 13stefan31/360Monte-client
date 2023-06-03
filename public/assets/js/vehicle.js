@@ -7,10 +7,11 @@ $(document).ready(function() {
         data:{getSingleVehicle:1,vehicleId:vehicleId},
         dataType: 'json',
         success: function(response) {
-            var data = response.data.data;
-            if (data.error) {
-                $('#alertGetVehicle').html(handleErrors(data.error));
+            if (response.error) {
+                $('#alertGetVehicle').html(handleErrors(response.error));
+                $('.vehicleDataCard').hide()
             } else {
+                var data = response.data.data;
                 $('.vehicleName').html(data.brand + ' ' + data.model);
                 $('.vehicleBrand').html(data.brand);
                 $('.vehicleModel').html(data.model);
@@ -30,6 +31,9 @@ $(document).ready(function() {
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#alertGetVehicle').html(createWarningMessage(error));
+        },
+        complete:function (){
+            $('#loader-overlay').hide();
         }
     });
     var current_page=$('#current_page').val();
@@ -108,7 +112,6 @@ function getVehicleComment(current_page,per_page){
             } else {
                 $('#vehicle-comment-table tbody').empty();
                 response.data.data.forEach(function(item) {
-                    console.log(item)
                     var newRow = '<tr id="'+item.id+'"><td>'+item.user.name+'</td><td>' + item.comment + '</td><td>' + item.mark + '</td></tr>';
                     $('#vehicle-comment-table tbody').append(newRow);
 

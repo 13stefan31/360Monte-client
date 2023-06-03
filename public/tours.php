@@ -7,6 +7,9 @@ require 'auth.php';
 <?php include ('layouts/head.php')?>
 
 <body>
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
 <div class="app">
     <div class="layout">
         <?php include ('layouts/header.php')?>

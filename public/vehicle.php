@@ -14,6 +14,9 @@ $current_page= 1;
 <?php include ('layouts/head.php')?>
 
 <body>
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
 <div class="app">
     <div class="layout">
         <?php include ('layouts/header.php')?>
@@ -34,7 +37,7 @@ $current_page= 1;
                     <div class="card-body">
                         <h4> <a href="/vozila"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
                         <div id="alertGetVehicle"></div>
-                        <div class="m-t-25">
+                        <div class="m-t-25 vehicleDataCard">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Opšte informacije</a>

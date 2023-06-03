@@ -8,10 +8,9 @@ $(document).ready(function() {
         data:{getSinglePerson:1,personId:personId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             if (response.error) {
-
                 $('#alertGetPerson').html(handleErrors(response.error));
+                $('.cardUserData').hide()
             } else {
                 var data = response.data.data;
                 $('.personName').html(data.name);
@@ -27,6 +26,9 @@ $(document).ready(function() {
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#alertGetPerson').html(createWarningMessage(error));
+        },
+        complete:function (){
+            $('#loader-overlay').hide();
         }
     });
 
@@ -49,7 +51,6 @@ $(document).ready(function() {
                     }
                 }),
                 success: function(response) {
-                    console.log(response)
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
 

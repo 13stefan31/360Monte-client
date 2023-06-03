@@ -11,6 +11,9 @@ if (!in_array($authRole,$personAllowedRoles) && $_GET['id'] != $authUser->id){
 <?php include ('layouts/head.php')?>
 
 <body>
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
 <div class="app">
     <div class="layout">
         <?php include ('layouts/header.php')?>
@@ -30,10 +33,10 @@ if (!in_array($authRole,$personAllowedRoles) && $_GET['id'] != $authUser->id){
                     </div>
                 </div>
                 <div class="card">
+                    <div id="alertGetPerson"></div>
                     <div class="card-body">
-                        <div id="alertGetPerson"></div>
                         <h4> <a href="/zaposleni"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
-                        <div class="m-t-25">
+                        <div class="m-t-25 cardUserData">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Opšte informacije</a>

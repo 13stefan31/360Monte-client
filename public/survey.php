@@ -11,6 +11,9 @@ if (!in_array($authRole,$surveysAllowedRoles)){
 <?php include ('layouts/head.php')?>
 
 <body>
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
 <div class="app">
     <div class="layout">
         <?php include ('layouts/header.php')?>
@@ -31,7 +34,9 @@ if (!in_array($authRole,$surveysAllowedRoles)){
                 </div>
 
                 <div class="container-fluid">
-                    <div class="tab-content m-t-15">
+
+                    <div id="surveysError"></div>
+                    <div class="tab-content m-t-15 surveyDatacard">
                         <div class="tab-pane fade show active" id="product-overview" >
                             <div class="card">
                                 <div class="card-body">

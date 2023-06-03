@@ -25,6 +25,9 @@ function getTours(filters){
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#alert').append(createWarningMessage(error));
+        },
+        complete:function (){
+            $('#loader-overlay').hide();
         }
     });
 }

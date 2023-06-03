@@ -6,7 +6,7 @@ $(document).ready(function() {
 });
 
 function getAllSurveys(current_page,per_page){
-    $('#surveysTable tbody').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
+    $('#surveysTable tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
         url: '/../../functions/survey.php',
         type:'GET',
@@ -24,7 +24,6 @@ function getAllSurveys(current_page,per_page){
                 $('#surveysTable tbody').empty();
                 var data = response.data.data;
                 data.forEach(function(item) {
-                    console.log(item)
                     var surveyItem='';
                     var filled='';
 
@@ -112,7 +111,6 @@ $(document).on('click', '#saveSurveyResults', function(e) {
             'data':data
         },
         success: function(response) {
-            console.log(response)
             var dataParse = JSON.parse(response);
             if (dataParse.error) {
                 $('#surveyError').html(handleErrors(dataParse.error));

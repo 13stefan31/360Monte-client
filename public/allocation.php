@@ -10,6 +10,9 @@ if (!in_array($authRole,$allocationAllowedRoles)){
 <?php include ('layouts/head.php')?>
 
 <body>
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
 <div class="app">
     <div class="layout">
         <?php include ('layouts/header.php')?>
@@ -34,9 +37,10 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                             <div class="card">
                                 <div class="card-body">
 <!--                                    staviti ovaj prvi div za svaki error-->
+                                    <h4 class="card-title">Informacije</h4>
                                     <div id="allocationAlert"></div>
                                     <div id="alertGetAllocation"></div>
-                                    <h4 class="card-title">Informacije</h4>
+                                    <div class="allocationDivCard">
                                     <div class="card-group">
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
@@ -102,6 +106,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                 </div>
                                             </ul>
                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
