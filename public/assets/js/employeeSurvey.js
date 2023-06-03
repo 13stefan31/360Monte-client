@@ -27,8 +27,9 @@ $(document).ready(function() {
                     } else {
                         if (data.type == 1) {
                             data.surveyData.forEach(function (item) {
-                                var pesronSurvey = '<div class="card-body employeeSurvey">' +
-                                    '<div class="form-group">' +
+                                var personSurvey = '<div class="card-body employeeSurvey">' +
+                                    '<div class="form-group">\n' +
+                                    '<div class="alert alert-danger markErrorDiv" style="display: none"><p class="markError"></p> </div>' +
                                     '<label class="font-weight-semibold" for="password">Ocijenite zaposlenog <b>' + item.username + '</b>:</label>' +
                                     '<div class="star-rating m-t-5" data-id="' + item.userId + '">' +
                                     '<input type="radio" id="star3-5-' + item.userId + '" name="rating-' + item.userId + '" value="5" /><label for="star3-5-' + item.userId + '" title="5 star"></label>' +
@@ -38,17 +39,16 @@ $(document).ready(function() {
                                     '<input type="radio" id="star3-1-' + item.userId + '" name="rating-' + item.userId + '" value="1"/><label for="star3-1-' + item.userId + '" title="1 star"></label>' +
                                     '</div>' +
                                     '</div>' +
-                                    '<div class="form-group">' +
+                                    '<div class="form-group rating-comment" style="display: none;">' + // Hidden by default
                                     '<label class="font-weight-semibold" for="password">Obrazložite odgovor:</label>' +
                                     '<input type="text" class="form-control" id="comment-' + item.userId + '" placeholder="Obrazložite odgovor">' +
                                     '</div>' +
                                     '</div>';
-                                $('#surveyData').append(pesronSurvey);
-
+                                $('#surveyData').append(personSurvey);
                             });
                         } else if (data.type == 2) {
-                            var vehicleSurvey = '<div class="form-group">' +
-                                '<label class="font-weight-semibold" >Ocijenite vozilo ' + data.surveyData.brand + ' ' + data.surveyData.model + ' ' + data.surveyData.registrationNumber + ':</label>' +
+                            var vehicleSurvey = '<div class="form-group"><div class="alert alert-danger markErrorDiv" style="display: none"><p class="markError"></p> </div>' +
+                                '<label class="font-weight-semibold">Ocijenite vozilo ' + data.surveyData.brand + ' ' + data.surveyData.model + ' ' + data.surveyData.registrationNumber + ':</label>' +
                                 '<div class="star-rating m-t-5">' +
                                 '<input type="radio" id="star3-5" name="vehicleRate" value="5" /><label for="star3-5" title="5 star"></label>' +
                                 '<input type="radio" id="star3-4" name="vehicleRate" value="4" /><label for="star3-4" title="4 star"></label>' +
@@ -57,10 +57,11 @@ $(document).ready(function() {
                                 '<input type="radio" id="star3-1" name="vehicleRate" value="1" /><label for="star3-1" title="1 star"></label>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="form-group comment-input">' +
-                                '<label class="font-weight-semibold" >Obrazložite odgovor:</label>' +
-                                '<input type="text" class="form-control"  id="vehicleComment" placeholder="Obrazložite odgovor">' +
+                                '<div class="form-group comment-input" style="display: none;">' +
+                                '<label class="font-weight-semibold">Obrazložite odgovor:</label>' +
+                                '<input type="text" class="form-control" id="vehicleComment" placeholder="Obrazložite odgovor">' +
                                 '</div>';
+
 
                             $('#surveyData').append(vehicleSurvey);
                             $('#surveyData').append('<input  hidden="" value="' + data.surveyData.vehicleId + '" id="vehicleId">');
@@ -93,12 +94,25 @@ $(document).on('click', '#saveSurveyResults', function(e) {
     var token = url.substring(url.lastIndexOf('/') + 1);
     if (type==1){
         var surveyData = [];
+        var isValid = 0;
         $('.employeeSurvey').each(function() {
             var $surveySection = $(this);
             var personId = $surveySection.find('.star-rating').data('id');
             var mark = $surveySection.find('input[name="rating-' + personId + '"]:checked').val();
             var comment = $surveySection.find('#comment-' + personId).val();
-
+            if (!mark) {
+                isValid++;
+                $surveySection.find('.markError').text('Morate dati ocjenu.');
+                $surveySection.find('.markErrorDiv').show();
+            } else {
+                $surveySection.find('.markErrorDiv').hide();
+                $surveySection.find('.markError').text('');
+                if (mark <= 4 && comment.trim() === '') {
+                    isValid++;
+                    $surveySection.find('.markError').text('Morate obrazložiti ocjenu.');
+                    $surveySection.find('.markErrorDiv').show();
+                }
+            }
             var personSurveyData = {
                 "targetId": parseInt(personId),
                 "mark": parseInt(mark),
@@ -106,14 +120,40 @@ $(document).on('click', '#saveSurveyResults', function(e) {
             };
             surveyData.push(personSurveyData);
         });
+
+        if (isValid > 0) {
+            $btn.removeClass('is-loading').prop('disabled', false);
+            $btn.find('.anticon-loading').remove();
+            return;
+        }
         var data = JSON.stringify({
             "surveyData": surveyData
         });
     }else if(type==2){
         var targetId = $('#vehicleId').val();
-
         var mark = $('input[name="vehicleRate"]:checked').val();
         var comment = $('#vehicleComment').val();
+
+        var isValid = 0;
+        if (!mark) {
+            isValid++;
+            $('.markError').text('Morate dati ocjenu.');
+            $('.markErrorDiv').show();
+        } else {
+            $('.markErrorDiv').hide();
+            $('.markError').text('');
+            if (mark <= 4 && comment.trim() === '') {
+                isValid++;
+                $('.markError').text('Morate obrazložiti ocjenu.');
+                $('.markErrorDiv').show();
+            }
+        }
+        if (isValid > 0) {
+            $btn.removeClass('is-loading').prop('disabled', false);
+            $btn.find('.anticon-loading').remove();
+            return;
+        }
+
         var data = JSON.stringify({
             "surveyData": [{
                 "targetId": parseInt(targetId),
@@ -158,7 +198,26 @@ $(document).on('click', '#saveSurveyResults', function(e) {
 
 
 
+});
+$('#surveyData').on('click', '.star-rating input[type="radio"]', function() {
+    var rating = $(this).val();
+    var commentDiv = $(this).closest('.employeeSurvey').find('.rating-comment');
+    if (rating <= 4) {
+        commentDiv.show();
+    } else {
+        commentDiv.hide();
+    }
+});
+
+// Trigger the show/hide behavior on vehicle rating click
+$('#surveyData').on('click', '.star-rating input[type="radio"]', function() {
+    var rating = $(this).val();
+    var commentInput = $(this).closest('.form-group').next('.comment-input')
 
 
-
+    if (rating <= 4) {
+        commentInput.show();
+    } else {
+        commentInput.hide();
+    }
 });
