@@ -168,6 +168,13 @@ $current_page= 1;
                                     <select id="tourAdd" class="form-control"></select>
                                     <p class="error"></p>
                                 </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">Komentar</span>
+                                    </div>
+                                    <textarea id="note" class="form-control"></textarea>
+<!--                                    <p class="error"></p>-->
+                                </div>
                             </div>
                             </form>
                             <div class="modal-footer">

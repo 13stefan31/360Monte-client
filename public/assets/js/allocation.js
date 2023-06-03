@@ -26,6 +26,8 @@ $(document).ready(function() {
                 $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model  );
                 $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber  );
                 $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats  );
+                $('.allocationNote').html(data.note  );
+                $('#noteChange').html(data.note  );
 
                 var date = data.allocationDate;
                 var dateComponents = date.split('.');
@@ -123,12 +125,12 @@ $(document).ready(function() {
                         'allocationId': allocationId,
                         'allocationDate': formattedToday,
                         'vehicleId': $('#vehicleChange').val(),
+                        'note': $('#noteChange').val(),
                         'tourId': $('#tourChange').val()
                     }
 
                 }),
                 success: function (response) {
-
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
                         $('#allocationDataChangeError').html(handleErrors(dataParse.error));
@@ -140,6 +142,7 @@ $(document).ready(function() {
                         $('.allocationVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model);
                         $('.allocationVehicleRegNo').html(data.vehicle.registrationNumber);
                         $('.allocationVehicleSeatsNo').html(data.vehicle.numberOfSeats);
+                        $('.allocationNote').html(data.note  );
 
                         $('#vehicle-date-change-modal').modal('hide');
                         $('#allocationDataChangeError').html('');

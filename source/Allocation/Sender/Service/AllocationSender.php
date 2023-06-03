@@ -78,6 +78,7 @@ public function getAllAllocationStuff($id){
         $body = [
             'vehicleId' => $data['vehicleId'],
             'tourId' => $data['tourId'],
+            'note' => $data['note'],
             'allocationDate' => $data['allocationDate']
         ];
         $initialize_field = 'allocation';
@@ -89,6 +90,7 @@ public function getAllAllocationStuff($id){
             'allocationId' => $data['allocationId'],
             'vehicleId' => $data['vehicleId'],
             'tourId' => $data['tourId'],
+            'note' => $data['note'],
             'allocationDate' => $data['allocationDate']
         ];
         $initialize_field = 'allocation';

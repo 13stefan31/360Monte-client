@@ -61,6 +61,7 @@ $(document).ready(function() {
                     'data':{
                         'vehicleId': $('#vehicleAdd').val(),
                         'tourId': $('#tourAdd').val(),
+                        'note': $('#note').val(),
                         'allocationDate':formattedToday
                     }
                 } ,

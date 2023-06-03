@@ -76,6 +76,9 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                 <li class="list-group-item">
                                                     <p>Broj sjedišta vozila:</p><p class="allocationVehicleSeatsNo m-b-0 text-dark font-weight-semibold"></p>
                                                 </li>
+                                                <li class="list-group-item">
+                                                    <p>Komentar:</p><p class="allocationNote m-b-0 text-dark font-weight-semibold"></p>
+                                                </li>
                                             </ul>
 
                                         </div>
@@ -144,6 +147,12 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                             <span class="input-group-text" >Tura</span>
                                         </div>
                                         <select id="tourChange" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Komentar</span>
+                                        </div>
+                                        <textarea id="noteChange" class="form-control"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
