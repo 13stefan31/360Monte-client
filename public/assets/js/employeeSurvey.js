@@ -22,6 +22,7 @@ $(document).ready(function() {
                 // }else{
                     if (data.status == 1) {
                         $('#surveyError').html(handleErrors('Anketa je već popunjena'));
+                        $(".backHome").show();
 
                     } else {
                         if (data.type == 1) {
@@ -79,6 +80,7 @@ $(document).ready(function() {
         error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#surveyError').html(createWarningMessage(error));
+            $(".backHome").show();
         }
     });
 
@@ -142,12 +144,14 @@ $(document).on('click', '#saveSurveyResults', function(e) {
                 var data = dataParse.data.data;
                 $('#surveyError').html(createSuccessMessage('Uspješno ste glasali'));
                 $('#surveyData').empty();
+                $(".backHome").show();
 
 
             }
         },  error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#surveyError').html(createErrorMessage(error));
+            $(".backHome").show();
         },
         complete:function (){
             $btn.removeClass('is-loading').prop('disabled', false);

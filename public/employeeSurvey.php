@@ -18,9 +18,9 @@ include('layouts/head.php') ?>
 
                                     <div id="surveyError"></div>
                                     <div id="surveyData">
-
                                     </div>
 
+                                <a class="btn btn-primary m-r-5 float-right backHome" href="/pocetna"style="display: none">Nazad na početnu</a>
                             </div>
                         </div>
                     </div>
