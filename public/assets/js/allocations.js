@@ -77,9 +77,9 @@ $(document).ready(function() {
                         newRow.append($('<td>').text(data.vehicle.registrationNumber));
                         newRow.append($('<td>').text(data.tour.name));
                         if (data.status==0){
-                            var status ='<span class="badge badge-pill badge-red font-size-13">Pending</span>';
+                            var status ='<span class="badge badge-pill badge-red font-size-13">Na čekanju</span>';
                         }else  if (data.status==1){
-                            var status ='<span class="badge badge-pill badge-cyan font-size-13">Confirmed</span>';
+                            var status ='<span class="badge badge-pill badge-cyan font-size-13">Kompletirano</span>';
                         }else{
                             var status ='<span class="badge badge-pill badge-red font-size-13"></span>';
                         }

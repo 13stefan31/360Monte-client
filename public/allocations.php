@@ -97,8 +97,8 @@ $current_page= 1;
                                             </div>
                                             <select id="statusFilter" class="form-control">
                                                 <option value="">Odaberite status alokacije</option>
-                                                <option value="0"<?php if ($statusFilters == '0') echo ' selected'; ?>>Pending</option>
-                                                <option value="1"<?php if ($statusFilters == '1') echo ' selected'; ?>>Confirmed</option>
+                                                <option value="0"<?php if ($statusFilters == '0') echo ' selected'; ?>>Na čekanju</option>
+                                                <option value="1"<?php if ($statusFilters == '1') echo ' selected'; ?>>Kompletirano</option>
                                             </select>
                                         </div>
 
