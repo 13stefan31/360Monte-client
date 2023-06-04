@@ -84,6 +84,30 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#forgottenPassword').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/../../functions/user.php',
+            type:'POST',
+            data: {
+                'forgottenPassword': 1,
+                'email': $('#email').val()
+            },
+            success: function(response) {
+                var dataParse = JSON.parse(response);
+                console.log(response)
+                if (dataParse.error){
+                    $('#passwordResetError').html(handleErrors(dataParse.error));
+                }else{
+                   Swal.fire('Poslat vam je email za promjenu lozinke','','success')
+                }
+            },  error: function(jqXHR) {
+                var error = generateAjaxError(jqXHR);
+                $('#passwordResetError').html(createErrorMessage(error));
+            }
+        });
+    });
 });
 
 function getVehiclesSelect(selectId, selectedValue = null){

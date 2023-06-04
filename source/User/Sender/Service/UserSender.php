@@ -52,6 +52,28 @@ class UserSender extends \Main\SenderService
         }
     }
 
+    public function forgottenPassword($email){
+        $body = [
+            'email' => $email
+        ];
+        $initialize_field = 'users/password/forgotten-password';
+        return  $this->send_post_request($initialize_field, $body);
+
+    }
+
+    public function checkChangePassword($token){
+        $initialize_field = 'users/password/forgotten-password/'.$token ;
+        return  $this->send_get_request($initialize_field);
+    }
+    public function changePassword($data){
+        $body = [
+            'newPassword' => $data['newPassword'],
+            'confirmPassword' => $data['confirmPassword']
+        ];
+        $initialize_field = 'users/password/forgotten-password/'.$data['token'];
+        return  $this->send_post_request($initialize_field, $body);
+
+    }
 
 }
 

@@ -15,7 +15,8 @@
                                     <div class="d-flex align-items-center justify-content-between m-b-30">
                                         <img class="img-fluid" alt="" src="/assets/images/logo/logo.png">
                                     </div>
-                                    <form>
+                                    <div id="changePasswordError"></div>
+                                    <form id="changePasswordForm">
                                         <div class="form-group">
                                             <label class="font-weight-semibold" for="password">Nova lozinka:</label>
                                              <div class="input-affix m-b-10">
@@ -27,15 +28,17 @@
                                             <label class="font-weight-semibold" for="password">Ponovite lozinku:</label>
                                             <div class="input-affix m-b-10">
                                                 <i class="prefix-icon anticon anticon-lock"></i>
-                                                <input type="password" class="form-control" id="reNewPassword" placeholder="Ponovite lozinku">
+                                                <input type="password" class="form-control" id="confirmPassword" placeholder="Ponovite lozinku">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <button class="btn btn-primary">Promijenite lozinku</button>
+                                                <button class="btn btn-primary" id="changePassword">Promijenite lozinku</button>
                                             </div>
                                         </div>
+                                        <input hidden="" id="changePasswordToken" value="">
                                     </form>
+                                    <a class="btn btn-primary m-r-5 float-right backHome" href="/prijava"style="display: none">Nazad na prijavu</a>
                                 </div>
                             </div>
                         </div>
@@ -45,15 +48,11 @@
             </div>
         </div>
     </div>
-
-    
-    <!-- Core Vendors JS -->
-    <script src="assets/js/vendors.min.js"></script>
-
-    <!-- page js -->
-
-    <!-- Core JS -->
-    <script src="assets/js/app.min.js"></script>
+    <script src="/assets/js/vendors.min.js"></script>
+    <script src="/assets/js/app.min.js"></script>
+    <script src="/assets/js/alerts.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/changePassword.js"></script>
 
 </body>
 

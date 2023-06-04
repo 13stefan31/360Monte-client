@@ -15,6 +15,7 @@
                                     <div class="d-flex align-items-center justify-content-between m-b-30">
                                         <img class="img-fluid" alt="" src="/assets/images/logo/logo.png">
                                     </div>
+                                    <div id="passwordResetError"></div>
                                     <form>
 <!--                                        <div class="form-group">-->
 <!--                                            <label class="font-weight-semibold" for="userName">Korisničko ime:</label>-->
@@ -25,7 +26,7 @@
 <!--                                        </div>-->
                                         <div class="form-group">
                                             <label class="font-weight-semibold" for="password">Email:</label>
-                                            <a class="float-right font-size-13 text-muted" href="login.php">Prijavite se</a>
+                                            <a class="float-right font-size-13 text-muted" href="/prijava">Prijavite se</a>
                                             <div class="input-affix m-b-10">
                                                 <i class="prefix-icon anticon anticon-mail"></i>
                                                 <input type="email" class="form-control" id="email" placeholder="Email">
@@ -33,7 +34,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                <button class="btn btn-primary">Resetujte lozinku</button>
+                                                <button class="btn btn-primary" id="forgottenPassword">Resetujte lozinku</button>
                                             </div>
                                         </div>
                                     </form>
@@ -46,15 +47,10 @@
             </div>
         </div>
     </div>
-
-    
-    <!-- Core Vendors JS -->
-    <script src="assets/js/vendors.min.js"></script>
-
-    <!-- page js -->
-
-    <!-- Core JS -->
-    <script src="assets/js/app.min.js"></script>
+    <script src="/assets/js/vendors.min.js"></script>
+    <script src="/assets/js/app.min.js"></script>
+    <script src="/assets/js/alerts.js"></script>
+    <script src="/assets/js/custom.js"></script>
 
 </body>
 

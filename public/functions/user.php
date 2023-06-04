@@ -12,3 +12,14 @@ if(isset($_POST) && isset($_POST['logout'])){
 if(isset($_POST) && isset($_POST['loggedUser'])){
     return $user_sender->loggedUser();
 }
+if(isset($_POST) && isset($_POST['forgottenPassword'])){
+    return $user_sender->forgottenPassword($_POST['email']);
+}
+if(isset($_GET) && isset($_GET['checkChangePassword'])){
+    return $user_sender->checkChangePassword($_GET['token']);
+}
+if(isset($_POST) && isset($_POST['changePassword'])){
+    return $user_sender->changePassword($_POST);
+}
+//ofic aa i gen men mogu da mijenjanu status
+//samo mehanicar da li je u vozno stanju ili nije

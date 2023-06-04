@@ -90,11 +90,6 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                     </div>
                                                 </div>
                                                 <?php } ?>
-                                                <div class="card-footer">
-                                                    <div class="alert alert-info">
-                                                        <p>Komentar:</p><p class="allocationNote m-b-0 text-dark font-weight-semibold"></p>
-                                                    </div>
-                                                </div>
                                                 <div class="table-responsive">
                                                     <table id="allocation-stuff-tabele" class="table">
                                                         <thead>
@@ -108,6 +103,11 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                         <tbody>
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="alert alert-info">
+                                                        <p>Komentar:</p><p class="allocationNote m-b-0 text-dark font-weight-semibold"></p>
+                                                    </div>
                                                 </div>
                                             </ul>
                                        </div>
