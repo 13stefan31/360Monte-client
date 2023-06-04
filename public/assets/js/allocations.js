@@ -220,9 +220,9 @@ function getAllocations(filters,current_page,per_page){
                 var data = response.data.data;
                 $.each(data, function(index, row) {
                     if (row.status==0){
-                        var status ='<span class="badge badge-pill badge-red font-size-13">Pending</span>';
+                        var status ='<span class="badge badge-pill badge-red font-size-13">Na čekanju</span>';
                     }else  if (row.status==1){
-                        var status ='<span class="badge badge-pill badge-cyan font-size-13">Confirmed</span>';
+                        var status ='<span class="badge badge-pill badge-cyan font-size-13">Kompletirano</span>';
                     }
 
                     //dok se ne obirsu stare ture
