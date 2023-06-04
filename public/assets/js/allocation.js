@@ -163,7 +163,7 @@ $(document).ready(function() {
 
     $('#addEmpAllocationButton').click(function(e) {
         e.preventDefault();
-        $('#allocationPersonAddError').hide();
+        $('#allocationPersonAddError').html("");
         getStuffPositionAllocation('empPositionAddAllocation');
         getStuffAllocation('empAddAllocation');
     });
