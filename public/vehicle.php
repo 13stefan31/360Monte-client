@@ -216,9 +216,9 @@ $current_page= 1;
                                     <span class="input-group-text" id="basic-addon1">Status</span>
                                 </div>
                                 <select id="reservedForExternalUsage" class="form-control">
-                                    <option value="">Promijenite eksterne upotrebe</option>
-                                    <option value="1">Spremno</option>
-                                    <option value="0">Nije spremno</option>
+                                    <option value=""></option>
+                                    <option value="1">Rezervisano</option>
+                                    <option value="0">Nije rezervisano</option>
                                 </select>
                             </div>
                         </div>
