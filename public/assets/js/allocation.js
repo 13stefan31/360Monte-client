@@ -16,9 +16,9 @@ $(document).ready(function() {
             } else {
                 var data = response.data.data;
                 if (data.status==1){
-                    var status ='<span class="badge badge-pill badge-cyan  font-size-15">Confirmed</span>';
+                    var status ='<span class="badge badge-pill badge-cyan  font-size-15">Kompletirano</span>';
                 }else  if (data.status==0){
-                    var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+                    var status ='<span class="badge badge-pill badge-red font-size-15">Na čekanju</span>';
                 }
                 $('.allocationStatus').html(status);
                 $('.allocationDate').html(data.allocationDate);
@@ -163,6 +163,7 @@ $(document).ready(function() {
 
     $('#addEmpAllocationButton').click(function(e) {
         e.preventDefault();
+        $('#allocationPersonAddError').hide();
         getStuffPositionAllocation('empPositionAddAllocation');
         getStuffAllocation('empAddAllocation');
     });
