@@ -77,5 +77,14 @@ class VehicleSender extends \Main\SenderService
         return  $this->send_post_request($initialize_field,$body);
 
     }
+    public function changeVehicleStatus($data){
+        $body = [
+            'readyToDrive' =>  $data['readyToDrive']
+        ];
+        $initialize_field = 'vehicles/'.$data['vehicleId'].'/set-status';
+
+        return  $this->send_put_request($initialize_field, $body);
+
+    }
 }
 

@@ -54,4 +54,11 @@ if(isset($_GET) && isset($_GET['getSingleVehicleComment']) && isset($_GET['getSi
 if(isset($_POST) && isset($_POST['addVehicleComment'])){
     return $vehicle_sender->addVehicleComment($_POST['data']);
 }
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $data = file_get_contents('php://input');
+    $decoded_data = json_decode($data, true);
+    if (isset($decoded_data['changeVehicleStatus'])){
+        return $vehicle_sender->changeVehicleStatus($decoded_data['data']);
+    }
 
+}

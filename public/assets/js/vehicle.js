@@ -7,6 +7,7 @@ $(document).ready(function() {
         data:{getSingleVehicle:1,vehicleId:vehicleId},
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             if (response.error) {
                 $('#alertGetVehicle').html(handleErrors(response.error));
                 $('.vehicleDataCard').hide()
@@ -88,6 +89,52 @@ $(document).ready(function() {
         if (value < 1 || value > 5 || isNaN(value)) {
             $(this).val('');
         }
+    });
+    $('#changeVehicleStatus').click(function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+        vehicleId= $('.vehicleId').val();
+        if ($('#vehicleStatus').val()==1){
+            var vehicleStatus=true;
+        }else{
+            vehicleStatus=false;
+        }
+        $.ajax({
+            url: '/../../functions/vehicles.php',
+            type:'put',
+            data:  JSON.stringify({
+                'changeVehicleStatus': 1,
+                'data':{
+                    'vehicleId': vehicleId,
+                    'readyToDrive': vehicleStatus
+                }
+            }),
+            success: function(response) {
+                if (response.error) {
+                    $('#vehicleStatusError').html(handleErrors(response.error));
+                } else {
+                    var dataParse = JSON.parse(response);
+                    Swal.fire('Uspejšno ste promijenili status vozila','','success' )
+                    if (dataParse.data.data.readyForDrive==true){
+                        $('.vehicleReadyForDrive').html('<span class="badge badge-pill badge-cyan font-size-13">Ispravno</span>');
+                    }else{
+                        $('.vehicleReadyForDrive').html('<span class="badge badge-pill badge-red font-size-13">Neispravno</span>');
+                    }
+                    $('#mehanicSetStatus').modal('hide');
+
+                }
+            },  error: function(jqXHR) {
+                var error = generateAjaxError(jqXHR);
+                $('#vehicleStatusError').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
+        });
+
     });
 });
 

@@ -89,6 +89,9 @@ $current_page= 1;
                                     <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity">
                                         Novi unos
                                     </button>
+                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#mehanicSetStatus">
+                                            Promijeni status
+                                        </button>
                                     <?php }?>
 
                                     <div class="table-container">
@@ -147,8 +150,40 @@ $current_page= 1;
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="mehanicSetStatus">
+
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Promijeni status</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+
+                        <div id="vehicleStatusError"></div>
+                        <div class="modal-body">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Status</span>
+                                </div>
+                                <select id="vehicleStatus" class="form-control">
+                                    <option value="">Promijenite status vozila</option>
+                                    <option value="1">Ispravno</option>
+                                    <option value="0">Neispravno</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                            <button type="button" class="btn btn-primary" id="changeVehicleStatus">Sačuvaj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php }?>
-            <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>
         <!-- Page Container END -->
