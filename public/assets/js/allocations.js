@@ -232,7 +232,7 @@ function getAllocations(filters,current_page,per_page){
                         var tour='';
                     }
 
-                    $('#allocations-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td><td>' + tour + '</td>  <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacije/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
+                    $('#allocations-table tbody').append('<tr id="'+row.id+'"><td>' + row.allocationDate + '</td><td>' + row.vehicle.brand +' ' +row.vehicle.model+ '</td><td>' + row.vehicle.registrationNumber + '</td><td>' + tour + '</td>  <td>' + status + '</td> <td><a class="btn btn-primary m-r-5 " href="/alokacije/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 allocation-delete" data-allocationid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 var meta = response.data.meta;
                 var paginationHTML = generatePagination(meta.totalItems, meta.itemsPerPage, meta.currentPage);
