@@ -86,5 +86,14 @@ class VehicleSender extends \Main\SenderService
         return  $this->send_put_request($initialize_field, $body);
 
     }
+    public function externalUse($data){
+        $body = [
+            'reservedForExternalUsage' =>  $data['reservedForExternalUsage']
+        ];
+        $initialize_field = 'vehicles/'.$data['vehicleId'].'/set-external-usage';
+
+        return  $this->send_put_request($initialize_field, $body);
+
+    }
 }
 

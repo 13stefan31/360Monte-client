@@ -26,6 +26,11 @@ $(document).ready(function() {
                 }else{
                     $('.vehicleReadyForDrive').html('<span class="badge badge-pill badge-red font-size-13">Neispravno</span>');
                 }
+                if (data.isReservedForExternalUsage==true){
+                    $('.vehicleExternalUse').html('<span class="badge badge-pill badge-cyan font-size-13">DA</span>');
+                }else{
+                    $('.vehicleExternalUse').html('<span class="badge badge-pill badge-red font-size-13">NE</span>');
+                }
 
             }
         }  ,
@@ -128,6 +133,54 @@ $(document).ready(function() {
             },  error: function(jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#vehicleStatusError').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
+        });
+
+    });
+    $('#externalUseChange').click(function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+        vehicleId= $('.vehicleId').val();
+        if ($('#reservedForExternalUsage').val()==1){
+            var reservedForExternalUsage=true;
+        }else{
+            reservedForExternalUsage=false;
+        }
+        console.log(reservedForExternalUsage)
+        $.ajax({
+            url: '/../../functions/vehicles.php',
+            type:'put',
+            data:  JSON.stringify({
+                'externalUse': 1,
+                'data':{
+                    'vehicleId': vehicleId,
+                    'reservedForExternalUsage': reservedForExternalUsage
+                }
+            }),
+            success: function(response) {
+                if (response.error) {
+                    $('#vehicleExternalError').html(handleErrors(response.error));
+                } else {
+                    var dataParse = JSON.parse(response);
+                    console.log(dataParse)
+                    Swal.fire('Uspejšno ste promijenili status eksterne upotrebe vozila','','success' )
+                    if (dataParse.data.data.isReservedForExternalUsage==true){
+                        $('.vehicleExternalUse').html('<span class="badge badge-pill badge-cyan font-size-13">Da</span>');
+                    }else{
+                        $('.vehicleExternalUse').html('<span class="badge badge-pill badge-red font-size-13">Ne</span>');
+                    }
+                    $('#externalUse').modal('hide');
+
+                }
+            },  error: function(jqXHR) {
+                var error = generateAjaxError(jqXHR);
+                $('#vehicleExternalError').html(createErrorMessage(error));
             },
             complete:function (){
                 $btn.removeClass('is-loading').prop('disabled', false);

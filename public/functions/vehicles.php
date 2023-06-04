@@ -60,5 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if (isset($decoded_data['changeVehicleStatus'])){
         return $vehicle_sender->changeVehicleStatus($decoded_data['data']);
     }
-
+    if (isset($decoded_data['externalUse'])){
+        return $vehicle_sender->externalUse($decoded_data['data']);
+    }
 }

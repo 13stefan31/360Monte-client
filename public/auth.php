@@ -67,6 +67,10 @@ $allocationEditRolesString = json_encode($allocationEditRoles);
 $allocationUpdateRoles = array(
     P_GENERAL_MANAGER_ROLE_ID
 );
+$externalUseChange = array(
+    P_OFFICE_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID
+);
 $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
 
 

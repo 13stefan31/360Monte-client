@@ -49,7 +49,13 @@ $current_page= 1;
                             <div class="tab-content m-t-15" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="card">
+
                                         <div class="card-body">
+                                            <?php if (in_array($authRole,$externalUseChange)){?>
+                                            <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#externalUse">
+                                               Promijeni status eksterne upotrebe
+                                            </button>
+                                            <?php }?>
                                             <div class="table-responsive">
                                                 <table class="product-info-table m-t-20">
                                                     <tbody>
@@ -75,6 +81,10 @@ $current_page= 1;
                                                     <tr>
                                                         <td>Ispravnost:</td>
                                                         <td class="vehicleReadyForDrive"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Da li je za eksternu upotrebu:</td>
+                                                        <td class="vehicleExternalUse"></td>
                                                     </tr>
                                                     <input hidden="" class="vehicleId" value="">
                                                     </tbody>
@@ -179,6 +189,42 @@ $current_page= 1;
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
                             <button type="button" class="btn btn-primary" id="changeVehicleStatus">Sačuvaj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php }?>
+
+            <?php if (in_array($authRole,$externalUseChange)){?>
+            <div class="modal fade" id="externalUse">
+
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Promijeni status eksterne upotrebe</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+
+                        <div id="vehicleExternalError"></div>
+                        <div class="modal-body">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Status</span>
+                                </div>
+                                <select id="reservedForExternalUsage" class="form-control">
+                                    <option value="">Promijenite eksterne upotrebe</option>
+                                    <option value="1">Spremno</option>
+                                    <option value="0">Nije spremno</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                            <button type="button" class="btn btn-primary" id="externalUseChange">Sačuvaj</button>
                         </div>
                     </div>
                 </div>
