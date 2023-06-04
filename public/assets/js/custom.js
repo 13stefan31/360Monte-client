@@ -34,7 +34,7 @@ $(document).ready(function () {
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
                     // $('#loginAlert').html(createWarningMessage(data.error));
-                    $('#loginAlert').html('Kredencijali nisu dobri');
+                    $('#loginAlert').html('Email/lozinka nisu ispravni');
                 }else{
                     var dataParse = JSON.parse(response);
 

@@ -132,12 +132,12 @@ function validatePasswordData(){
 
     $('.error').remove();
 
-    if (currentPassword.length < 8) {
-        $('#currentPassword').after('<p class="error">Trenutna lozinka mora biti najmanje 8 karaktera dugačka.</p>');
+    if (currentPassword.length < 6) {
+        $('#currentPassword').after('<p class="error">Trenutna lozinka mora biti najmanje 6 karaktera dugačka.</p>');
     }
 
-    if (newPassword.length < 8) {
-        $('#newPassword').after('<p class="error">Nova lozinka mora biti najmanje 8 karaktera dugačka.</p>');
+    if (newPassword.length < 6) {
+        $('#newPassword').after('<p class="error">Nova lozinka mora biti najmanje 6 karaktera dugačka.</p>');
     } else if (newPassword == currentPassword) {
         $('#newPassword').after('<p class="error">Nova lozinka ne može biti ista kao trenutna lozinka.</p>');
     }
