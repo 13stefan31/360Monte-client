@@ -72,6 +72,9 @@ if (!in_array($authRole,$personAllowedRoles) && $_GET['id'] != $authUser->id){
                                                     <tr>
                                                         <td>Username:</td>
                                                         <td class="personUsername"></td>
+                                                    </tr>  <tr>
+                                                        <td>Rola:</td>
+                                                        <td class="personRole"></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

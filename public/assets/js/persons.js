@@ -48,6 +48,7 @@ $(document).ready(function() {
                             newRow.append($('<td>').text(data.name));
                             newRow.append($('<td>').text(data.email));
                             newRow.append($('<td>').text(data.username));
+                            newRow.append($('<td>').text(data.roleName));
                             newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/zaposleni/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a><button class="btn btn-danger m-r-5 user-delete" data-userid="'+data.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button>'));
                             $('#persons-table tbody').prepend(newRow);
 
@@ -170,7 +171,7 @@ function getUsers(filters,current_page,per_page){
                 $('#persons-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td>' + row.roleName + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                         '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 var meta = response.data.meta;

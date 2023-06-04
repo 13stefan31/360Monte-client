@@ -91,6 +91,7 @@ $current_page= 1;
                                             <th>Ime i prezime</th>
                                             <th>Email</th>
                                             <th>Username</th>
+                                            <th>Rola</th>
                                             <th></th>
                                         </tr>
                                         </thead>

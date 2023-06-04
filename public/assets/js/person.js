@@ -16,6 +16,7 @@ $(document).ready(function() {
                 $('.personName').html(data.name);
                 $('.personEmail').html(data.email);
                 $('.personUsername').html(data.username);
+                $('.personRole').html(data.roleName);
 
 
                 $('#personName').val(data.name);
@@ -61,6 +62,7 @@ $(document).ready(function() {
                         $('.personName').html(data.name);
                         $('.personEmail').html(data.email);
                         $('.personUsername').html(data.username);
+                        $('.personRole').html(data.roleName);
 
                         $('#personName').val(data.name);
                         $('#personEmail').val(data.email);
