@@ -31,6 +31,16 @@
                          </span> Vozila</a>
                     </li>
                     <?php }?>
+                    <?php if (in_array($authRole,$surveysAllowedRoles)){?>
+                        <li>
+                            <a href="/surveys.php">
+                             <span class="icon-holder">
+                         <i class="anticon anticon-question-circle"></i>
+                         </span>
+                                Ankete</a>
+                        </li>
+
+                    <?php }?>
                     <?php if (in_array($authRole,$allocationAllowedRoles)){?>
                     <li>
                         <a href="/alokacije">
@@ -45,16 +55,7 @@
                          <i class="anticon anticon-deployment-unit"></i>
                          </span>Ture</a>
                     </li>
-                    <?php if (in_array($authRole,$surveysAllowedRoles)){?>
-                    <li>
-                        <a href="/surveys.php">
-                             <span class="icon-holder">
-                         <i class="anticon anticon-question-circle"></i>
-                         </span>
-                            Ankete</a>
-                    </li>
 
-                    <?php }?>
                 </ul>
             </li>
             <hr/>
