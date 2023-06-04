@@ -30,7 +30,7 @@ class VehicleSender extends \Main\SenderService
             $filters[] = 'model=' . urlencode($model);
         }
         if (!empty($regNo)) {
-            $filters[] = 'registration_number=' . urlencode($regNo);
+            $filters[] = 'registrationNumber=' . urlencode($regNo);
         }
         if (!empty($status)) {
             $filters[] = 'readyToDrive=' . urlencode($status);
