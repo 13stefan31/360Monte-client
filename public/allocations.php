@@ -25,7 +25,7 @@ if(isset($_SESSION['allocation_filter_vehicle']) ||
     $statusFilters='';
 }
 
-$itemsPerPage = 5;
+$itemsPerPage = 10;
 $current_page= 1;
 
 
