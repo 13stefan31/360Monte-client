@@ -63,34 +63,19 @@ $(document).ready(function() {
                 }else{
                     data.result.forEach(function(item) {
                         $('.surveyTime').html(item.createdAt);
-                        // var rating = Math.round(item.rating);
-                        //
-                        // var starRatingHTML = '<div class="star-rating m-t-5">';
-                        //
-                        // for (var i = 1; i <= 5; i++) {
-                        //     if (i <= rating) {
-                        //         starRatingHTML +=
-                        //             '<input type="radio " checked /><label class="star-selected" for="star' +
-                        //             item.id +
-                        //             '-' +
-                        //             i +
-                        //             '" title="' +
-                        //             i +
-                        //             ' star"></label>';
-                        //     } else {
-                        //         starRatingHTML +=
-                        //             '<input type="radio"  /><label class="star-unselected" for="star' +
-                        //             item.id +
-                        //             '-' +
-                        //             i +
-                        //             '" title="' +
-                        //             i +
-                        //             ' star"></label>';
-                        //     }
-                        // }
+                        var rating = Math.round(item.rating);
+                        var starRatingHTML = '<div class="star-rating m-t-5">';
+                        for (var i = 5; i >= 1; i--) {
+                            starRatingHTML += '<input type="radio" id="star3-' + i + '"   value="' + i + '"';
+                            if (rating >= i) {
+                                starRatingHTML += ' checked';
+                            }
+                            starRatingHTML += ' /><label for="star3-' + i + '" title="' + i + ' star"></label>';
+                        }
+                        starRatingHTML += '</div>';
 
                         // starRatingHTML += '</div>';
-
+                        var comment = item.comment ? item.comment : '';
                         var newRow =
                             '  <div class="card">' +
                             '    <div class="card-header employeeSurveyName">' +
@@ -102,13 +87,13 @@ $(document).ready(function() {
                             '    </div>' +
                             '    <div class="card-header">' +
                             '      <h4 class="card-title">Ocjena:  <span>' +
-                            item.rating +
+                            starRatingHTML +
                             '</span></h4>' +
                             '    </div>' +
                             '    <div class="card-header">' +
                             '      <h4 class="card-title">Komentar</h4>' +
                             '      <span>' +
-                            item.comment +
+                            comment +
                             '</span>' +
                             '    </div>' +
                             '    <br>' +

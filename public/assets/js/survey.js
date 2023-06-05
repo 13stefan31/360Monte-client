@@ -17,6 +17,7 @@ function getAllSurveys(current_page,per_page){
         },
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             $('#surveysTable tbody').empty();
             if (response.error) {
                 $('#surveysError').html(handleErrors(response.error));

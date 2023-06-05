@@ -1,6 +1,8 @@
 var page = 1;
 var perPage = 10;
-var loaderElement = $('<div class="loader"><div class="spinner-border centered-loader" role="status"><span class="sr-only">Učitavanje...</span></div></div>');
+var loaderElement = $('<div class="loader" style="display: flex; justify-content: center; align-items: center;">' +
+    '<div class="centered-loader" role="status"><span class="sr-only">Učitavanje...</span></div>' +
+    '</div>');
 
 
 $(document).ready(function() {
@@ -55,8 +57,10 @@ function getAllNotification(page) {
             if (page < lastPage && totalItems > page * perPage) {
                 var moreButton = '<button class="btn btn-primary btn-tone m-r-5 w-100 load-more pt-3 pb-3">Prikaži više</button>';
                 $('#notification-dropdown').append(moreButton);
-            }else  {
-                var noNotificationsMessage = '<div class="loader"><div class=" centered-loader">Nema više notifikacija</div></div>';
+            }else  {var noNotificationsMessage = '<div style="display: flex; justify-content: center; align-items: center; ">' +
+                '<div style="text-align: center;">Nema više notifikacija</div>' +
+                '</div>';
+
                 $('#notification-dropdown').append(noNotificationsMessage);
             }
             if (unSeen > 0) {

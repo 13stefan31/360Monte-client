@@ -19,8 +19,20 @@ class SurveySender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllSurveys(){
+    public function getAllSurveys($limit,$page){
         $initialize_field = 'surveys' ;
+
+        $filters = array();
+        if (!empty($limit)) {
+            $filters[] = 'limit=' . urlencode($limit);
+        }
+        if (!empty($page)) {
+            $filters[] = 'page=' . urlencode($page);
+        }
+        $filterString = implode('&', $filters);
+        if (!empty($filterString)) {
+            $initialize_field .= '?' . $filterString;
+        }
         return  $this->send_get_request($initialize_field);
     }
 

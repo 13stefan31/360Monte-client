@@ -33,7 +33,7 @@
                     <?php }?>
                     <?php if (in_array($authRole,$surveysAllowedRoles)){?>
                         <li>
-                            <a href="/surveys.php">
+                            <a href="/ankete">
                              <span class="icon-holder">
                          <i class="anticon anticon-question-circle"></i>
                          </span>
