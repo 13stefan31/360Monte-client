@@ -20,6 +20,9 @@ $(document).ready(function () {
 
     $('.login').click(function(e) {
         e.preventDefault();
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         $.ajax({
             url: '/../../functions/user.php',
             type:'POST',
@@ -33,17 +36,15 @@ $(document).ready(function () {
             success: function(response) {
                 var dataParse = JSON.parse(response);
                 if (dataParse.success==false){
-                    // $('#loginAlert').html(createWarningMessage(data.error));
-                    $('#loginAlert').html('Email/lozinka nisu ispravni');
+                    $('#loginAlert').html(createWarningMessage(dataParse.error));
                 }else{
-                    var dataParse = JSON.parse(response);
-
                     var accessToken = dataParse.data.access_token;
-
                     var expiresIn = dataParse.data.expires_in;
-                    var expirationTime = new Date().getTime() + (expiresIn * 1000);
+                    var expirationTimeInMinutes = new Date().getTime() + (expiresIn * 60 * 1000);
 
-                    var expirationDate = new Date(expirationTime);
+                    var expirationDate = new Date(expirationTimeInMinutes);
+                    console.log(expirationDate);
+
                     document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
 
                     var parts = accessToken.split('.');
@@ -56,6 +57,10 @@ $(document).ready(function () {
             },  error: function(jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#loginAlert').html(createErrorMessage(error));
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
             }
         });
     });

@@ -54,7 +54,6 @@ $(document).ready(function() {
                 success: function(response) {
                     var dataParse = JSON.parse(response);
                     if (dataParse.error) {
-
                         $('#alertSingleUser').html(handleErrors(dataParse.error));
                     } else {
                         var data = dataParse.data.data;
@@ -103,6 +102,7 @@ $(document).ready(function() {
                     }
                 }),
                 success: function(response) {
+                    console.log(response)
                     var data = JSON.parse(response);
                     if (data.error) {
                         $('#alertChangeUserPassword').html(handleErrors(data.error));
