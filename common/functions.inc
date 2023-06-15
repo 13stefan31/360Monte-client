@@ -28,6 +28,9 @@ require_once(dirname(__FILE__) . "/../source/Survey/Model/Survey.php");
 require_once(dirname(__FILE__) . "/../source/Notification/Sender/Service/NotificationSender.php");
 require_once(dirname(__FILE__) . "/../source/Notification/Model/Notification.php");
 
+require_once(dirname(__FILE__) . "/../source/Report/Sender/Service/ReportSender.php");
+require_once(dirname(__FILE__) . "/../source/Report/Model/Report.php");
+
 $person_sender = PersonSender::getInstance();
 $person = Person::getInstance();
 
@@ -46,7 +49,8 @@ $tour = Tour::getInstance();
 $survey_sender = SurveySender::getInstance();
 $survey = Survey::getInstance();
 
-
 $notification_sender = NotificationSender::getInstance();
 $notification = Notification::getInstance();
 
+$report_sender = ReportSender::getInstance();
+$report = Report::getInstance();

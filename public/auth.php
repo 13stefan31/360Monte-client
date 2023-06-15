@@ -50,6 +50,12 @@ $personAllowedRoles = array(
     P_GENERAL_MANAGER_ROLE_ID,
     P_HR_MANAGER_ROLE_ID
 );
+$reportAllowedRoles = array(
+    P_ADMIN_ROLE_ID,
+    P_OFFICE_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_HR_MANAGER_ROLE_ID
+);
 $surveysAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID
@@ -74,6 +80,7 @@ $externalUseChange = array(
     P_GENERAL_MANAGER_ROLE_ID
 );
 $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
+
 
 
 //ko moze da unosi komentar na vozila

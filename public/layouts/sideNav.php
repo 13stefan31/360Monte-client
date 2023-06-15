@@ -49,6 +49,14 @@
                          </span> Alokacije</a>
                     </li>
                     <?php }?>
+                    <?php if (in_array($authRole,$reportAllowedRoles)){?>
+                        <li>
+                            <a href="/izvjestaj">
+                             <span class="icon-holder">
+                                                    <i class="anticon anticon-solution"></i>
+                         </span> Izvještaj</a>
+                        </li>
+                    <?php }?>
                     <li>
                         <a href="/ture">
                              <span class="icon-holder">

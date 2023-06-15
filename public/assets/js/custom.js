@@ -109,7 +109,29 @@ $(document).ready(function () {
         });
     });
 });
+//svi vozaci i vodici
+function getStuffAllocation(selectId, selectedValue = null){
+    $.ajax({
+        url: '/../../functions/allocation.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{'getAllStuffAdd':1},
+        success: function(response) {
+            var data = response.data.data;
+            var select = $('#'+selectId);
+            select.empty();
+            select.append('<option value="">Odaberite zaposlenog</option>');
+            $.each(data, function(key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name +'</option>');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
 
+}
 function getVehiclesSelect(selectId, selectedValue = null){
     $.ajax({
         url: '/../../functions/vehicles.php',

@@ -88,7 +88,24 @@
                             </a>
                         </div>
                         <?php }?>
-
+                        <?php if (in_array($authRole,$reportAllowedRoles)){?>
+                            <div class="col-md-6 col-lg-3">
+                                <a href="/izvjestaj">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media align-items-center">
+                                                <div class="avatar avatar-icon avatar-lg avatar-orange">
+                                                    <i class="anticon anticon-solution"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <h2 class="m-b-0">Izvještaj</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php }?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/ture">
                                 <div class="card">
