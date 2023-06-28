@@ -52,7 +52,7 @@
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/alerts.js"></script>
     <script src="/assets/js/custom.js"></script>
-    <script src="/assets/js/changePassword.js"></script>
+    <script src="/assets/js/changePassword.js?v=1"></script>
 
 </body>
 
