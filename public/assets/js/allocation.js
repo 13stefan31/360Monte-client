@@ -397,9 +397,9 @@ $(document).on('click', '.update-status', function(e) {
                         }
                         $('#'+data.id).find('.stuffStatus').html(data.status + actionHtml);
                         if (data.allocation.status==1){
-                            var status ='<span class="badge badge-pill badge-cyan font-size-15">Confirmed</span>';
+                            var status ='<span class="badge badge-pill badge-cyan font-size-15">Prihvaćeno</span>';
                         }else  if (data.allocation.status==0){
-                            var status ='<span class="badge badge-pill badge-red font-size-15">Pending</span>';
+                            var status ='<span class="badge badge-pill badge-red font-size-15">Na čekanju</span>';
                         }
                         $('.allocationStatus').html(status);
 
