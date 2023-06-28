@@ -48,16 +48,16 @@ $(document).on('click', '#changePassword', function(e) {
             if (dataParse.error) {
                 $('#changePasswordError').html(handleErrors(dataParse.error));
             } else {
-
-                var accessToken = dataParse.data.access_token;
-
-                var expiresIn = dataParse.data.expires_in;
-                var expirationTimeInMinutes = new Date().getTime() + (expiresIn * 60 * 1000);
-
-                var expirationDate = new Date(expirationTimeInMinutes);
-                console.log(expirationDate);
-
-                document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
+                // console.log(response)
+                // var accessToken = dataParse.data.access_token;
+                //
+                // var expiresIn = dataParse.data.expires_in;
+                // var expirationTimeInMinutes = new Date().getTime() + (expiresIn * 60 * 1000);
+                //
+                // var expirationDate = new Date(expirationTimeInMinutes);
+                // console.log(expirationDate);
+                //
+                // document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
 
 
                 $('#changePasswordForm').hide()
