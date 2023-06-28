@@ -96,7 +96,7 @@ $current_page= 1;
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div id="commentAlert"></div>
                                     <?php if (in_array($authRole,$vehicleCommentRoles)){?>
-                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity">
+                                    <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity" id="newIrregularityButton">
                                         Novi unos
                                     </button>
                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#mehanicSetStatus">
@@ -243,7 +243,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicle.js"></script>
+<script src="/assets/js/vehicle.js?v=1"></script>
 
 </body>
 

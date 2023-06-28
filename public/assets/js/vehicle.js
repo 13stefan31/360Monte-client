@@ -141,6 +141,10 @@ $(document).ready(function() {
         });
 
     });
+    $('#newIrregularityButton').click(function(e) {
+        $('#vehicleComment').val('');
+        $('#vehicleRate').val('');
+    });
     $('#externalUseChange').click(function(e) {
         e.preventDefault();
         var $btn = $(this);
