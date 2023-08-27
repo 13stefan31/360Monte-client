@@ -216,7 +216,7 @@ function getVehicleComment(current_page,per_page){
             } else {
                 $('#vehicle-comment-table tbody').empty();
                 response.data.data.forEach(function(item) {
-                    var newRow = '<tr id="'+item.id+'"><td>'+item.user.name+'</td><td>' + item.comment + '</td><td>' + item.mark + '</td></tr>';
+                    var newRow = '<tr id="'+item.id+'"><td>'+item.user.name+'</td><td class="vehicle-comment">' + item.comment + '</td><td>' + item.mark + '</td></tr>';
                     $('#vehicle-comment-table tbody').append(newRow);
 
                 });

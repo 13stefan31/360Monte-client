@@ -114,3 +114,6 @@ p.error {
     border: 2px red solid
 ;
 }
+#vehicle-comment-table td {
+    white-space: pre-line;
+}

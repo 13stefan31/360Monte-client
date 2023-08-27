@@ -243,7 +243,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicle.js?v=1"></script>
+<script src="/assets/js/vehicle.js?v=2"></script>
 
 </body>
 
