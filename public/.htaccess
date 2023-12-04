@@ -19,6 +19,12 @@ RewriteRule ^zaposleni/?$ persons.php
 RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]
 
 
+RewriteRule ^istorija-radova/?$ worksHistory.php
+RewriteRule ^istorija-rada/([0-9]+)/?$ workHistory.php?id=$1 [QSA]
+
+RewriteRule ^istorija-dnevnih-podataka/?$ dailyDataHistory.php
+RewriteRule ^istorija-dnevnog-podatka/([0-9]+)/?$ signleDailyDataHistory.php?id=$1 [QSA]
+
 RewriteRule ^vozila/?$ vehicles.php
 RewriteRule ^vozila/([0-9]+)/?$ vehicle.php?id=$1 [QSA]
 

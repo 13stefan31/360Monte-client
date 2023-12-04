@@ -107,6 +107,38 @@
                             </div>
                         <?php }?>
                         <div class="col-md-6 col-lg-3">
+                            <a href="/istorija-radova">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="avatar avatar-icon avatar-lg avatar-blue">
+                                                <i class="fas fa-history"></i>
+                                            </div>
+                                            <div class="m-l-15">
+                                                <h2 class="m-b-0">Istorija radova</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <a href="/istorija-dnevnih-podataka">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="avatar avatar-icon avatar-lg avatar-gold">
+                                                <i class="fas fa-history"></i>
+                                            </div>
+                                            <div class="m-l-15">
+                                                <h2 class="m-b-0">Istorija dnevnih podataka</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
                             <a href="/ture">
                                 <div class="card">
                                     <div class="card-body">

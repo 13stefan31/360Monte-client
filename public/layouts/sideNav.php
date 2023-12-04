@@ -58,6 +58,17 @@
                         </li>
                     <?php }?>
                     <li>
+                        <a href="/istorija-radova">
+                             <span class="icon-holder">
+                                 <i class="fas fa-history"></i>
+                         </span>Istorija radova</a>
+                    </li>
+                    <li>
+                        <a href="/istorija-dnevnih-podataka">
+                            <i class="fas fa-history"></i>
+                         </span>Istorija dnevnih podataka</a>
+                    </li>
+                    <li>
                         <a href="/ture">
                              <span class="icon-holder">
                          <i class="anticon anticon-deployment-unit"></i>

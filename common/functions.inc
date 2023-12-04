@@ -31,6 +31,9 @@ require_once(dirname(__FILE__) . "/../source/Notification/Model/Notification.php
 require_once(dirname(__FILE__) . "/../source/Report/Sender/Service/ReportSender.php");
 require_once(dirname(__FILE__) . "/../source/Report/Model/Report.php");
 
+require_once(dirname(__FILE__) . "/../source/DailyData/Sender/Service/DailyDataSender.php");
+require_once(dirname(__FILE__) . "/../source/DailyData/Model/DailyData.php");
+
 $person_sender = PersonSender::getInstance();
 $person = Person::getInstance();
 
@@ -54,3 +57,6 @@ $notification = Notification::getInstance();
 
 $report_sender = ReportSender::getInstance();
 $report = Report::getInstance();
+
+$daily_data_sender = DailyDataSender::getInstance();
+$daily_data = DailyData::getInstance();
