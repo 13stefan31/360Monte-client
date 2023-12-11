@@ -123,14 +123,16 @@ $(document).ready(function() {
                         descriptionRow.append($('<th>').text('Opis:'));
                         descriptionRow.append($('<td>').attr('colspan', '13').text(data.description));
 
-                        $('#works-history-table tbody').prepend(descriptionRow);
                         $('#works-history-table tbody').prepend(newRow);
+                        $('#works-history-table tbody').prepend(descriptionRow);
 
 
                         $('#alertAddWorkHistory').html(createSuccessMessage('Uspješan unos!'));
 
                         $('#newWorkHistory').modal('hide');
                         $('#workHisrtoryAdd')[0].reset();
+
+
                     }
 
                 },  error: function(jqXHR) {
@@ -419,7 +421,7 @@ function getWorksHistory(filters,current_page,per_page){
                         '<th>Opis:</th>' +
                         '<td colspan="12">' + row.description + '</td></tr>';
 
-                    $('#works-history-table tbody').prepend(workHistoryRow + opisRow);
+                    $('#works-history-table tbody').append(workHistoryRow + opisRow);
                 });
 
                 $('#works-history-table tbody').on('mouseenter', '.work-history-row', function() {
