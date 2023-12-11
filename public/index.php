@@ -7,12 +7,9 @@
         <div class="layout">
         <?php  include ('layouts/header.php')?>
         <?php  include ('layouts/sideNav.php')?>
-            <!-- Page Container START -->
             <div class="page-container">
-                <!-- Content Wrapper START -->
                 <div class="main-content">
                     <div class="row">
-
                         <?php if (in_array($authRole,$personAllowedRoles)) { ?>
                             <div class="col-md-6 col-lg-3">
                             <a href="/zaposleni">
@@ -23,7 +20,7 @@
                                             <i class="anticon anticon-user-add"></i>
                                         </div>
                                         <div class="m-l-15">
-                                            <h2 class="m-b-0">Zaposleni</h2>
+                                            <h3 class="m-b-0">Zaposleni</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -42,7 +39,7 @@
                                             <i class="anticon anticon-car"></i>
                                         </div>
                                         <div class="m-l-15">
-                                            <h2 class="m-b-0">Vozila</h2>
+                                            <h3 class="m-b-0">Vozila</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +58,7 @@
                                             <i class="anticon anticon-question-circle"></i>
                                         </div>
                                         <div class="m-l-15">
-                                            <h2 class="m-b-0">Ankete</h2>
+                                            <h3 class="m-b-0">Ankete</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +77,7 @@
                                             <i class="anticon anticon-deployment-unit"></i>
                                         </div>
                                         <div class="m-l-15">
-                                            <h2 class="m-b-0">Alokacije</h2>
+                                            <h3 class="m-b-0">Alokacije</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +95,7 @@
                                                     <i class="anticon anticon-solution"></i>
                                                 </div>
                                                 <div class="m-l-15">
-                                                    <h2 class="m-b-0">Izvještaj</h2>
+                                                    <h3 class="m-b-0">Izvještaji</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,6 +103,7 @@
                                 </a>
                             </div>
                         <?php }?>
+                        <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/istorija-radova">
                                 <div class="card">
@@ -115,13 +113,15 @@
                                                 <i class="fas fa-history"></i>
                                             </div>
                                             <div class="m-l-15">
-                                                <h2 class="m-b-0">Istorija radova</h2>
+                                                <h3 class="m-b-0">Istorija radova</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
+                        <?php }?>
+                        <?php if (in_array($authRole,$dailyDataHistoryAllowedRoles)){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/istorija-dnevnih-podataka">
                                 <div class="card">
@@ -131,13 +131,14 @@
                                                 <i class="fas fa-history"></i>
                                             </div>
                                             <div class="m-l-15">
-                                                <h2 class="m-b-0">Istorija dnevnih podataka</h2>
+                                                <h3 class="m-b-0">Istorija dnevnih podataka</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
+                        <?php }?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/ture">
                                 <div class="card">
@@ -147,7 +148,7 @@
                                                 <i class="anticon anticon-car"></i>
                                             </div>
                                             <div class="m-l-15">
-                                                <h2 class="m-b-0">Ture</h2>
+                                                <h3 class="m-b-0">Ture</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -156,10 +157,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Content Wrapper END -->
                 <?php  include ('layouts/footer.php')?>
             </div>
-            <!-- Page Container END -->
             <?php  include ('layouts/themeConfig.php')?>
         </div>
     </div>

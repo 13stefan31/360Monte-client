@@ -14,7 +14,10 @@ if(isset($_GET) && isset($_GET['getDailyDataHistory'])){
 
     return $daily_data_sender->getDailyData($vehicleId,$limit,$page);
 }
-
+if(isset($_GET) && isset($_GET['generateCart'])){
+    $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
+    return $daily_data_sender->getCartData($vehicleId);
+}
 if(isset($_POST) && isset($_POST['addDailyData'])){
     return $daily_data_sender->addDailyData($_POST['data']);
 }

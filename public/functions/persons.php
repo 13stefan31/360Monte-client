@@ -9,7 +9,7 @@ if(isset($_GET) && isset($_GET['getAllPersons'])){
     }else{
         $_SESSION['person_filter_name'] = null;
     }
-    if (isset($name)){
+    if (isset($rolaId)){
         $_SESSION['person_filter_rola_id'] = $rolaId;
     }else{
         $_SESSION['person_filter_rola_id'] = null;

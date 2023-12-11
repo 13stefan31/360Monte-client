@@ -18,53 +18,95 @@ if (!in_array($authRole,$reportAllowedRoles)){
     <div class="layout">
         <?php include ('layouts/header.php')?>
         <?php include ('layouts/sideNav.php')?>
-        <!-- Page Container START -->
         <div class="page-container">
-            <!-- Content Wrapper START -->
             <div class="main-content">
                 <div class="page-header">
                     <h2 class="header-title personName"></h2>
                     <div class="header-sub-title">
                         <nav class="breadcrumb breadcrumb-dash">
                             <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
-                            <span class="breadcrumb-item active  ">Izvještaj</span>
+                            <span class="breadcrumb-item active  ">Izvještaji</span>
                         </nav>
                     </div>
-                </div><div class="card">
+                </div>
+                <div class="accordion" id="accordion-default">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <a data-toggle="collapse" href="#collapseOneDefault">
+                                    <span>Alokacija zaposlenog po turi</span>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseOneDefault" class="collapse show" data-parent="#accordion-default">
+                            <div class="card-body">
 
-                    <div class="card-header">
-                        <h4 class="card-title">Izvještaj</h4>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold">Tura:</label>
+                                            <select id="toursSelectReport" class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Zaposleni:</label>
+                                            <select id="employeeSelectReport" class="form-control">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Početni datum:</label>
+                                            <input type="date" id="dateFromReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Krajnji datum:</label>
+                                            <input type="date" id="dateToReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary m-r-5 float-right mb-3" id="generateReport"><i class="anticon anticon-download"></i> Preuzmi izvještaj</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="font-weight-semibold">Tura:</label>
-                                    <select id="toursSelectReport" class="form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="font-weight-semibold" >Zaposleni:</label>
-                                    <select id="employeeSelectReport" class="form-control">
-                                        <option></option>
-                                    </select>
-                                </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <a class="collapsed" data-toggle="collapse" href="#collapseTwoDefault">
+                                    <span>Alokacija tura po vodiču</span>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseTwoDefault" class="collapse" data-parent="#accordion-default">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label class="font-weight-semibold" >Zaposleni:</label>
+                                            <select id="employeeSelectReport2" class="form-control">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Početni datum:</label>
+                                            <input type="date" id="dateFromReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Krajnji datum:</label>
+                                            <input type="date" id="dateToReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary m-r-5 float-right mb-3" id="generateReport2"><i class="anticon anticon-download"></i> Preuzmi izvještaj</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="font-weight-semibold" >Početni datum:</label>
-                                    <input type="date" id="dateFromReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="font-weight-semibold" >Krajnji datum:</label>
-                                    <input type="date" id="dateToReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
-                                </div>
-                            </div>
-                            <div id="reportMessage"></div>
-                            <div>
-                                <button class="btn btn-tone btn-primary float-right" id="generateReport">Generiši</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +118,7 @@ if (!in_array($authRole,$reportAllowedRoles)){
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/report.js"></script>
+<script src="/assets/js/report.js?v=1.1"></script>
 
 </body>
 

@@ -1,6 +1,6 @@
 <?php
 require 'auth.php';
-if (!in_array($authRole,$personAllowedRoles)){
+if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
 
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
@@ -29,9 +29,7 @@ $current_page= 1;
     <div class="layout">
         <?php include ('layouts/header.php')?>
         <?php include ('layouts/sideNav.php')?>
-        <!-- Page Container START -->
         <div class="page-container">
-            <!-- Content Wrapper START -->
             <div class="main-content">
                 <div class="page-header">
                     <h2 class="header-title">Istorija dnevnih podataka</h2>
@@ -43,16 +41,17 @@ $current_page= 1;
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="dialy-data">
                         <div id="alert"></div>
                         <div class="m-t-25">
-                            <?php if (in_array($authRole,$personAllowedRoles)){?>
                                 <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newDailyDataButton" data-target="#newDailyData">
                                     Novi unos
                                 </button>
-                            <?php }?>
                             <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showDailyDataFilter" >
                                 Filteri
+                            </button>
+                            <button type="button" class="btn btn-secondary m-b-15 m-r-10 " id="showDailyDataCart" >
+                                <i class="anticon anticon-bar-chart"></i> Dijagram podataka
                             </button>
                             <div class="card" id="dailyDataFilter" style="<?=$showFilters?>">
                                 <div class="card-body">
@@ -73,14 +72,38 @@ $current_page= 1;
                                     </div>
                                 </div>
                             </div>
+                            <div class="card" id="dailyDataCart" style="display: none">
+                                <div class="card-body">
+                                    <h4>Dijagram podataka</h4>
+                                     <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Vozilo</span>
+                                        </div>
+                                        <select id="vehicleCartId" class="form-control"></select>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <button class="btn btn-primary" id="generateVehicleChart">Generiši</button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body" id="chartDiv" style="display: none;">
+                                    <canvas id="dailyDataChart" width="400" height="200" ></canvas>
+                                </div>
+                            </div>
                             <div id="alertAddDialyData"></div>
                             <div class="table-container">
                                 <table id="daily-data-table" class="table">
                                     <thead>
                                     <tr>
                                         <th>Vozilo</th>
-                                        <th>Počeo dan</th>
-                                        <th>Završio dan</th>
+                                        <th>Registarska oznaka</th>
+                                        <th style="text-align: right">Godina</th>
+                                        <th style="text-align: right">Počeo dan</th>
+                                        <th style="text-align: right">Završio dan</th>
+                                        <th style="text-align: right">Količina goriva</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -95,7 +118,6 @@ $current_page= 1;
                 </div>
             </div>
 
-            <?php if (in_array($authRole,$personAllowedRoles)){?>
                 <div class="modal fade" id="newDailyData">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -120,7 +142,7 @@ $current_page= 1;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Početna kilometraža</span>
                                         </div>
-                                        <input type="text" class="form-control" id="startingMileage" aria-describedby="basic-addon3" placeholder="Unesite početnu kilometražu">
+                                        <input type="number" class="form-control" id="startingMileage" aria-describedby="basic-addon3" placeholder="Unesite početnu kilometražu">
 
                                     </div>
 
@@ -128,7 +150,7 @@ $current_page= 1;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Završna kilomteraža</span>
                                         </div>
-                                        <input type="text" class="form-control" id="endingMileage" aria-describedby="basic-addon3" placeholder="Unesite završnu kilometražu">
+                                        <input type="number" class="form-control" id="endingMileage" aria-describedby="basic-addon3" placeholder="Unesite završnu kilometražu">
 
                                     </div>
 
@@ -136,7 +158,7 @@ $current_page= 1;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Cijena goriva (EUR)</span>
                                         </div>
-                                        <input type="text" class="form-control" id="fuelPrice" aria-describedby="basic-addon3" placeholder="Unesite cijenu goriva">
+                                        <input type="number" class="form-control" id="fuelPrice" aria-describedby="basic-addon3" placeholder="Unesite cijenu goriva">
 
                                     </div>
 
@@ -144,7 +166,7 @@ $current_page= 1;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Količina goriva (L)</span>
                                         </div>
-                                        <input type="text" class="form-control" id="fuelQuantity" aria-describedby="basic-addon3" placeholder="Unesite količinu goriva">
+                                        <input type="number" class="form-control" id="fuelQuantity" aria-describedby="basic-addon3" placeholder="Unesite količinu goriva">
 
                                     </div>
 
@@ -157,11 +179,8 @@ $current_page= 1;
                         </div>
                     </div>
                 </div>
-            <?php }?>
-            <!-- Content Wrapper END -->
             <?php include ('layouts/footer.php')?>
         </div>
-        <!-- Page Container END -->
         <?php  include ('layouts/themeConfig.php')?>
     </div>
 </div>
@@ -170,8 +189,8 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
+<script src="/assets/vendors/chartist/chartist.min.js"></script>
 <script src="/assets/js/dailyDataHistory.js"></script>
-
 </body>
 
 </html>

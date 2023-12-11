@@ -1,6 +1,4 @@
 
-
-<!-- Side Nav START -->
 <div class="side-nav">
     <div class="side-nav-inner">
         <ul class="side-nav-menu scrollable">
@@ -13,7 +11,6 @@
                     <span class="arrow"> <i class="arrow-icon"></i> </span>
                 </a>
                 <ul class="dropdown-menu">
-
                     <?php if (in_array($authRole,$personAllowedRoles)) { ?>
                     <li>
                         <a href="/zaposleni">
@@ -54,20 +51,24 @@
                             <a href="/izvjestaj">
                              <span class="icon-holder">
                                                     <i class="anticon anticon-solution"></i>
-                         </span> Izvještaj</a>
+                         </span> Izvještaji</a>
                         </li>
                     <?php }?>
+                    <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
                     <li>
                         <a href="/istorija-radova">
                              <span class="icon-holder">
                                  <i class="fas fa-history"></i>
                          </span>Istorija radova</a>
                     </li>
+                    <?php }?>
+                    <?php if (in_array($authRole,$dailyDataHistoryAllowedRoles)){?>
                     <li>
                         <a href="/istorija-dnevnih-podataka">
                             <i class="fas fa-history"></i>
                          </span>Istorija dnevnih podataka</a>
                     </li>
+                    <?php }?>
                     <li>
                         <a href="/ture">
                              <span class="icon-holder">
@@ -78,8 +79,6 @@
                 </ul>
             </li>
             <hr/>
-
         </ul>
     </div>
 </div>
-<!-- Side Nav END -->

@@ -29,30 +29,37 @@ define("P_OFFICE_ADMIN_ROLE_ID", 4);
 define("P_MEHANIC_ROLE_ID", 5);
 define("P_GENERAL_MANAGER_ROLE_ID",6);
 define("P_HR_MANAGER_ROLE_ID",7);
+define("P_SALE_COORDINATOR_ROLE_ID",8);
+define("P_VEHICLE_COORDINATOR_ROLE_ID",9);
 
 $allocationAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_TOUR_GUIDE_ROLE_ID,
     P_DRIVER_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
-    P_GENERAL_MANAGER_ROLE_ID
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID
 );
 $vehiclesAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
     P_HR_MANAGER_ROLE_ID,
-    P_MEHANIC_ROLE_ID
+    P_MEHANIC_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
 );
 $personAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
     P_HR_MANAGER_ROLE_ID
 );
 $reportAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID
 );
 $surveysAllowedRoles = array(
     P_ADMIN_ROLE_ID,
@@ -63,6 +70,7 @@ $allocationEditRoles = array(
     P_ADMIN_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
     P_HR_MANAGER_ROLE_ID
 );
 $allocationEditRolesString = json_encode($allocationEditRoles);
@@ -70,12 +78,14 @@ $allocationEditRolesString = json_encode($allocationEditRoles);
 //za alokacije kojima je status 1
 $allocationUpdateRoles = array(
     P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
     P_ADMIN_ROLE_ID
 );
 $externalUseChange = array(
     P_ADMIN_ROLE_ID,
     P_OFFICE_ADMIN_ROLE_ID,
-    P_GENERAL_MANAGER_ROLE_ID
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID
 );
 $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
 
@@ -84,7 +94,22 @@ $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
 //ko moze da unosi komentar na vozila
 $vehicleCommentRoles = array(
     P_ADMIN_ROLE_ID,
-    P_MEHANIC_ROLE_ID
+    P_MEHANIC_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
+);
+
+$worksHistoryAllowedRoles = array(
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
+
+);
+$dailyDataHistoryAllowedRoles = array(
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
 );
 
 ?>

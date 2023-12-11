@@ -6,12 +6,12 @@
             <img class="logo-fold" src="/assets/images/logo/logo-fold.png" alt="360Monte">
         </a>
     </div>
-    <div class="logo logo-white">
-        <a href="/">
-            <img src="/assets/images/logo/logo-white.png" alt="Logo">
-            <img class="logo-fold" src="/assets/images/logo/logo-fold-white.png" alt="360Monte">
-        </a>
-    </div>
+<!--    <div class="logo logo-white">-->
+<!--        <a href="/">-->
+<!--            <img src="/assets/images/logo/logo-white.png" alt="Logo">-->
+<!--            <img class="logo-fold" src="/assets/images/logo/logo-fold-white.png" alt="360Monte">-->
+<!--        </a>-->
+<!--    </div>-->
     <div class="nav-wrap">
         <ul class="nav-left">
             <li class="desktop-toggle">

@@ -38,6 +38,10 @@ class DailyDataSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
     }
 
+    public function getCartData($vehicleId = null){
+        $initialize_field = 'vehicle-daily-data/vehicle/'.$vehicleId.'/chart' ;
+        return  $this->send_get_request($initialize_field);
+    }
     public function getSingleDailyData($id) {
         $initialize_field = 'vehicle-daily-data' . '/' . $id;
         return  $this->send_get_request($initialize_field);

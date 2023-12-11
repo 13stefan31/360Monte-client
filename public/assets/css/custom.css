@@ -117,3 +117,37 @@ p.error {
 #vehicle-comment-table td {
     white-space: pre-line;
 }
+
+div#chartDiv {
+    max-height: 400px ;
+}
+
+#works-history-table .table th, .table td {
+    white-space: break-spaces;
+}
+.accordion>.card>.card-header>.card-title>a{
+    background-color: rgba(63, 135, 245,0.2)!important;
+}
+@media screen and (min-width: 768px) {
+    #showDailyDataCart,#showWorksDataCart {
+        float: right;
+        margin-right: 10px;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+  #chartDiv{
+      padding: unset!important;
+  }
+    canvas#dailyDataChart{
+        height: auto!important;
+        width: 100%!important;
+    }
+    .dialy-data{
+        padding: unset!important;
+    }
+}
+.work-history-row.hovered, .work-history-opis-row.hovered {
+    background-color: rgba(63, 135, 245,0.2)!important;
+}

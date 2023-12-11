@@ -17,19 +17,27 @@ $(document).ready(function() {
         e.preventDefault();
         getVehiclesSelect('vehicleFilterId');
         $("#dailyDataFilter").toggle();
+        $("#dailyDataCart").hide();
     });
 
+    $('#showDailyDataCart').click(function(e) {
+        e.preventDefault();
+        getVehiclesSelect('vehicleCartId');
+        $("#dailyDataFilter").hide();
+        $("#dailyDataCart").toggle();
+    });
 
     $('#newDailyDataButton').click(function(e) {
         e.preventDefault();
+        $("#dailyDataAddError").empty();
         getVehiclesSelect('vehicleSelectNew');
     });
 
 
     $('#addNewDailyData').click(function(e) {
         e.preventDefault();
-        var validate = validateNewDailyData();
-        if (validate){
+        // var validate = validateNewDailyData();
+        // if (validate){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
@@ -53,14 +61,18 @@ $(document).ready(function() {
                         $('#dailyDataAddError').html(handleErrors(dataParse.error));
                     }else{
                         var data = dataParse.data.data;
+                        console.log(data)
                         var newRow = $('<tr>').attr('id', data.id);
                         newRow.append($('<td>').text( data.vehicle.brand +' '+ data.vehicle.model ));
-                        newRow.append($('<td>').text(data.starting_mileage));
-                        newRow.append($('<td>').text(data.ending_mileage));
+                        newRow.append($('<td>').text( data.vehicle.registrationNumber ));
+                        newRow.append($('<td style="text-align: right">').text( data.vehicle.year ));
+                        newRow.append($('<td style="text-align: right">').text(data.starting_mileage+'km'));
+                        newRow.append($('<td style="text-align: right">').text(data.ending_mileage+'km'));
+                        newRow.append($('<td style="text-align: right">').text(data.fuel_quantity+'L'));
                         newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>'));
                         $('#daily-data-table tbody').prepend(newRow);
 
-                        $('#alertAddDialyData').html(createSuccessMessage('Uspješno ste unijeli novu istoriju dnevnih pdoataka!'));
+                        $('#alertAddDialyData').html(createSuccessMessage('Uspješno ste unijeli novu istoriju dnevnih podataka!'));
 
                         $('#newDailyData').modal('hide');
                         $('#dialyDataAdd')[0].reset();
@@ -75,7 +87,7 @@ $(document).ready(function() {
                     $btn.find('.anticon-loading').remove();
                 }
             });
-        }
+        // }
     });
 
 
@@ -86,6 +98,74 @@ $(document).ready(function() {
         $('#vehicleFilterId').val('');
         $('#clearFilters').hide();
     });
+
+    let myChart;
+    $("#generateVehicleChart").on("click", function () {
+        const selectedVehicleId = $("#vehicleCartId").val();
+
+        if (!selectedVehicleId) {
+            Swal.fire("Morate odabrati vozilo za generisanje dijagrama",'','warning')
+            return;
+        }
+
+        const selectedValueText = $("#vehicleCartId option:selected").text();
+
+        $.ajax({
+            url: '/../../functions/dailyDataHistory.php',
+            method: 'GET',
+            data: {
+                vehicleId: selectedVehicleId,
+                generateCart: 1
+            },
+            success: function (data) {
+                $("#chartDiv").show();
+                var dataParse = JSON.parse(data);
+                const chartData = dataParse.data.data.chartData;
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                const displayTextMap = {
+                    "averageMileage": "Prosječna kilometraža",
+                    "averageFuelQuantity": "Prosječna količina goriva (L)",
+                    "averageFuelPrice": "Prosječna cijena goriva (EUR)"
+                };
+
+                const xAsis = chartData.xAsis || [];
+                const updatedXAsis = xAsis.map(value => displayTextMap[value] || value);
+
+                const yAsis = chartData.yAsis || [];
+                const ctx = document.getElementById('dailyDataChart').getContext('2d');
+                 myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: updatedXAsis,
+                        datasets: [{
+                            label: selectedValueText,
+                            data: yAsis,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                $("#dailyDataChart").attr("width", 150);
+                $("#dailyDataChart").attr("height", 150);
+            },
+            error: function (error) {
+                console.error('Error fetching data from the API:', error);
+            }
+        });
+    });
+
+
 });
 
 
@@ -118,14 +198,22 @@ function getDailyDataHistory(filters,current_page,per_page){
         data:data,
         dataType: 'json',
         success: function(response) {
+
             if (response.error) {
                 $('#alert').append(createWarningMessage(response.error));
             } else {
                 $('#daily-data-table tbody').empty();
                 var data = response.data.data;
-                var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#daily-data-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.vehicle.brand +' '+ row.vehicle.model + '</td><td>' + row.starting_mileage + '</td><td>' + row.ending_mileage + '</td><td><a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                    $('#daily-data-table tbody').prepend('' +
+                        '<tr id="'+row.id+'">' +
+                        '<td>' + row.vehicle.brand +' '+ row.vehicle.model + '</td>' +
+                        '<td>' + row.vehicle.registrationNumber + '</td>' +
+                        '<td style="text-align: right">' + row.vehicle.year + '</td>' +
+                        '<td style="text-align: right">' + row.starting_mileage + 'km</td>' +
+                        '<td style="text-align: right">' + row.ending_mileage + 'km</td>' +
+                        '<td style="text-align: right">' + row.fuel_quantity + 'L</td>' +
+                        '<td><a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                         '</td></tr>');
                 });
                 var meta = response.data.meta;
@@ -139,36 +227,6 @@ function getDailyDataHistory(filters,current_page,per_page){
         }
     });
 }
-
-function validateNewDailyData(){
-    var startingMileage = $('#startingMileage').val();
-    var endingMileage = $('#endingMileage').val();
-    var fuelPrice = $('#fuelPrice').val();
-    var fuelQuantity = $('#fuelPrice').val();
-    var vehicleId = $('#vehicleSelectNew').val();
-    $('.error').remove();
-
-    if ($.trim(startingMileage).length == 0) {
-        $('#startingMileage').after('<p class="error">Unesite početnu kilometražu.</p>');
-    }
-    if ($.trim(endingMileage).length == 0 ) {
-        $('#endingMileage').after('<p class="error">Unesite završnu kilometražu.</p>');
-    }
-    if ($.trim(fuelPrice).length == 0 ) {
-        $('#fuelPrice').after('<p class="error">Unesite cijenu goriva.</p>');
-    }
-    if ($.trim(fuelQuantity).length == 0 ) {
-        $('#fuelQuantity').after('<p class="error">Unesite količinu goriva.</p>');
-    }
-    if (vehicleId == '') {
-        $('#vehicleId').after('<p class="error">Odaberite vozilo.</p>');
-    }
-    if ($('.error').length == 0) {
-        return true;
-    }else {
-        return false;
-    }
-};
 
 
 function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {

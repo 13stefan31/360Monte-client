@@ -1,5 +1,5 @@
 <?php  require 'auth.php';
-if (!in_array($authRole,$allocationAllowedRoles)){
+if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
     exit();
@@ -40,14 +40,12 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                     <div class="dailyDataDivCard">
                                         <div class="card-group">
                                             <div class="card">
-                                                <?php if (in_array($authRole,$allocationEditRoles)){?>
-                                                    <li class="list-group-item">
-                                                        <div class="text-center m-t-5">
-                                                            <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeDailyDataButton" data-target="#daily-data-change-modal">
-                                                                <i class="anticon anticon-form"></i>Izmijeni podatke
-                                                            </button>  </div>
-                                                    </li>
-                                                <?php }?>
+                                                <li class="list-group-item">
+                                                    <div class="text-center m-t-5">
+                                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeDailyDataButton" data-target="#daily-data-change-modal">
+                                                            <i class="anticon anticon-form"></i>Izmijeni podatke
+                                                        </button>  </div>
+                                                </li>
                                                 <ul class="list-group list-group-flus">
                                                     <li class="list-group-item">
                                                         <p>Vozilo: <span class="dailyDataVehicle m-b-0 text-dark font-weight-semibold"></span></p>
@@ -72,6 +70,19 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                                     </li>
                                                 </ul>
                                             </div>
+                                            <div class="card">
+                                                <div class="table-responsive">
+                                                    <table id="drivers-tabele" class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">Vozilo koristio</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +91,6 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                     </div>
                 </div>
 
-                <?php if (in_array($authRole,$allocationEditRoles)){?>
                     <div class="modal fade" id="daily-data-change-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -91,31 +101,31 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                     </button>
                                 </div>
                                 <div id="dailyDataChangeError"></div>
-                                <form id="allocationPersonChange">
+                                <form id="change-form">
                                     <div class="modal-body">
                                         <input hidden="" id="dataId">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Početna kilometraža:</span>
                                             </div>
-                                            <input type="text" id="smChange" class="form-control" />
+                                            <input type="number" id="smChange" class="form-control" />
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Krajnja kilometraža:</span>
                                             </div>
-                                            <input type="text" id="emChange" class="form-control" />
+                                            <input type="number" id="emChange" class="form-control" />
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Cijena goriva (EUR):</span>
                                             </div>
-                                            <input type="text" id="fpChange" class="form-control" />
+                                            <input type="number" id="fpChange" class="form-control" />
                                         </div><div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Količina goriva (L):</span>
                                             </div>
-                                            <input type="text" id="qpChange" class="form-control" />
+                                            <input type="number" id="qpChange" class="form-control" />
                                         </div>
 
                                     </div>
@@ -124,10 +134,10 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                         <button type="submit" class="btn btn-primary" id="editDailyData">Sačuvaj</button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
-                <?php }?>
                 <?php include ('layouts/footer.php')?>
             </div>
             <?php  include ('layouts/themeConfig.php')?>

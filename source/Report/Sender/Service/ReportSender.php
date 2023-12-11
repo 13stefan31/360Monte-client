@@ -32,5 +32,16 @@ class ReportSender extends \Main\SenderService
 
     }
 
+    public function generateReport2($data){
+        $body = [
+            'userId' => $data['userId'],
+            'fromDate' => $data['fromDate'],
+            'toDate' => $data['toDate']
+        ];
+        $initialize_field = 'report/generate-user-tour-history';
+        return  $this->send_post_request($initialize_field, $body);
+
+    }
+
 }
 
