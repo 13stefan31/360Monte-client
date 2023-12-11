@@ -36,8 +36,8 @@ $(document).ready(function() {
 
     $('#addNewDailyData').click(function(e) {
         e.preventDefault();
-        // var validate = validateNewDailyData();
-        // if (validate){
+        var validate = validateNew();
+        if (validate){
             var $btn = $(this);
             $btn.addClass('is-loading').prop('disabled', true);
             $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
@@ -52,7 +52,8 @@ $(document).ready(function() {
                         'startingMileage': $('#startingMileage').val(),
                         'fuelPrice': $('#fuelPrice').val(),
                         'fuelQuantity': $('#fuelQuantity').val(),
-                        'endingMileage': $('#endingMileage').val()
+                        'endingMileage': $('#endingMileage').val(),
+                        'date': $('#dateNew').val()
                     }
                 } ,
                 success: function(response) {
@@ -61,7 +62,6 @@ $(document).ready(function() {
                         $('#dailyDataAddError').html(handleErrors(dataParse.error));
                     }else{
                         var data = dataParse.data.data;
-                        console.log(data)
                         var newRow = $('<tr>').attr('id', data.id);
                         newRow.append($('<td>').text( data.vehicle.brand +' '+ data.vehicle.model ));
                         newRow.append($('<td>').text( data.vehicle.registrationNumber ));
@@ -87,7 +87,7 @@ $(document).ready(function() {
                     $btn.find('.anticon-loading').remove();
                 }
             });
-        // }
+        }
     });
 
 
@@ -205,7 +205,7 @@ function getDailyDataHistory(filters,current_page,per_page){
                 $('#daily-data-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#daily-data-table tbody').prepend('' +
+                    $('#daily-data-table tbody').append('' +
                         '<tr id="'+row.id+'">' +
                         '<td>' + row.vehicle.brand +' '+ row.vehicle.model + '</td>' +
                         '<td>' + row.vehicle.registrationNumber + '</td>' +
@@ -282,4 +282,12 @@ function handlePageClick(pageNumber) {
         getUsers('',pageNumber,per_page);
     }
 
+}
+
+function validateNew() {
+    if ($('#dateNew').val().length === 0) {
+        $('#dailyDataAddError').html(handleErrors('Morate unijeti datum'));
+        return false;
+    }
+    return true;
 }

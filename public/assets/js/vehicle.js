@@ -7,7 +7,6 @@ $(document).ready(function() {
         data:{getSingleVehicle:1,vehicleId:vehicleId},
         dataType: 'json',
         success: function(response) {
-            console.log(response)
             if (response.error) {
                 $('#alertGetVehicle').html(handleErrors(response.error));
                 $('.vehicleDataCard').hide()
@@ -156,7 +155,6 @@ $(document).ready(function() {
         }else{
             reservedForExternalUsage=false;
         }
-        console.log(reservedForExternalUsage)
         $.ajax({
             url: '/../../functions/vehicles.php',
             type:'put',
@@ -172,8 +170,7 @@ $(document).ready(function() {
                     $('#vehicleExternalError').html(handleErrors(response.error));
                 } else {
                     var dataParse = JSON.parse(response);
-                    console.log(dataParse)
-                    Swal.fire('Uspejšno ste promijenili status eksterne upotrebe vozila','','success' )
+                    Swal.fire('Uspješno ste promijenili status eksterne upotrebe vozila','','success' )
                     if (dataParse.data.data.isReservedForExternalUsage==true){
                         $('.vehicleExternalUse').html('<span class="badge badge-pill badge-cyan font-size-13">Da</span>');
                     }else{

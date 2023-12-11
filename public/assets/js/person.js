@@ -102,7 +102,6 @@ $(document).ready(function() {
                     }
                 }),
                 success: function(response) {
-                    console.log(response)
                     var data = JSON.parse(response);
                     if (data.error) {
                         $('#alertChangeUserPassword').html(handleErrors(data.error));

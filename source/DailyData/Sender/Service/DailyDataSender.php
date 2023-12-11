@@ -61,13 +61,15 @@ class DailyDataSender extends \Main\SenderService
     }
 
     public function addDailyData($data){
+        $date = isset($data['date']) ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
+
         $body = [
             'vehicleId' => $data['vehicleId'],
             'startingMileage' => $data['startingMileage'],
             'endingMileage' => $data['endingMileage'],
             'fuelPrice' => $data['fuelPrice'],
             'fuelQuantity' => $data['fuelQuantity'],
-            'date' => date('d.m.Y')
+            'date' => $date
         ];
 
         $initialize_field = 'vehicle-daily-data';

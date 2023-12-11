@@ -14,7 +14,6 @@ $(document).ready(function() {
                 $('.dailyDataDivCard').hide()
             } else {
                 var data = response.data.data;
-                console.log(data)
                 $('#dataId').val(data.id);
                 $('.dailyDataCreated').html(data.createdAt);
                 $('.dailyDataFuelQ').html(data.fuel_quantity+'L');
@@ -27,9 +26,9 @@ $(document).ready(function() {
                 $('.dailyDataEndingM').html(data.ending_mileage+'km');
                 $('#emChange').val(data.ending_mileage  );
                 $('.dailyDataDistance').html(data.daily_distance+'km');
+                $('.dailyData').html(data.logDate);
 
                 data.drivenBy.forEach(function(item) {
-                    console.log(item)
                     var newRow = '<tr id="'+item.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + item.name + '</td></tr>';
                     $('#drivers-tabele tbody').append(newRow);
                 });

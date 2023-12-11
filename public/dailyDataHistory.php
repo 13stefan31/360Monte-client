@@ -137,7 +137,13 @@ $current_page= 1;
                                         </div>
                                         <select id="vehicleSelectNew" class="form-control"></select>
                                     </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"  >Datum</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="dateNew" aria-describedby="basic-addon3" >
 
+                                    </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Početna kilometraža</span>

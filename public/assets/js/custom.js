@@ -43,7 +43,7 @@ $(document).ready(function () {
                     var expirationTimeInMinutes = new Date().getTime() + (expiresIn * 60 * 1000);
 
                     var expirationDate = new Date(expirationTimeInMinutes);
-                    console.log(expirationDate);
+
 
                     document.cookie = 'token=' + accessToken + ';expires=' + expirationDate.toUTCString() + ';path=/';
 
@@ -101,7 +101,6 @@ $(document).ready(function () {
             },
             success: function(response) {
                 var dataParse = JSON.parse(response);
-                console.log(response)
                 if (dataParse.error){
                     $('#passwordResetError').html(handleErrors(dataParse.error));
                 }else{

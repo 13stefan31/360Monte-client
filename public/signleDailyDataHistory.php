@@ -66,6 +66,9 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
                                                         <p>Količina goriva (L): <span class="dailyDataFuelQ m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
                                                     <li class="list-group-item">
+                                                        <p>Datum: <span class="dailyData m-b-0 text-dark font-weight-semibold"></span></p>
+                                                    </li>
+                                                    <li class="list-group-item">
                                                         <p>Kreirano: <span class="dailyDataCreated m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
                                                 </ul>
@@ -121,7 +124,8 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
                                                 <span class="input-group-text" >Cijena goriva (EUR):</span>
                                             </div>
                                             <input type="number" id="fpChange" class="form-control" />
-                                        </div><div class="input-group mb-3">
+                                        </div>
+                                        <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Količina goriva (L):</span>
                                             </div>

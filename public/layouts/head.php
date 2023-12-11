@@ -13,7 +13,7 @@
     <link href="/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
 
     <link href="/assets/css/app.min.css" rel="stylesheet">
-    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link href="/assets/css/custom.css?v=1" rel="stylesheet">
     <!-- page css -->
     <link href="/assets/vendors/select2/select2.css" rel="stylesheet">
 
