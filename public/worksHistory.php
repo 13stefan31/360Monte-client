@@ -157,7 +157,7 @@ $current_page= 1;
                                 </button>
                             </div>
                             <div id="alertAddWorkHistory"></div>
-                            <div class="table-responsive">
+                            <div class="table-responsive-sm">
                                 <table id="works-history-table" class="table table-hover">
                                     <thead>
                                     <tr>

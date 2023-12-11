@@ -295,6 +295,7 @@ $(document).ready(function() {
                 generateCart: 1
             },
             success: function (data) {
+                console.log(data)
                 $("#chartDiv").show();
                 $("#downloadWorksDataCart").show();
                 var dataParse = JSON.parse(data);

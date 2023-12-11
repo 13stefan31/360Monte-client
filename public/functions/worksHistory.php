@@ -50,7 +50,7 @@ if(isset($_GET) && isset($_GET['generateCart'])){
 
 if(isset($_GET) && isset($_GET['downloadWorksDataCart'])){
     $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
-    $breakDownCategoryId = isset($_GET['breakDownCategoryId']) ? $_GET['breakDownCategoryId'] : null;
+    $breakDownCategoryId = isset($_GET['breakdownCatId']) ? $_GET['breakdownCatId'] : null;
     return $works_history_sender->downloadWorksDataCart($vehicleId,$breakDownCategoryId);
 }
 
