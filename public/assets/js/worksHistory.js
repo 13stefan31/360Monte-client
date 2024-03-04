@@ -143,6 +143,7 @@ $(document).ready(function() {
                             ' data-vehiclePartsPaymentMethod="'+data.vehiclePartsPaymentMethod+'"' +
                             ' data-breakDownMilage="'+data.breakDownMilage+'"' +
                             '><i class="anticon anticon-plus"></i></button>'
+                            +'<button class="btn btn-danger btn-sm m-r-5  " href="javascript:void(0)" onclick="deleteWorkHistory('+data.id+')"  ><i class="anticon anticon-delete"></i></button>'
                         ));
 
                         $('#works-history-table tbody').prepend(newRow);
@@ -246,6 +247,7 @@ $(document).ready(function() {
                             ' data-vehiclePartsPaymentMethod="'+updatedRowData.vehiclePartsPaymentMethod+'"' +
                             ' data-breakDownMilage="'+updatedRowData.breakDownMilage+'"' +
                             '><i class="anticon anticon-plus"></i></button>'
+                            +'<button class="btn btn-danger btn-sm m-r-5  " href="javascript:void(0)" onclick="deleteWorkHistory('+updatedRowData.id+')"  ><i class="anticon anticon-delete"></i></button>'
                             +'</td></tr>');
 
 
@@ -487,6 +489,7 @@ function getWorksHistory(filters,current_page,per_page){
                         ' data-vehiclePartsPaymentMethod="'+row.vehiclePartsPaymentMethod+'"' +
                         ' data-breakDownMilage="'+row.breakDownMilage+'"' +
                         '><i class="anticon anticon-plus"></i></button>'
+                        +'<button class="btn btn-danger btn-sm m-r-5  " href="javascript:void(0)" onclick="deleteWorkHistory('+row.id+')"  ><i class="anticon anticon-delete"></i></button>'
                         + '</td></tr>';
 
                     $('#works-history-table tbody').append(workHistoryRow );
@@ -797,6 +800,41 @@ function validateNewWork() {
         return false;
     }
     return true;
+}
+function deleteWorkHistory(id){
+    Swal.fire({
+        title: 'Da li ste sigutni da želite da obrišete?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Obriši',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/../../functions/worksHistory.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deleteWorkData: 1
+                    , workDataId: id
+                }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        Swal.fire( data.error,'','error');
+                    }else{
+                        $('#'+data.data.data.id).remove();
+                        Swal.fire('Uspješno obrisano','','success');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    var error = generateAjaxError(jqXHR);
+                    Swal.fire( error,'','error');
+                }
+            });
+        } else if (result.isDenied) {   }
+    })
 }
 function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheElement) {
     var selectedOption = paymentMethod.val();

@@ -100,7 +100,10 @@ class WorksHistorySender extends \Main\SenderService
         return  $this->send_post_request($initialize_field, $body);
 
     }
-
+    public function deleteWorkData($id) {
+        $initialize_field = 'vehicle-break-down-log' . '/' . $id;
+        return  $this->send_delete_request($initialize_field);
+    }
 
     public function editWorkHistory($data){
 

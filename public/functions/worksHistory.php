@@ -85,3 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
 
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = file_get_contents('php://input');
+    $decoded_data = json_decode($data, true);
+
+    if (isset($decoded_data['deleteWorkData']) && !empty($decoded_data['deleteWorkData'])) {
+        return $works_history_sender->deleteWorkData($decoded_data['workDataId']);
+    }
+}
