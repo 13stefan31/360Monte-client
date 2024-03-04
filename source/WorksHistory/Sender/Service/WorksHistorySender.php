@@ -20,7 +20,7 @@ class WorksHistorySender extends \Main\SenderService
     }
 
 
-    public function getAllWorksHistory($reportedBy = null,$breakdownCat=null,$breakdownSubcat=null,$partsPay=null,$mehanicPay=null, $limit,$page){
+    public function getAllWorksHistory($reportedBy = null,$breakdownCat=null,$vehicleId=null,$date=null,$breakdownSubcat=null,$partsPay=null,$mehanicPay=null, $limit,$page){
         $initialize_field = 'vehicle-break-down-log' ;
         $filters = array();
         if (!empty($reportedBy)) {
@@ -31,6 +31,12 @@ class WorksHistorySender extends \Main\SenderService
         }
         if (!empty($breakdownSubcat)) {
             $filters[] = 'breakDownSubcategory=' . (int) $breakdownSubcat;
+        }
+        if (!empty($vehicleId)) {
+            $filters[] = 'vehicleId=' . (int) $vehicleId;
+        }
+        if (!empty($date)) {
+            $filters[] = 'breakDownDate=' . DateTime::createFromFormat('Y-m-d', $date)->format('d.m.Y');
         }
         if (!empty($partsPay)) {
             $filters[] = 'partsPayMethod=' . urlencode($partsPay);
@@ -65,23 +71,6 @@ class WorksHistorySender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
     }
 
-    public function getSingleDailyData($id) {
-        $initialize_field = 'vehicle-daily-data' . '/' . $id;
-        return  $this->send_get_request($initialize_field);
-    }
-
-    public function updateDailyData($data){
-        $body = [
-            'startingMileage' => $data['startingMileage'],
-            'endingMileage' => $data['endingMileage'],
-            'fuelPrice' => $data['fuelPrice'],
-            'fuelQuantity' => $data['fuelQuantity']
-        ];
-
-        $initialize_field = 'vehicle-daily-data/'.$data['dataId'];
-        return  $this->send_put_request($initialize_field, $body);
-
-    }
 
     public function addNewWorkHistory($data){
 
@@ -97,13 +86,14 @@ class WorksHistorySender extends \Main\SenderService
             'endingDate' => $endingDate,
             'breakDownCategoryId' => (int)$data['workCategory'],
             'breakDownSubcategoryId' => !empty($data['workSubcategory']) ? (int)$data['workSubcategory'] : null,
-
             'description' => $data['description'],
-            'partsPrice' => $data['partsPrice'],
-            'mechanicPrice' => $data['mechanicPrice'],
             'breakDownMileage' => $data['breakDownMileage'],
-            'mechanic' => $data['mechanicPaymentMethod'],
-            'parts' => $data['vehiclePartsPaymentMethod'],
+            'mechanicPaymentMethod' => $data['mechanicPaymentMethod'],
+            'partsPaymentMethod' => $data['vehiclePartsPaymentMethod'],
+            'partsPriceCache' => $data['partsPriceCache'],
+            'partsPriceCard' => $data['partsPriceCard'],
+            'mechanicPriceCache' => $data['mechanicPriceCache'],
+            'mechanicPriceCard' => $data['mechanicPriceCard'],
         ];
 
         $initialize_field = 'vehicle-break-down-log';
@@ -129,11 +119,15 @@ class WorksHistorySender extends \Main\SenderService
 
 
             'description' => $data['descriptionEdit'],
-            'partsPrice' => $data['partsPriceEdit'],
-            'mechanicPrice' => $data['mechanicPriceEdit'],
             'breakDownMileage' => $data['breakDownMileageEdit'],
-            'mechanic' => $data['mechanicPaymentMethodEdit'],
-            'parts' => $data['vehiclePartsPaymentMethodEdit'],
+
+            'partsPriceCard' => $data['partsPriceCardEdit'],
+            'partsPaymentMethod' => $data['vehiclePartsPaymentMethodEdit'],
+            'partsPriceCache' => $data['partsPriceCacheEdit'],
+
+            'mechanicPaymentMethod' => $data['mechanicPaymentMethodEdit'],
+            'mechanicPriceCache' => $data['mechanicPriceCacheEdit'],
+            'mechanicPriceCard' => $data['mechanicPriceCardEdit'],
         ];
 
         $initialize_field = 'vehicle-break-down-log/'.$data['workIdEdit'];

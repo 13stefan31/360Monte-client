@@ -121,7 +121,9 @@ p.error {
 div#chartDiv {
     max-height: 400px ;
 }
-
+.disabled-input {
+    background-color: silver;
+}
 #works-history-table .table th, .table td {
     white-space: break-spaces;
 }

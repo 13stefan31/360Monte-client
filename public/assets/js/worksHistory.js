@@ -8,8 +8,12 @@ $(document).ready(function() {
         var work_filter_reported_id=$('#work_filter_reported_id').val();
         var work_filter_breakdown_cat_id=$('#work_filter_breakdown_cat_id').val();
         var work_filter_breakdown_sub_cat_id=$('#work_filter_breakdown_sub_cat_id').val();
+        var work_filter_vehicle_id=$('#work_filter_vehicle_id').val();
 
+        var work_filter_date=$('#work_filter_date').val();
+        $('#dateFilterId').val(work_filter_date);
         getStuffAllocation('reportedByFilterId',work_filter_reported_id);
+        getVehiclesSelect('vehicleFilterId',work_filter_vehicle_id);
         getBreakDownCategoryIdSelect('breakdownCatFilterId',work_filter_breakdown_cat_id);
         getBreakDownSubcategoryIdSelect('breakdownSubcatFilterId',work_filter_breakdown_cat_id,work_filter_breakdown_sub_cat_id);
 
@@ -19,8 +23,6 @@ $(document).ready(function() {
         var work_filter_mehanic_pay_id=$('#work_filter_mehanic_pay_id').val();
         $('#mehanicPayFilterId').val(work_filter_mehanic_pay_id);
 
-        getStuffAllocation('reportedByFilterId',work_filter_reported_id);
-        getBreakDownCategoryIdSelect('breakdownCatFilterId',work_filter_breakdown_cat_id);
     } else {
 
         getWorksHistory('',current_page,per_page);
@@ -30,6 +32,8 @@ $(document).ready(function() {
         e.preventDefault();
         getStuffAllocation('reportedByFilterId');
         getBreakDownCategoryIdSelect('breakdownCatFilterId');
+        getVehiclesSelect('vehicleFilterId');
+
         // getRoles('rolaFilterId');
         $("#worksDataCart").hide();
         $("#filterWorksHistory").toggle();
@@ -88,43 +92,60 @@ $(document).ready(function() {
                     }else{
                         var data = dataParse.data.data;
                         var newRow = $('<tr>').attr('id', data.id);
-                        newRow.append($('<td rowspan="2">').html('<i class="anticon anticon-right"></i>'));
-                        newRow.append($('<td>').text(data.vehicle.brand + ' ' + data.vehicle.model + ' ' + data.vehicle.year));
+                         newRow.append($('<td>').text(data.vehicle.brand + ' ' + data.vehicle.model + ' ' + data.vehicle.year));
                         newRow.append($('<td>').text(data.reportedBy.name));
                         newRow.append($('<td>').text(data.breakDownCategory.name));
-                        newRow.append($('<td>').text(data.breakDownSubcategory !== null ? data.breakDownSubcategory.name : ''));
-                        newRow.append($('<td style="text-align:right">').text(data.breakDownMilage+"km"));
+                         newRow.append($('<td style="text-align:right">').text(data.breakDownMilage+"km"));
                         newRow.append($('<td>').text(data.startingDate));
                         newRow.append($('<td>').text(data.endingDate));
                         newRow.append($('<td>').text(data.mechanicPaymentMethod));
-                        newRow.append($('<td style="text-align:right">').text(data.mechanicPrice +'€'));
-                        newRow.append($('<td>').text(data.vehiclePartsPaymentMethod));
-                        newRow.append($('<td style="text-align:right">').text(data.vehiclePartsPrice+'€'));
-                        newRow.append($('<td>').text(data.createdBy.name));
-                        newRow.append($('<td >').html(
+                         newRow.append($('<td>').text(data.vehiclePartsPaymentMethod));
+                         newRow.append($('<td>').text(data.createdBy.name));
+                         newRow.append($('<td>').text(data.createdAt));
+                        newRow.append($('<td style="display: flex">').html(
                             '<button class="btn btn-success m-r-5 work-edit" data-target="#editWorkHistory" ' +
-                            ' data-workid="' + data.id + '"' +
-                            ' data-reportedBy="' + data.reportedBy.id + '"' +
-                            ' data-vehicleId="' + data.vehicle.id + '"' +
-                            ' data-startingDate="' + data.startingDate + '"' +
-                            ' data-endingDate="' + data.endingDate + '"' +
-                            ' data-breakDownCategory="' + data.breakDownCategory.id + '"' +
+                            ' data-workid="'+data.id+'"' +
+                            ' data-reportedBy="'+data.reportedBy.id+'"' +
+                            ' data-vehicleId="'+data.vehicle.id+'"' +
+                            ' data-startingDate="'+data.startingDate+'"' +
+                            ' data-endingDate="'+data.endingDate+'"' +
+                            ' data-breakDownCategory="'+data.breakDownCategory.id+'"' +
                             ' data-breakDownSubcategory="' + (data.breakDownSubcategory !== null ? data.breakDownSubcategory.id : '') + '"' +
-                            ' data-description="' + data.description + '"' +
-                            ' data-mechanicPaymentMethod="' + data.mechanicPaymentMethod + '"' +
-                            ' data-mechanicPaymentMethod="' + data.mechanicPaymentMethod + '"' +
-                            ' data-mechanicPrice="' + data.mechanicPrice + '"' +
-                            ' data-vehiclePartsPrice="' + data.vehiclePartsPrice + '"' +
-                            ' data-vehiclePartsPaymentMethod="' + data.vehiclePartsPaymentMethod + '"' +
-                            ' data-breakDownMilage="' + data.breakDownMilage + '"' +
-                            '><i class="anticon anticon-edit"></i></button>'
+                              ' data-description="'+data.description+'"' +
+                            ' data-mechanicPaymentMethod="'+data.mechanicPaymentMethod+'"' +
+                            ' data-mechanicPricePayedOverAccount="'+data.mechanicPricePayedOverAccount+'"' +
+                            ' data-mechanicPricePayedWithCache="'+data.mechanicPricePayedWithCache+'"' +
+
+                            ' data-vehiclePartsPricePayedWithCache="'+data.vehiclePartsPricePayedWithCache+'"' +
+                            ' data-vehiclePartsPricePayedOverAccount="'+data.vehiclePartsPricePayedOverAccount+'"' +
+                            ' data-vehiclePartsPaymentMethod="'+data.vehiclePartsPaymentMethod+'"' +
+
+                            ' data-breakDownMilage="'+data.breakDownMilage+'"' +
+                            '><i class="anticon anticon-edit"></i></button>'+
+                            '<button class="btn btn-primary btn-sm m-r-5 work-open" data-target="#openWorkHistory"' +
+                            ' data-workid="'+data.id+'"' +
+                            ' data-reportedByName="'+data.reportedBy.name+'"' +
+                            ' data-vehicleName="'+ data.vehicle.brand + ' '+ data.vehicle.model +' ' + data.vehicle.year+'"' +
+                            ' data-startingDate="'+data.startingDate+'"' +
+                            ' data-endingDate="'+data.endingDate+'"' +
+                            ' data-totalPrice="'+data.totalPrice+'"' +
+                            ' data-createdAt="'+data.createdAt+'"' +
+                            ' data-breakDownCategoryName="'+data.breakDownCategory.name+'"' +
+
+                            ' data-breakDownSubcategory="' + (data.breakDownSubcategory !== null ? data.breakDownSubcategory.id : '') + '"' +
+                            ' data-description="'+data.description+'"' +
+                            ' data-mechanicPaymentMethod="'+data.mechanicPaymentMethod+'"' +
+                            ' data-mechanicPricePayedOverAccount="'+data.mechanicPricePayedOverAccount+'"' +
+                            ' data-mechanicPricePayedWithCache="'+data.mechanicPricePayedWithCache+'"' +
+
+                            ' data-vehiclePartsPricePayedWithCache="'+data.vehiclePartsPricePayedWithCache+'"' +
+                            ' data-vehiclePartsPricePayedOverAccount="'+data.vehiclePartsPricePayedOverAccount+'"' +
+                            ' data-vehiclePartsPaymentMethod="'+data.vehiclePartsPaymentMethod+'"' +
+                            ' data-breakDownMilage="'+data.breakDownMilage+'"' +
+                            '><i class="anticon anticon-plus"></i></button>'
                         ));
-                        var descriptionRow = $('<tr>').attr('id', 'opis-' + data.id);
-                        descriptionRow.append($('<th>').text('Opis:'));
-                        descriptionRow.append($('<td>').attr('colspan', '13').text(data.description));
 
                         $('#works-history-table tbody').prepend(newRow);
-                        $('#works-history-table tbody').prepend(descriptionRow);
 
 
                         $('#alertAddWorkHistory').html(createSuccessMessage('Uspješan unos!'));
@@ -169,20 +190,21 @@ $(document).ready(function() {
                         var $tableRow = $('#works-history-table tbody').find('tr[id="' + updatedRowData.id + '"]');
 
                         $tableRow.html(
-                            '<td rowspan="2"><i class="anticon anticon-right"></i></td>' +
+                            // '<td rowspan="2"><i class="anticon anticon-right"></i></td>' +
                             '<td>' + updatedRowData.vehicle.brand + ' ' + updatedRowData.vehicle.model + ' ' + updatedRowData.vehicle.year + '</td>' +
                             '<td>' + updatedRowData.reportedBy.name + '</td>' +
                             '<td>' + updatedRowData.breakDownCategory.name + '</td>' +
-                            '<td>' + (updatedRowData.breakDownSubcategory !== null ? updatedRowData.breakDownSubcategory.name : '') + '</td>'+
+                            // '<td>' + (updatedRowData.breakDownSubcategory !== null ? updatedRowData.breakDownSubcategory.name : '') + '</td>'+
                         '<td style="text-align:right">' + updatedRowData.breakDownMilage + 'km</td>' +
                             '<td>' + updatedRowData.startingDate + '</td>' +
                             '<td>' + updatedRowData.endingDate + '</td>' +
                             '<td>' + updatedRowData.mechanicPaymentMethod + '</td>' +
-                            '<td style="text-align:right">' + updatedRowData.mechanicPrice + '€</td>' +
+                            // '<td style="text-align:right">' + updatedRowData.mechanicPrice + '€</td>' +
                             '<td>' + updatedRowData.vehiclePartsPaymentMethod + '</td>' +
-                            '<td style="text-align:right">' + updatedRowData.vehiclePartsPrice + '€</td>' +
+                            // '<td style="text-align:right">' + updatedRowData.vehiclePartsPrice + '€</td>' +
                             '<td>' + updatedRowData.createdBy.name + '</td>' +
-                            '<td>' +
+                            '<td>' + updatedRowData.createdAt + '</td>' +
+                            '<td style="display: flex">' +
                             '<button class="btn btn-success m-r-5 work-edit" data-target="#editWorkHistory"' +
                             ' data-workid="'+updatedRowData.id+'"' +
                             ' data-reportedBy="'+updatedRowData.reportedBy.id+'"' +
@@ -190,22 +212,42 @@ $(document).ready(function() {
                             ' data-startingDate="'+updatedRowData.startingDate+'"' +
                             ' data-endingDate="'+updatedRowData.endingDate+'"' +
                             ' data-breakDownCategory="'+updatedRowData.breakDownCategory.id+'"' +
-                            ' data-breakDownSubcategory="' + (updatedRowData.breakDownSubcategory !== null ? updatedRowData.breakDownSubcategory.id : '') + '"'+
-                        ' data-description="'+updatedRowData.description+'"' +
+
+                            ' data-breakDownSubcategory="' + (updatedRowData.breakDownSubcategory !== null ? updatedRowData.breakDownSubcategory.id : '') + '"' +
+                            ' data-description="'+updatedRowData.description+'"' +
                             ' data-mechanicPaymentMethod="'+updatedRowData.mechanicPaymentMethod+'"' +
+                            ' data-mechanicPricePayedOverAccount="'+updatedRowData.mechanicPricePayedOverAccount+'"' +
+                            ' data-mechanicPricePayedWithCache="'+updatedRowData.mechanicPricePayedWithCache+'"' +
+
+                            ' data-vehiclePartsPricePayedWithCache="'+updatedRowData.vehiclePartsPricePayedWithCache+'"' +
+                            ' data-vehiclePartsPricePayedOverAccount="'+updatedRowData.vehiclePartsPricePayedOverAccount+'"' +
+                            ' data-vehiclePartsPaymentMethod="'+updatedRowData.vehiclePartsPaymentMethod+'"' +
+
+                            ' data-breakDownMilage="'+updatedRowData.breakDownMilage+'"' +
+                            '><i class="anticon anticon-edit"></i></button>' +
+                            '<button class="btn btn-primary btn-sm m-r-5 work-open" data-target="#openWorkHistory"' +
+                            ' data-workid="'+updatedRowData.id+'"' +
+                            ' data-reportedByName="'+updatedRowData.reportedBy.name+'"' +
+                            ' data-vehicleName="'+ updatedRowData.vehicle.brand + ' '+ updatedRowData.vehicle.model +' ' + updatedRowData.vehicle.year+'"' +
+                            ' data-startingDate="'+updatedRowData.startingDate+'"' +
+                            ' data-endingDate="'+updatedRowData.endingDate+'"' +
+                            ' data-totalPrice="'+updatedRowData.totalPrice+'"' +
+                            ' data-createdAt="'+updatedRowData.createdAt+'"' +
+                            ' data-breakDownCategoryName="'+updatedRowData.breakDownCategory.name+'"' +
+                            ' data-breakDownSubcategoryName="' + (updatedRowData.breakDownSubcategory !== null ? updatedRowData.breakDownSubcategory.name : '') + '"'
+                            +
+                            ' data-description="'+updatedRowData.description+'"' +
                             ' data-mechanicPaymentMethod="'+updatedRowData.mechanicPaymentMethod+'"' +
-                            ' data-mechanicPrice="'+updatedRowData.mechanicPrice+'"' +
-                            ' data-vehiclePartsPrice="'+updatedRowData.vehiclePartsPrice+'"' +
+                            ' data-mechanicPricePayedOverAccount="'+updatedRowData.mechanicPricePayedOverAccount+'"' +
+                            ' data-mechanicPricePayedWithCache="'+updatedRowData.mechanicPricePayedWithCache+'"' +
+
+                            ' data-vehiclePartsPricePayedWithCache="'+updatedRowData.vehiclePartsPricePayedWithCache+'"' +
+                            ' data-vehiclePartsPricePayedOverAccount="'+updatedRowData.vehiclePartsPricePayedOverAccount+'"' +
                             ' data-vehiclePartsPaymentMethod="'+updatedRowData.vehiclePartsPaymentMethod+'"' +
                             ' data-breakDownMilage="'+updatedRowData.breakDownMilage+'"' +
-                            '><i class="anticon anticon-edit"></i></button>' + '</td></tr>');
+                            '><i class="anticon anticon-plus"></i></button>'
+                            +'</td></tr>');
 
-
-                        var $tableRowO = $('#works-history-table tbody').find('tr[id="opis-' + updatedRowData.id + '"]');
-
-                        $tableRowO.html(   '<th>Opis:</th>' +
-                            '<td colspan="13">' + updatedRowData.description + '</td>'
-                        );
 
                         $('#alertAddWorkHistory').html(createSuccessMessage('Uspješno ste izmijenili podatke!'));
 
@@ -267,6 +309,7 @@ $(document).ready(function() {
         $('#reportedByFilterId').val('');
         $('#breakdownCatFilterId').val('');
         $('#breakdownSubcatFilterId').val('');
+        $('#dateFilterId').val('');
         $('#partsPayFilterId').val('');
         $('#mehanicPayFilterId').val('');
         $('#clearFilters').hide();
@@ -295,7 +338,6 @@ $(document).ready(function() {
                 generateCart: 1
             },
             success: function (data) {
-                console.log(data)
                 $("#chartDiv").show();
                 $("#downloadWorksDataCart").show();
                 var dataParse = JSON.parse(data);
@@ -344,12 +386,16 @@ $(document).on('click', '#worksHistoryFilter', function() {
     var breakdownCatFilterId = $('#breakdownCatFilterId').val();
     var breakdownSubcatFilterId = $('#breakdownSubcatFilterId').val();
     var partsPayFilterId = $('#partsPayFilterId').val();
+    var vehicleFilterId = $('#vehicleFilterId').val();
     var mehanicPayFilterId = $('#mehanicPayFilterId').val();
+    var dateFilterId = $('#dateFilterId').val();
     var filters = {
         reportedByFilterId: reportedByFilterId,
         breakdownCatFilterId: breakdownCatFilterId,
         breakdownSubcatFilterId: breakdownSubcatFilterId,
         partsPayFilterId: partsPayFilterId,
+        vehicleFilterId: vehicleFilterId,
+        dateFilterId: dateFilterId,
         mehanicPayFilterId: mehanicPayFilterId
     };
     localStorage.setItem('worksHistoryFilters', JSON.stringify(filters));
@@ -366,13 +412,15 @@ function getWorksHistory(filters,current_page,per_page){
     };
     if (filters !== '') {
         data.reportedBy = filters.reportedByFilterId;
+        data.breakDownDate = filters.dateFilterId;
+        data.vehicleId = filters.vehicleFilterId;
         data.breakdownCat = filters.breakdownCatFilterId;
         data.breakdownSubcat = filters.breakdownSubcatFilterId;
         data.partsPay = filters.partsPayFilterId;
         data.mehanicPay = filters.mehanicPayFilterId;
     }
 
-    $('#works-history-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
+    $('#works-history-table tbody').html('<tr><td colspan="10" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
         url: '/../../functions/worksHistory.php',
         type:'GET',
@@ -385,21 +433,22 @@ function getWorksHistory(filters,current_page,per_page){
                 $('#works-history-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
+                    console.log(row)
                     var workHistoryRow = '<tr class="work-history-row" id="'+row.id+'">' +
-                        '<td rowspan="2"><i class="anticon anticon-right"></i></td>' +
                         '<td>' + row.vehicle.brand + ' '+ row.vehicle.model +' ' + row.vehicle.year+'</td>' +
                         '<td>' + row.reportedBy.name + '</td>' +
                         '<td>' + row.breakDownCategory.name + '</td>' +
-                        '<td>' + (row.breakDownSubcategory !== null ? row.breakDownSubcategory.name : '') + '</td>'+
+                        // '<td>' + (row.breakDownSubcategory !== null ? row.breakDownSubcategory.name : '') + '</td>'+
                         '<td style="text-align:right">' + row.breakDownMilage + 'km</td>' +
                         '<td>' + row.startingDate + '</td>' +
                         '<td>' + row.endingDate + '</td>' +
                         '<td>' + row.mechanicPaymentMethod + '</td>' +
-                        '<td style="text-align:right">' + row.mechanicPrice + '€</td>' +
+                        // '<td style="text-align:right">' + row.mechanicPrice + '€</td>' +
                         '<td>' + row.vehiclePartsPaymentMethod + '</td>' +
-                        '<td style="text-align:right">' + row.vehiclePartsPrice + '€</td>' +
+                        // '<td style="text-align:right">' + row.vehiclePartsPrice + '€</td>' +
                         '<td>' + row.createdBy.name + '</td>' +
-                        '<td  >' +
+                        '<td>' + row.createdAt + '</td>' +
+                        '<td  style="display: flex">' +
                         '<button class="btn btn-success btn-sm m-r-5 work-edit" data-target="#editWorkHistory"' +
                         ' data-workid="'+row.id+'"' +
                         ' data-reportedBy="'+row.reportedBy.id+'"' +
@@ -407,22 +456,40 @@ function getWorksHistory(filters,current_page,per_page){
                         ' data-startingDate="'+row.startingDate+'"' +
                         ' data-endingDate="'+row.endingDate+'"' +
                         ' data-breakDownCategory="'+row.breakDownCategory.id+'"' +
-                        ' data-breakDownSubcategory="' + (row.breakDownSubcategory !== null ? row.breakDownSubcategory.id : '') + '"'
+                        ' data-breakDownSubcategory="' + (row.breakDownSubcategory !== null ? row.breakDownSubcategory.id : '') + '"' +
+                        ' data-description="'+row.description+'"' +
+                        ' data-mechanicPaymentMethod="'+row.mechanicPaymentMethod+'"' +
+                        ' data-mechanicPricePayedOverAccount="'+row.mechanicPricePayedOverAccount+'"' +
+                        ' data-mechanicPricePayedWithCache="'+row.mechanicPricePayedWithCache+'"' +
+                        ' data-vehiclePartsPricePayedWithCache="'+row.vehiclePartsPricePayedWithCache+'"' +
+                        ' data-vehiclePartsPricePayedOverAccount="'+row.vehiclePartsPricePayedOverAccount+'"' +
+                        ' data-vehiclePartsPaymentMethod="'+row.vehiclePartsPaymentMethod+'"' +
+                        ' data-breakDownMilage="'+row.breakDownMilage+'"' +
+                        '><i class="anticon anticon-edit"></i></button>'+
+                        '<button class="btn btn-primary btn-sm m-r-5 work-open" data-target="#openWorkHistory"' +
+                        ' data-workid="'+row.id+'"' +
+                        ' data-reportedByName="'+row.reportedBy.name+'"' +
+                        ' data-vehicleName="'+ row.vehicle.brand + ' '+ row.vehicle.model +' ' + row.vehicle.year+'"' +
+                        ' data-startingDate="'+row.startingDate+'"' +
+                        ' data-endingDate="'+row.endingDate+'"' +
+                        ' data-totalPrice="'+row.totalPrice+'"' +
+                        ' data-createdAt="'+row.createdAt+'"' +
+                        ' data-breakDownCategoryName="'+row.breakDownCategory.name+'"' +
+                        ' data-breakDownSubcategoryName="' + (row.breakDownSubcategory !== null ? row.breakDownSubcategory.name : '') + '"'
                         +
                         ' data-description="'+row.description+'"' +
                         ' data-mechanicPaymentMethod="'+row.mechanicPaymentMethod+'"' +
-                        ' data-mechanicPaymentMethod="'+row.mechanicPaymentMethod+'"' +
-                        ' data-mechanicPrice="'+row.mechanicPrice+'"' +
-                        ' data-vehiclePartsPrice="'+row.vehiclePartsPrice+'"' +
+                        ' data-mechanicPricePayedOverAccount="'+row.mechanicPricePayedOverAccount+'"' +
+                        ' data-mechanicPricePayedWithCache="'+row.mechanicPricePayedWithCache+'"' +
+
+                        ' data-vehiclePartsPricePayedWithCache="'+row.vehiclePartsPricePayedWithCache+'"' +
+                        ' data-vehiclePartsPricePayedOverAccount="'+row.vehiclePartsPricePayedOverAccount+'"' +
                         ' data-vehiclePartsPaymentMethod="'+row.vehiclePartsPaymentMethod+'"' +
                         ' data-breakDownMilage="'+row.breakDownMilage+'"' +
-                        '><i class="anticon anticon-edit"></i></button>' + '</td></tr>';
+                        '><i class="anticon anticon-plus"></i></button>'
+                        + '</td></tr>';
 
-                    var opisRow = '<tr class="work-history-opis-row" id="opis-'+row.id+'" >' +
-                        '<th>Opis:</th>' +
-                        '<td colspan="12">' + row.description + '</td></tr>';
-
-                    $('#works-history-table tbody').append(workHistoryRow + opisRow);
+                    $('#works-history-table tbody').append(workHistoryRow );
                 });
 
                 $('#works-history-table tbody').on('mouseenter', '.work-history-row', function() {
@@ -617,11 +684,31 @@ $(document).on('click', '.work-edit', function() {
     var endingDate = $(this).data('endingdate');
     var breakDownCategory = $(this).data('breakdowncategory');
     var breakDownSubcategory = $(this).data('breakdownsubcategory');
+
     var description = $(this).data('description');
     var mechanicPaymentMethod = $(this).data('mechanicpaymentmethod');
-    var mechanicPrice = $(this).data('mechanicprice');
-    var vehiclePartsPrice = $(this).data('vehiclepartsprice');
+
+    var mechanicPricePayedOverAccount = $(this).data('mechanicpricepayedoveraccount');
+    var mechanicPricePayedWithCache = $(this).data('mechanicpricepayedwithcache');
+
+    var vehiclePartsPricePayedWithCache = $(this).data('vehiclepartspricepayedwithcache');
+    var vehiclePartsPricePayedOverAccount = $(this).data('vehiclepartspricepayedoveraccount');
+
     var vehiclePartsPaymentMethod = $(this).data('vehiclepartspaymentmethod');
+
+    if (mechanicPaymentMethod === 'Račun') {
+        $('#mechanicPriceCardEdit').prop('disabled', true).addClass('disabled-input').val('');
+    } else if (mechanicPaymentMethod === 'Keš') {
+        $('#mechanicPriceCacheEdit').prop('disabled', true).addClass('disabled-input').val('');
+    }
+
+    if (vehiclePartsPaymentMethod === 'Račun') {
+        $('#partsPriceCacheEdit').prop('disabled', true).addClass('disabled-input').val('');
+    } else if (vehiclePartsPaymentMethod === 'Keš') {
+        $('#partsPriceCardEdit').prop('disabled', true).addClass('disabled-input').val('');
+    }
+
+
     var breakDownMilage = $(this).data('breakdownmilage');
 
 
@@ -630,9 +717,24 @@ $(document).on('click', '.work-edit', function() {
     getStuffAllocation('reportedByEdit',reportedBy);
     $('#breakDownMileageEdit').val(breakDownMilage);
     $('#descriptionEdit').val(description);
-    $('#mechanicPriceEdit').val(mechanicPrice);
+
+    if (vehiclePartsPricePayedOverAccount !== '' && vehiclePartsPricePayedOverAccount>0) {
+        $('#partsPriceCardEdit').val(vehiclePartsPricePayedOverAccount);
+    }
+
+    if (vehiclePartsPricePayedWithCache !== '' && vehiclePartsPricePayedWithCache>0) {
+        $('#partsPriceCacheEdit').val(vehiclePartsPricePayedWithCache);
+    }
+
+    if (mechanicPricePayedOverAccount !== '' && mechanicPricePayedOverAccount>0) {
+        $('#mechanicPriceCardEdit').val(mechanicPricePayedOverAccount);
+    }
+
+    if (mechanicPricePayedWithCache !== '' && mechanicPricePayedWithCache>0) {
+        $('#mechanicPriceCacheEdit').val(mechanicPricePayedWithCache);
+    }
+
     $('#workIdEdit').val(workId);
-    $('#partsPriceEdit').val(vehiclePartsPrice);
     $('#startingDateEdit').val(convertToDateInputFormat(startingDate));
     $('#endingDateEdit').val(convertToDateInputFormat(endingDate));
 
@@ -652,6 +754,31 @@ $(document).on('click', '.work-edit', function() {
 
 });
 
+
+$(document).on('click', '.work-open', function() {
+    $('#openWorkHistory').modal('show');
+    $('.vehicleView').html( $(this).data('vehiclename'));
+    $('.reportedByView').html($(this).data('reportedbyname'));
+    $('.categoryView').html($(this).data('breakdowncategoryname') +'/'+$(this).data('breakdownsubcategoryname'));
+    $('.distanceView').html($(this).data('breakdownmilage') +' km');
+    $('.dateView').html( $(this).data('startingdate') +'-'+ $(this).data('endingdate') );
+    $('.totalView').html( $(this).data('totalprice') +'€' );
+    $('.createdAtView').html( $(this).data('createdat') );
+
+    $('.partsAccView').html(  $(this).data('vehiclepartspricepayedoveraccount') +'€' );
+    $('.partsCacheView').html( $(this).data('vehiclepartspricepayedwithcache') +'€' );
+    $('.partsMethodView').html( $(this).data('vehiclepartspaymentmethod') );
+
+    $('.mehanicMethodView').html($(this).data('mechanicpaymentmethod') );
+    $('.mehanicAccView').html($(this).data('mechanicpricepayedoveraccount')+'€');
+    $('.mehanicCacheView').html($(this).data('mechanicpricepayedwithcache')+'€');
+
+    $('.descView').html($(this).data('description'));
+
+
+
+
+});
 function convertToDateInputFormat(dateString) {
     var parts = dateString.split('.');
     if (parts.length === 3) {
@@ -671,3 +798,42 @@ function validateNewWork() {
     }
     return true;
 }
+function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheElement) {
+    var selectedOption = paymentMethod.val();
+    priceCardElement.prop('disabled', true).addClass('disabled-input').val('');
+    priceCacheElement.prop('disabled', true).addClass('disabled-input').val('');
+
+    if (selectedOption === '1') {
+        priceCardElement.prop('disabled', false).removeClass('disabled-input');
+    } else if (selectedOption === '2') {
+        priceCacheElement.prop('disabled', false).removeClass('disabled-input');
+    } else if (selectedOption === '3') {
+        priceCardElement.prop('disabled', false).removeClass('disabled-input');
+        priceCacheElement.prop('disabled', false).removeClass('disabled-input');
+    }
+}
+$(document).ready(function() {
+
+
+    $('#vehiclePartsPaymentMethod, #mechanicPaymentMethod').on('change', function() {
+        var selectedOption = $(this).val();
+        var isVehicle = $(this).attr('id') === 'vehiclePartsPaymentMethod';
+
+        if (isVehicle) {
+            handlePaymentMethodChange($(this), $('#partsPriceCard'), $('#partsPriceCache'));
+        } else {
+            handlePaymentMethodChange($(this), $('#mechanicPriceCard'), $('#mechanicPriceCache'));
+        }
+    });
+
+    $(document).on('change', '#vehiclePartsPaymentMethodEdit, #mechanicPaymentMethodEdit', function() {
+        var selectedOption = $(this).val();
+        var isVehicle = $(this).attr('id') === 'vehiclePartsPaymentMethodEdit';
+
+        if (isVehicle) {
+            handlePaymentMethodChange($(this), $('#partsPriceCardEdit'), $('#partsPriceCacheEdit'));
+        } else {
+            handlePaymentMethodChange($(this), $('#mechanicPriceCardEdit'), $('#mechanicPriceCacheEdit'));
+        }
+    });
+});

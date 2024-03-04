@@ -12,23 +12,15 @@ if(isset($_SESSION['work_filter_reported_id'])
     || isset($_SESSION['work_filter_breakdown_sub_cat_id'])
     || isset($_SESSION['work_filter_parts_pay_id'])
     || isset($_SESSION['work_filter_mehanic_pay_id'])
+    || isset($_SESSION['work_filter_vehicle_id'])
+    || isset($_SESSION['work_filter_date'])
 ){
-    $reportedByFilters = isset($_SESSION['work_filter_reported_id']) ? $_SESSION['work_filter_reported_id'] : '';
-    $breakdownCatFilters = isset($_SESSION['work_filter_breakdown_cat_id']) ? $_SESSION['work_filter_breakdown_cat_id'] : '';
-    $breakdownSubcatFilters = isset($_SESSION['work_filter_breakdown_sub_cat_id']) ? $_SESSION['work_filter_breakdown_sub_cat_id'] : '';
-    $partsPayFilters = isset($_SESSION['work_filter_parts_pay_id']) ? $_SESSION['work_filter_parts_pay_id'] : '';
-    $mehanicPayFilters = isset($_SESSION['work_filter_mehanic_pay_id']) ? $_SESSION['work_filter_mehanic_pay_id'] : '';
     $showFilters = '';
     $clearFilters = '';
 
 }else{
     $showFilters = 'display:none;';
     $clearFilters = 'display:none;';
-    $reportedByFilters = '';
-    $breakdownCatFilters ='';
-    $breakdownSubcatFilters = '';
-    $partsPayFilters = '';
-    $mehanicPayFilters = '';
 
 
 }
@@ -76,12 +68,26 @@ $current_page= 1;
                                     <input type="hidden" id="work_filter_breakdown_sub_cat_id" value="<?php echo isset($_SESSION['work_filter_breakdown_sub_cat_id']) ? $_SESSION['work_filter_breakdown_sub_cat_id'] : '' ?>">
                                     <input type="hidden" id="work_filter_parts_pay_id" value="<?php echo isset($_SESSION['work_filter_parts_pay_id']) ? $_SESSION['work_filter_parts_pay_id'] : '' ?>">
                                     <input type="hidden" id="work_filter_mehanic_pay_id" value="<?php echo isset($_SESSION['work_filter_mehanic_pay_id']) ? $_SESSION['work_filter_mehanic_pay_id'] : '' ?>">
+                                    <input type="hidden" id="work_filter_vehicle_id" value="<?php echo isset($_SESSION['work_filter_vehicle_id']) ? $_SESSION['work_filter_vehicle_id'] : '' ?>">
+                                    <input type="hidden" id="work_filter_date" value="<?php echo isset($_SESSION['work_filter_date']) ? $_SESSION['work_filter_date'] : '' ?>">
 
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">Prijavio</span>
                                         </div>
                                         <select id="reportedByFilterId" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Vozilo</span>
+                                        </div>
+                                        <select id="vehicleFilterId" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Datum</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="<dateFilterId>" name="dateFilterId" aria-describedby="basic-addon3">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -157,37 +163,20 @@ $current_page= 1;
                                 </button>
                             </div>
                             <div id="alertAddWorkHistory"></div>
-                            <div class="table-responsive-sm">
+                            <div class="table-responsive">
                                 <table id="works-history-table" class="table table-hover">
                                     <thead>
                                     <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th> </th>
-                                        <th> </th>
-                                        <th> </th>
-                                        <th></th>
-                                        <th></th>
-                                        <th colspan="2" style="text-align:center">Majstor </th>
-                                        <th colspan="2" style="text-align:center">Djelovi </th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
                                         <th>Vozilo</th>
                                         <th>Prijavio</th>
                                         <th>Kategorija </th>
-                                        <th>Potkategorija </th>
                                         <th style="text-align:right">KM </th>
                                         <th>Početak</th>
                                         <th>Kraj</th>
-                                        <th>Način plaćanja</th>
-                                        <th style="text-align:right">Cijena </th>
-                                        <th>Način plaćanja</th>
-                                        <th style="text-align:right">Cijena </th>
+                                        <th>Način plaćanja majstora</th>
+                                        <th>Način plaćanja djelova</th>
                                         <th>Kreirao</th>
+                                        <th>Kreirano</th>
                                         <th></th>
                                     </tr>
 
@@ -255,7 +244,7 @@ $current_page= 1;
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-7 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Plaćanje</span>
@@ -268,13 +257,18 @@ $current_page= 1;
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5 col-sm-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Cijena</span>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6">Račun</div>
+                                                <div class="col-6">Keš</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="partsPriceCard" name="partsPriceCard" aria-describedby="basic-addon3" placeholder="EUR">
                                                 </div>
-                                                <input type="text" class="form-control" id="partsPrice" name="partsPrice" aria-describedby="basic-addon3" placeholder="EUR">
-
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="partsPriceCache" name="partsPriceCache" aria-describedby="basic-addon3" placeholder="EUR">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +276,7 @@ $current_page= 1;
                                         <span>Majstor</span>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-7 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Plaćanje</span>
@@ -295,17 +289,23 @@ $current_page= 1;
                                         </select>
                                     </div>
                                         </div>
-                                        <div class="col-lg-5 col-sm-12">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" >Cijena</span>
-                                        </div>
-                                        <input type="text" class="form-control" id="mechanicPrice" name="mechanicPrice" aria-describedby="basic-addon3" placeholder="EUR">
-                                    </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6">Račun</div>
+                                                <div class="col-6">Keš</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="mechanicPriceCard" name="mechanicPriceCard" aria-describedby="basic-addon3" placeholder="EUR">
+                                                </div>
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="mechanicPriceCache" name="mechanicPriceCache" aria-describedby="basic-addon3" placeholder="EUR">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-3 mt-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Opis</span>
                                         </div>
@@ -342,7 +342,6 @@ $current_page= 1;
                             <form id="workHistoryEdit">
                                 <input type="text" class="form-control" id="workIdEdit" name="workIdEdit" hidden="" readonly>
                                 <div class="modal-body">
-                                    <div id="workHistoryEditError"></div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Prijavio</span>
@@ -383,7 +382,7 @@ $current_page= 1;
                                         <span>Djelovi</span>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-7 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Plaćanje</span>
@@ -396,13 +395,18 @@ $current_page= 1;
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5 col-sm-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Cijena</span>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6">Račun</div>
+                                                <div class="col-6">Keš</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="partsPriceCardEdit" name="partsPriceCardEdit" aria-describedby="basic-addon3" placeholder="EUR">
                                                 </div>
-                                                <input type="text" class="form-control" id="partsPriceEdit" name="partsPriceEdit" aria-describedby="basic-addon3" placeholder="EUR">
-
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="partsPriceCacheEdit" name="partsPriceCacheEdit" aria-describedby="basic-addon3" placeholder="EUR">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -410,7 +414,7 @@ $current_page= 1;
                                         <span>Majstor</span>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-7 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Plaćanje</span>
@@ -423,17 +427,23 @@ $current_page= 1;
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5 col-sm-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Cijena</span>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6">Račun</div>
+                                                <div class="col-6">Keš</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="mechanicPriceCardEdit" name="mechanicPriceCardEdit" aria-describedby="basic-addon3" placeholder="EUR">
                                                 </div>
-                                                <input type="text" class="form-control" id="mechanicPriceEdit" name="mechanicPriceEdit" aria-describedby="basic-addon3" placeholder="EUR">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control" id="mechanicPriceCacheEdit" name="mechanicPriceCacheEdit" aria-describedby="basic-addon3" placeholder="EUR">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-3 mt-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"  >Opis</span>
                                         </div>
@@ -447,6 +457,7 @@ $current_page= 1;
                                         <input type="text" class="form-control" id="breakDownMileageEdit" name="breakDownMileageEdit" aria-describedby="basic-addon3" placeholder="KM">
                                     </div>
 
+                                    <div id="workHistoryEditError"></div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
@@ -456,6 +467,69 @@ $current_page= 1;
                         </div>
                     </div>
                 </div>
+
+            <div class="modal fade" id="openWorkHistory">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Detalji</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+
+                        <div class="card-group">
+                            <div class="card">
+                                <ul class="list-group list-group-flus">
+                                    <li class="list-group-item">
+                                        <p>Vozilo: <span class="vehicleView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Prijavio: <span class="reportedByView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Kategorija/Potkategorija: <span class="categoryView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Kvar se desion na: <span class="distanceView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Početak-Kraj <span class="dateView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Kreirano <span class="createdAtView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Plaćanje majstore:
+                                            <span class="mehanicMethodView m-b-0 text-dark font-weight-semibold"></span> /
+                                            Račun
+                                            <span class="mehanicAccView m-b-0 text-dark font-weight-semibold"></span>
+                                            Keš
+                                            <span class="mehanicCacheView m-b-0 text-dark font-weight-semibold"></span>
+                                        </p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Plaćanje djelova:
+                                            <span class="partsMethodView m-b-0 text-dark font-weight-semibold"></span> /
+                                        Račun
+                                            <span class="partsAccView m-b-0 text-dark font-weight-semibold"></span>
+                                            Keš
+                                            <span class="partsCacheView m-b-0 text-dark font-weight-semibold"></span>
+                                        </p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p>Ukupno: <span class="totalView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <p>Opis: <span class="descView m-b-0 text-dark font-weight-semibold"></span></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php include ('layouts/footer.php')?>
         </div>
         <?php  include ('layouts/themeConfig.php')?>
@@ -467,6 +541,7 @@ $current_page= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/worksHistory.js"></script>
+
 </body>
 
 </html>

@@ -106,7 +106,25 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
                                 <div id="dailyDataChangeError"></div>
                                 <form id="change-form">
                                     <div class="modal-body">
+
                                         <input hidden="" id="dataId">
+                                        <input hidden="" id="vehicleId">
+                                        <input hidden="" id="driverId">
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Vozilo</span>
+                                            </div>
+                                            <select id="vehicleDailyEdit" class="form-control"></select>
+
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >Vozač</span>
+                                            </div>
+                                            <select id="empDailyEdit" class="form-control"></select>
+                                            <p class="error"></p>
+                                        </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Početna kilometraža:</span>
@@ -130,6 +148,12 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
                                                 <span class="input-group-text" >Količina goriva (L):</span>
                                             </div>
                                             <input type="number" id="qpChange" class="form-control" />
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >Datum:</span>
+                                            </div>
+                                            <input type="date" id="dateChange" class="form-control" />
                                         </div>
 
                                     </div>

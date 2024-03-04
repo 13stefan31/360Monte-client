@@ -19,11 +19,14 @@ class DailyDataSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getDailyData($vehicleId = null, $limit,$page){
+    public function getDailyData($vehicleId = null,$date=null, $limit,$page){
         $initialize_field = 'vehicle-daily-data' ;
         $filters = array();
         if (!empty($vehicleId)) {
             $filters[] = 'vehicleId=' . urlencode($vehicleId);
+        }
+        if (!empty($date)) {
+            $filters[] = 'date=' . urlencode($date);
         }
         if (!empty($limit)) {
             $filters[] = 'limit=' . urlencode($limit);
@@ -38,21 +41,37 @@ class DailyDataSender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
     }
 
-    public function getCartData($vehicleId = null){
+    public function getCartData($vehicleId = null,$date=null){
         $initialize_field = 'vehicle-daily-data/vehicle/'.$vehicleId.'/chart' ;
+        if (!empty($date)) {
+            $filters[] = 'date=' . urlencode($date);
+        }
+        $filterString = implode('&', $filters);
+        if (!empty($filterString)) {
+            $initialize_field .= '?' . $filterString;
+        }
         return  $this->send_get_request($initialize_field);
     }
     public function getSingleDailyData($id) {
         $initialize_field = 'vehicle-daily-data' . '/' . $id;
         return  $this->send_get_request($initialize_field);
     }
+    public function deleteDailyData($id) {
+        $initialize_field = 'vehicle-daily-data' . '/' . $id;
+        return  $this->send_delete_request($initialize_field);
+    }
 
     public function updateDailyData($data){
+        $date = isset($data['date']) && $data['date'] !== '' ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
+
         $body = [
             'startingMileage' => $data['startingMileage'],
             'endingMileage' => $data['endingMileage'],
             'fuelPrice' => $data['fuelPrice'],
-            'fuelQuantity' => $data['fuelQuantity']
+            'fuelQuantity' => $data['fuelQuantity'],
+            'vehicleId' => $data['vehicleId'],
+            'driverId' => $data['driverId'],
+            'date' => $date
         ];
 
         $initialize_field = 'vehicle-daily-data/'.$data['dataId'];
@@ -65,6 +84,7 @@ class DailyDataSender extends \Main\SenderService
 
         $body = [
             'vehicleId' => $data['vehicleId'],
+            'driverId' => $data['driverId'],
             'startingMileage' => $data['startingMileage'],
             'endingMileage' => $data['endingMileage'],
             'fuelPrice' => $data['fuelPrice'],

@@ -31,6 +31,7 @@ $(document).ready(function() {
         e.preventDefault();
         $("#dailyDataAddError").empty();
         getVehiclesSelect('vehicleSelectNew');
+        getStuffAllocation('empAddDailyData');
     });
 
 
@@ -49,6 +50,7 @@ $(document).ready(function() {
                     'addDailyData': 1,
                     'data':{
                         'vehicleId': $('#vehicleSelectNew').val(),
+                        'driverId': $('#empAddDailyData').val(),
                         'startingMileage': $('#startingMileage').val(),
                         'fuelPrice': $('#fuelPrice').val(),
                         'fuelQuantity': $('#fuelQuantity').val(),
@@ -69,7 +71,8 @@ $(document).ready(function() {
                         newRow.append($('<td style="text-align: right">').text(data.starting_mileage+'km'));
                         newRow.append($('<td style="text-align: right">').text(data.ending_mileage+'km'));
                         newRow.append($('<td style="text-align: right">').text(data.fuel_quantity+'L'));
-                        newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>'));
+                        newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                            '<a class="btn btn-danger m-r-5 " href="javascript:void(0)" onclick="deleteDailyData('+data.id+')"><i class="anticon anticon-plus"></i>Obriši</a>'));
                         $('#daily-data-table tbody').prepend(newRow);
 
                         $('#alertAddDialyData').html(createSuccessMessage('Uspješno ste unijeli novu istoriju dnevnih podataka!'));
@@ -96,17 +99,22 @@ $(document).ready(function() {
         getDailyDataHistory('',1,per_page);
         localStorage.removeItem('dailyDataFilters');
         $('#vehicleFilterId').val('');
+        $('#date').val('');
         $('#clearFilters').hide();
     });
 
     let myChart;
     $("#generateVehicleChart").on("click", function () {
         const selectedVehicleId = $("#vehicleCartId").val();
+        const date = $("#dateCart").val();
 
         if (!selectedVehicleId) {
             Swal.fire("Morate odabrati vozilo za generisanje dijagrama",'','warning')
             return;
         }
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
 
         const selectedValueText = $("#vehicleCartId option:selected").text();
 
@@ -115,7 +123,8 @@ $(document).ready(function() {
             method: 'GET',
             data: {
                 vehicleId: selectedVehicleId,
-                generateCart: 1
+                generateCart: 1,
+                date: date
             },
             success: function (data) {
                 $("#chartDiv").show();
@@ -161,6 +170,10 @@ $(document).ready(function() {
             },
             error: function (error) {
                 console.error('Error fetching data from the API:', error);
+            },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
             }
         });
     });
@@ -171,8 +184,10 @@ $(document).ready(function() {
 
 $(document).on('click', '#dailyDayaFilterSubmit', function() {
     var vehicleId = $('#vehicleFilterId').val();
+    var date = $('#date').val();
     var filters = {
-        vehicleId: vehicleId
+        vehicleId: vehicleId,
+        date: date
     };
     localStorage.setItem('dailyDataFilters', JSON.stringify(filters));
     var current_page=1;
@@ -189,6 +204,7 @@ function getDailyDataHistory(filters,current_page,per_page){
 
     if (filters !== '') {
         data.vehicleId = filters.vehicleId;
+        data.date = filters.date;
     }
 
     $('#daily-data-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
@@ -198,7 +214,6 @@ function getDailyDataHistory(filters,current_page,per_page){
         data:data,
         dataType: 'json',
         success: function(response) {
-
             if (response.error) {
                 $('#alert').append(createWarningMessage(response.error));
             } else {
@@ -214,6 +229,7 @@ function getDailyDataHistory(filters,current_page,per_page){
                         '<td style="text-align: right">' + row.ending_mileage + 'km</td>' +
                         '<td style="text-align: right">' + row.fuel_quantity + 'L</td>' +
                         '<td><a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                        '<a class="btn btn-danger m-r-5 " href="javascript:void(0)" onclick="deleteDailyData('+row.id+')"><i class="anticon anticon-plus"></i>Obriši</a>' +
                         '</td></tr>');
                 });
                 var meta = response.data.meta;
@@ -228,7 +244,41 @@ function getDailyDataHistory(filters,current_page,per_page){
     });
 }
 
+function deleteDailyData(id){
+    Swal.fire({
+        title: 'Da li ste sigutni da želite da obrišete?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Obriši',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/../../functions/dailyDataHistory.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deleteDailyData: 1
+                    , dailyDataId: id
+                }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        Swal.fire( data.error,'','error');
+                    }else{
+                        $('#'+data.data.data.id).remove();
+                        Swal.fire('Uspješno obrisano','','success');
+                     }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
 
+                    var error = generateAjaxError(jqXHR);
+                    Swal.fire( error,'','error');
+                }
+            });
+        } else if (result.isDenied) {   }
+    })
+}
 function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
     var totalPages = Math.ceil(totalItems / itemsPerPage);
     var startPage, endPage;

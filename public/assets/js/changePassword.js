@@ -43,7 +43,6 @@ $(document).on('click', '#changePassword', function(e) {
             'confirmPassword':$('#confirmPassword').val()
         },
         success: function(response) {
-            console.log(response)
             var dataParse = JSON.parse(response);
             if (dataParse.error) {
                 $('#changePasswordError').html(handleErrors(dataParse.error));

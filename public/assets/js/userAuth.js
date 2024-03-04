@@ -7,7 +7,6 @@ $(document).ready(function () {
         },
         dataType: 'json',
         success: function(response) {
-            // console.log(response)
             if (response.status==200){
                 var data = response.data.data;
                 $('.loggedUserName').html(data.name)

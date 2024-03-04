@@ -7,7 +7,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
     exit();
 }
 
-if( isset($_SESSION['daily_data_filter_vehicle_id'])){
+if( isset($_SESSION['daily_data_filter_vehicle_id']) ||  isset($_SESSION['daily_data_filter_date'])){
     $vehicleIdFilters = isset($_SESSION['daily_data_filter_vehicle_id']) ? $_SESSION['daily_data_filter_vehicle_id'] : '';
     $showFilters = '';
     $clearFilters = '' ;
@@ -63,7 +63,12 @@ $current_page= 1;
                                         </div>
                                         <select id="vehicleFilterId" class="form-control"></select>
                                     </div>
-
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Datum</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="date" aria-describedby="basic-addon3" <?php if(isset($_SESSION['daily_data_filter_date'])) echo 'value="' . date('Y-m-d', strtotime($_SESSION['daily_data_filter_date'])) . '"'; ?>>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
@@ -80,7 +85,12 @@ $current_page= 1;
                                             <span class="input-group-text" id="basic-addon1">Vozilo</span>
                                         </div>
                                         <select id="vehicleCartId" class="form-control"></select>
-
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Datum</span>
+                                        </div>
+                                        <input id="dateCart" class="form-control" type="date">
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -142,7 +152,13 @@ $current_page= 1;
                                             <span class="input-group-text"  >Datum</span>
                                         </div>
                                         <input type="date" class="form-control" id="dateNew" aria-describedby="basic-addon3" >
-
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Vozač</span>
+                                        </div>
+                                        <select id="empAddDailyData" class="form-control"></select>
+                                        <p class="error"></p>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -154,7 +170,7 @@ $current_page= 1;
 
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Završna kilomteraža</span>
+                                            <span class="input-group-text"  >Krajnja kilomteraža</span>
                                         </div>
                                         <input type="number" class="form-control" id="endingMileage" aria-describedby="basic-addon3" placeholder="Unesite završnu kilometražu">
 

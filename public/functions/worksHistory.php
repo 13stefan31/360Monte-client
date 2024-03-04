@@ -7,11 +7,23 @@ if(isset($_GET) && isset($_GET['getAllWorksHistory'])){
     $breakdownSubcat = isset($_GET['breakdownSubcat']) ? $_GET['breakdownSubcat'] : null;
     $partsPay = isset($_GET['partsPay']) ? $_GET['partsPay'] : null;
     $mehanicPay = isset($_GET['mehanicPay']) ? $_GET['mehanicPay'] : null;
+    $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
+    $date = isset($_GET['breakDownDate']) ? $_GET['breakDownDate'] : null;
 
     if (isset($reportedBy)){
         $_SESSION['work_filter_reported_id'] = $reportedBy;
     }else{
         $_SESSION['work_filter_reported_id'] = null;
+    }
+    if (isset($vehicleId)){
+        $_SESSION['work_filter_vehicle_id'] = $vehicleId;
+    }else{
+        $_SESSION['work_filter_vehicle_id'] = null;
+    }
+    if (isset($date)){
+        $_SESSION['work_filter_date'] = $date;
+    }else{
+        $_SESSION['work_filter_date'] = null;
     }
 
     if (isset($breakdownCat)){
@@ -39,7 +51,7 @@ if(isset($_GET) && isset($_GET['getAllWorksHistory'])){
     $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
 
 
-    return $works_history_sender->getAllWorksHistory($reportedBy,$breakdownCat,$breakdownSubcat,$partsPay,$mehanicPay,$limit,$page);
+    return $works_history_sender->getAllWorksHistory($reportedBy,$breakdownCat,$vehicleId,$date,$breakdownSubcat,$partsPay,$mehanicPay,$limit,$page);
 }
 
 if(isset($_GET) && isset($_GET['generateCart'])){

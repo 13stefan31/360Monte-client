@@ -14,6 +14,9 @@ $(document).ready(function() {
                 $('.dailyDataDivCard').hide()
             } else {
                 var data = response.data.data;
+                getVehiclesSelect('vehicleDailyEdit',data.vehicle.id);
+                getStuffAllocation('empDailyEdit',data.drivenBy.id);
+
                 $('#dataId').val(data.id);
                 $('.dailyDataCreated').html(data.createdAt);
                 $('.dailyDataFuelQ').html(data.fuel_quantity+'L');
@@ -26,14 +29,16 @@ $(document).ready(function() {
                 $('.dailyDataEndingM').html(data.ending_mileage+'km');
                 $('#emChange').val(data.ending_mileage  );
                 $('.dailyDataDistance').html(data.daily_distance+'km');
+                $('#tdChange').val(data.daily_distance);
                 $('.dailyData').html(data.logDate);
 
-                data.drivenBy.forEach(function(item) {
-                    var newRow = '<tr id="'+item.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + item.name + '</td></tr>';
-                    $('#drivers-tabele tbody').append(newRow);
-                });
+                var dateString = data.logDate;
+                var formattedDate = moment(dateString, "DD.MM.YYYY");
+                $('#dateChange').val(formattedDate.format("YYYY-MM-DD"));
 
 
+                var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
+                $('#drivers-tabele tbody').append(newRow);
 
             }
         }  ,
@@ -60,10 +65,13 @@ $(document).ready(function() {
                 'updateDailyData': 1,
                 'data': {
                     'dataId': $('#dataId').val(),
+                    'vehicleId': $('#vehicleDailyEdit').val(),
                     'startingMileage': $('#smChange').val(),
                     'endingMileage': $('#emChange').val(),
                     'fuelPrice': $('#fpChange').val(),
-                    'fuelQuantity': $('#qpChange').val()
+                    'fuelQuantity': $('#qpChange').val(),
+                    'driverId': $('#empDailyEdit').val(),
+                    'date': $('#dateChange').val()
                 }
 
             }),
@@ -74,6 +82,12 @@ $(document).ready(function() {
                 } else {
                     var data = dataParse.data.data;
                     $('#dailyDataAlert').html(createSuccessMessage('Uspješno ste izmijenili podatke.'));
+
+
+                    getVehiclesSelect('vehicleDailyEdit',data.vehicle.id);
+                    getStuffAllocation('empDailyEdit',data.drivenBy.id);
+
+
                     $('#dataId').val(data.id);
                     $('.dailyDataCreated').html(data.createdAt);
                     $('.dailyDataFuelQ').html(data.fuel_quantity+'L');
@@ -86,6 +100,17 @@ $(document).ready(function() {
                     $('.dailyDataEndingM').html(data.ending_mileage+'km');
                     $('#emChange').val(data.ending_mileage  );
                     $('.dailyDataDistance').html(data.daily_distance+'km');
+
+                    $('#tdChange').val(data.daily_distance);
+                    $('.dailyData').html(data.logDate);
+
+                    var dateString = data.logDate;
+                    var formattedDate = moment(dateString, "DD.MM.YYYY");
+                    $('#dateChange').val(formattedDate.format("YYYY-MM-DD"));
+
+                    $('#drivers-tabele tbody').empty();
+                    var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
+                    $('#drivers-tabele tbody').append(newRow);
 
                     $('#daily-data-change-modal').modal('hide');
                     $('#dailyDataChangeError').html('');
@@ -112,5 +137,6 @@ $(document).ready(function() {
 
 $('#changeDailyDataButton').on('click', function() {
     $('#dailyDataChangeError').html('');
+
 
 });
