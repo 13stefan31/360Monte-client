@@ -45,12 +45,14 @@ $(document).ready(function() {
         getBreakDownCategoryIdSelect('breakDownCategoryId');
 
         $("#filterWorksHistory").hide();
-        $("#worksDataCart").toggle(function(){
-            if ($("#worksDataCart").is(":hidden")) {
-                $("#chartDiv").hide();
-                $("#downloadWorksDataCart").hide();
-            }
-        });
+        $("#worksDataCart").toggleClass("hidden");
+        if ($("#worksDataCart").hasClass("hidden")) {
+            $("#chartTypeChange").hide();
+            $("#downloadWorksDataCart").hide();
+            $("#dailyDataChartBreakdown").hide();
+            $("#dailyDataChartPrice").hide();
+        }
+
     });
 
 
@@ -319,7 +321,8 @@ $(document).ready(function() {
     });
 
 
-    let myChart;
+    let myChartPrice;
+    let myChartBreakdown;
     $("#generateVehicleChart").on("click", function () {
         const selectedVehicleId = $("#vehicleCartId").val();
         const selectedBreakDownCategoryId = $("#breakDownCategoryId").val();
@@ -340,24 +343,32 @@ $(document).ready(function() {
                 generateCart: 1
             },
             success: function (data) {
-                $("#chartDiv").show();
+                $("#chartTypeChange").show();
                 $("#downloadWorksDataCart").show();
                 var dataParse = JSON.parse(data);
-                const chartData = dataParse.data.data.chartData;
-                if (myChart) {
-                    myChart.destroy();
-                }
 
-                const xAsis = chartData.xAsis || [];
-                const yAsis = chartData.yAsis || [];
-                const ctx = document.getElementById('dailyDataChart').getContext('2d');
-                myChart = new Chart(ctx, {
+                const chartDataPrice = dataParse.data.data.price.chartData;
+                const chartDataBreakdown = dataParse.data.data.breakdown.chartData;
+
+                if (myChartPrice) {
+                    myChartPrice.destroy();
+                }
+                if (myChartBreakdown) {
+                    myChartBreakdown.destroy();
+                }
+                console.log(chartDataPrice)
+                console.log(chartDataBreakdown)
+
+                const xAsisBreakdown = chartDataBreakdown.xAsis || [];
+                const yAsisBreakdown = chartDataBreakdown.yAsis || [];
+                const ctxBreakdown = document.getElementById('dailyDataChartBreakdown').getContext('2d');
+                myChartBreakdown = new Chart(ctxBreakdown, {
                     type: 'bar',
                     data: {
-                        labels: xAsis,
+                        labels: xAsisBreakdown,
                         datasets: [{
                             label: selectedValueText,
-                            data: yAsis,
+                            data: yAsisBreakdown,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
@@ -371,14 +382,55 @@ $(document).ready(function() {
                         }
                     }
                 });
-                $("#dailyDataChart").attr("width", 150);
-                $("#dailyDataChart").attr("height", 150);
+                // $("#dailyDataChartBreakdown").attr("width", 150);
+                // $("#dailyDataChartBreakdown").attr("height", 150);
+
+
+                const xAsisPrice = chartDataPrice.xAsis || [];
+                const yAsisPrice = chartDataPrice.yAsis || [];
+                const ctxPrice = document.getElementById('dailyDataChartPrice').getContext('2d');
+                myChartPrice = new Chart(ctxPrice, {
+                    type: 'bar',
+                    data: {
+                        labels: xAsisPrice,
+                        datasets: [{
+                            label: selectedValueText,
+                            data: yAsisPrice,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                // $("#dailyDataChartPrice").attr("width", 150);
+                // $("#dailyDataChartPrice").attr("height", 150);
             },
             error: function (error) {
                 console.error('Error fetching data from the API:', error);
             }
         });
     });
+    $("#showBreakdownChart").click(function(){
+        $("#chartDivBreakdown").show();
+        $("#chartDivPrice").hide();
+        $("#showPriceChart").removeClass("active");
+        $("#showBreakdownChart").addClass("active");
+    });
+
+    $("#showPriceChart").click(function(){
+        $("#chartDivBreakdown").hide();
+        $("#chartDivPrice").show();
+        $("#showPriceChart").addClass("active");
+        $("#showBreakdownChart").removeClass("active");
+    });
+
 
 
 });
@@ -435,7 +487,6 @@ function getWorksHistory(filters,current_page,per_page){
                 $('#works-history-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    console.log(row)
                     var workHistoryRow = '<tr class="work-history-row" id="'+row.id+'">' +
                         '<td>' + row.vehicle.brand + ' '+ row.vehicle.model +' ' + row.vehicle.year+'</td>' +
                         '<td>' + row.reportedBy.name + '</td>' +

@@ -58,11 +58,11 @@ if (!in_array($authRole,$reportAllowedRoles)){
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="font-weight-semibold" >Početni datum:</label>
-                                            <input type="date" id="dateFromReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                            <input type="date" id="dateFromReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="font-weight-semibold" >Krajnji datum:</label>
-                                            <input type="date" id="dateToReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                            <input type="date" id="dateToReport" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
                                         </div>
                                     </div>
                                     <div>
@@ -94,15 +94,62 @@ if (!in_array($authRole,$reportAllowedRoles)){
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label class="font-weight-semibold" >Početni datum:</label>
-                                            <input type="date" id="dateFromReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                            <input type="date" id="dateFromReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="font-weight-semibold" >Krajnji datum:</label>
-                                            <input type="date" id="dateToReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" value="<?php echo $dateFilters; ?>">
+                                            <input type="date" id="dateToReport2" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum" >
                                         </div>
                                     </div>
                                     <div>
                                         <button class="btn btn-primary m-r-5 float-right mb-3" id="generateReport2"><i class="anticon anticon-download"></i> Preuzmi izvještaj</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <a class="collapsed" data-toggle="collapse" href="#collapseThreeDefault">
+                                    <span>Poređenje potršnje goriva</span>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseThreeDefault" class="collapse" data-parent="#accordion-default">
+                            <div class="card-body">
+                                <form>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Vozilo:</label>
+                                            <select id="vehicleSelectReport3" class="form-control">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Datum:</label>
+                                            <input type="date" id="dateToReport3" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Zaposleni:</label>
+                                            <select id="employeeSelectReport3" class="form-control">
+                                                <option></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-6 ">
+                                            <label class="font-weight-semibold" >Zaposleni za poređenje:</label>
+                                            <select id="employeeSelectCompareReport3" class="form-control">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary m-r-5 float-right mb-3" id="generateReport3"><i class="anticon anticon-download"></i> Preuzmi izvještaj</button>
                                     </div>
                                 </form>
                             </div>

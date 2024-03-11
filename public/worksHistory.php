@@ -131,7 +131,7 @@ $current_page= 1;
                                     </div>
                                 </div>
                             </div>
-                            <div class="card" id="worksDataCart" style="display: none">
+                            <div class="card hidden" id="worksDataCart"  >
                                 <div class="card-body">
                                     <h4>Dijagram podataka</h4>
                                     <div class="input-group mb-3">
@@ -155,8 +155,16 @@ $current_page= 1;
                                     </div>
                                 </div>
 
-                                <div class="card-body" id="chartDiv" style="display: none;">
-                                    <canvas id="dailyDataChart" width="400" height="200" ></canvas>
+                                <div id="chartTypeChange" class="mb-5 ml-1" style="display: none">
+                                    <p>Odaberite tip dijagrama: </p>
+                                    <button class="btn btn-secondary" id="showBreakdownChart">Kvarovi</button>
+                                    <button class="btn btn-secondary" id="showPriceChart">Cijena</button>
+                                </div>
+                                <div class="card-body" id="chartDivPrice" style="display: none;">
+                                    <canvas id="dailyDataChartPrice" width="400" height="200" ></canvas>
+                                </div>
+                                <div class="card-body" id="chartDivBreakdown" style="display: none;">
+                                    <canvas id="dailyDataChartBreakdown" width="400" height="200" ></canvas>
                                 </div>
                                 <button type="button" class="btn btn-primary m-b-15 m-r-10" id="downloadWorksDataCart"  style="display: none;">
                                     <i class="anticon anticon-download"></i> Preuzmi izvještaj

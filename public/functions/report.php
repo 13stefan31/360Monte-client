@@ -7,3 +7,6 @@ if(isset($_POST) && isset($_POST['generateReport'])){
 if(isset($_POST) && isset($_POST['generateReport2'])){
     return $report_sender->generateReport2($_POST);
 }
+if(isset($_POST) && isset($_POST['generateReport3'])){
+    return $report_sender->generateReport3($_POST);
+}

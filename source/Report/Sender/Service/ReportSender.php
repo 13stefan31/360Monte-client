@@ -43,5 +43,17 @@ class ReportSender extends \Main\SenderService
 
     }
 
+    public function generateReport3($data){
+        $body = [
+            'userId' => $data['userId'],
+            'vehicleId' => $data['vehicleId'],
+            'userComparison' => $data['userComparison'],
+            'startingFrom' =>  $data['startingFrom']
+        ];
+        $initialize_field = 'report/user-fuel-spent-comparison';
+        return  $this->send_post_request($initialize_field, $body);
+
+    }
+
 }
 

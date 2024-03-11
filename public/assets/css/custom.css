@@ -118,8 +118,8 @@ p.error {
     white-space: pre-line;
 }
 
-div#chartDiv {
-    max-height: 400px ;
+div#chartDiv ,div#chartDivBreakdown,div#chartDivPrice,#dailyDataChartBreakdown,#dailyDataChartPrice{
+    max-height: 400px!important ;
 }
 .disabled-input {
     background-color: silver;
@@ -136,7 +136,9 @@ div#chartDiv {
         margin-right: 10px;
     }
 }
-
+.hidden {
+    display: none;
+}
 
 @media screen and (max-width: 767px) {
   #chartDiv{
