@@ -85,9 +85,9 @@ $current_page= 1;
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">Datum</span>
+                                            <span class="input-group-text" id="basic-addon1">Datum kreiranja/prijave</span>
                                         </div>
-                                        <input type="date" class="form-control" id="<dateFilterId>" name="dateFilterId" aria-describedby="basic-addon3">
+                                        <input type="date" class="form-control" id="dateFilterId" name="dateFilterId" aria-describedby="basic-addon3">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -131,7 +131,7 @@ $current_page= 1;
                                     </div>
                                 </div>
                             </div>
-                            <div class="card hidden" id="worksDataCart"  >
+                            <div class="card  " id="worksDataCart"  style="display: none">
                                 <div class="card-body">
                                     <h4>Dijagram podataka</h4>
                                     <div class="input-group mb-3">
@@ -166,7 +166,7 @@ $current_page= 1;
                                 <div class="card-body" id="chartDivBreakdown" style="display: none;">
                                     <canvas id="dailyDataChartBreakdown" width="400" height="200" ></canvas>
                                 </div>
-                                <button type="button" class="btn btn-primary m-b-15 m-r-10" id="downloadWorksDataCart"  style="display: none;">
+                                <button type="button" class="btn btn-primary m-b-15 m-r-10 w-100" id="downloadWorksDataCart"  style="display: none;">
                                     <i class="anticon anticon-download"></i> Preuzmi izvještaj
                                 </button>
                             </div>

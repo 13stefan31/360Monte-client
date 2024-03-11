@@ -32,7 +32,7 @@ class AllocationSender extends \Main\SenderService
         if (!empty($allocationDate)) {
             $filters[] = 'allocationDate=' . urlencode($allocationDate);
         }
-        if (!empty($status)) {
+        if ($status !== null && $status !== '' && $status !== false) {
             $filters[] = 'status=' . urlencode($status);
         }
         if (!empty($limit)) {

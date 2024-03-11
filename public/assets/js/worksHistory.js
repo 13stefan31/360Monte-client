@@ -35,7 +35,16 @@ $(document).ready(function() {
         getVehiclesSelect('vehicleFilterId');
 
         // getRoles('rolaFilterId');
+        $("#chartTypeChange").hide();
+        $("#downloadWorksDataCart").hide();
+        $("#chartDivBreakdown").hide();
+        $("#chartDivPrice").hide();
         $("#worksDataCart").hide();
+
+        $("#showPriceChart").removeClass("active");
+        $("#showBreakdownChart").removeClass("active");
+
+
         $("#filterWorksHistory").toggle();
     });
 
@@ -46,13 +55,16 @@ $(document).ready(function() {
 
         $("#filterWorksHistory").hide();
         $("#worksDataCart").toggleClass("hidden");
-        if ($("#worksDataCart").hasClass("hidden")) {
-            $("#chartTypeChange").hide();
-            $("#downloadWorksDataCart").hide();
-            $("#dailyDataChartBreakdown").hide();
-            $("#dailyDataChartPrice").hide();
-        }
-
+        $("#worksDataCart").toggle(function(){
+            if ($("#worksDataCart").is(":hidden")) {
+                $("#chartTypeChange").hide();
+                $("#downloadWorksDataCart").hide();
+                $("#chartDivBreakdown").hide();
+                $("#chartDivPrice").hide();
+                $("#showPriceChart").removeClass("active");
+                $("#showBreakdownChart").removeClass("active");
+            }
+        });
     });
 
 
@@ -356,8 +368,6 @@ $(document).ready(function() {
                 if (myChartBreakdown) {
                     myChartBreakdown.destroy();
                 }
-                console.log(chartDataPrice)
-                console.log(chartDataBreakdown)
 
                 const xAsisBreakdown = chartDataBreakdown.xAsis || [];
                 const yAsisBreakdown = chartDataBreakdown.yAsis || [];

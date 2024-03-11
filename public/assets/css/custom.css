@@ -139,6 +139,7 @@ div#chartDiv ,div#chartDivBreakdown,div#chartDivPrice,#dailyDataChartBreakdown,#
 .hidden {
     display: none;
 }
+}
 
 @media screen and (max-width: 767px) {
   #chartDiv{

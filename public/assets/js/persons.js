@@ -168,10 +168,11 @@ function getUsers(filters,current_page,per_page){
             if (response.error) {
                 $('#alert').append(createWarningMessage(response.error));
             } else {
+                console.log()
                 $('#persons-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
-                    $('#persons-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td>' + row.roleName + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
+                    $('#persons-table tbody').append('<tr id="'+row.id+'"><td>' + row.name + '</td><td>' + row.email + '</td><td>' + row.username + '</td><td>' + row.roleName + '</td><td><a class="btn btn-primary m-r-5 " href="/zaposleni/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                         '<button class="btn btn-danger m-r-5 user-delete" data-userid="'+row.id+'"><i class="anticon anticon-user-delete"></i>Obriši</button></td></tr>');
                 });
                 var meta = response.data.meta;
