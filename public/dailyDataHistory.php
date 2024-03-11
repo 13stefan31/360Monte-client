@@ -212,7 +212,7 @@ $current_page= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/vendors/chartist/chartist.min.js"></script>
-<script src="/assets/js/dailyDataHistory.js"></script>
+<script src="/assets/js/dailyDataHistory.js?v=1.1"></script>
 </body>
 
 </html>

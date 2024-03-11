@@ -24,7 +24,11 @@ $(document).ready(function() {
         e.preventDefault();
         getVehiclesSelect('vehicleCartId');
         $("#dailyDataFilter").hide();
-        $("#dailyDataCart").toggle();
+        $("#dailyDataCart").toggle(function(){
+            if ($("#worksDataCart").is(":hidden")) {
+                $("#dailyDataChart").hide();
+            }
+        });
     });
 
     $('#newDailyDataButton').click(function(e) {
