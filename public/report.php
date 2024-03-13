@@ -113,7 +113,7 @@ if (!in_array($authRole,$reportAllowedRoles)){
                         <div class="card-header">
                             <h5 class="card-title">
                                 <a class="collapsed" data-toggle="collapse" href="#collapseThreeDefault">
-                                    <span>Poređenje potršnje goriva</span>
+                                    <span>Poređenje potrošnje goriva</span>
                                 </a>
                             </h5>
                         </div>
