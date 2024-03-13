@@ -3,7 +3,7 @@ require_once(dirname(__FILE__). '/../../common/functions.inc');
 
 if(isset($_GET) && isset($_GET['getDailyDataHistory'])){
     $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
-    $date = isset($data['date']) && $data['date'] !== '' ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
+    $date = isset($_GET['date']) && $_GET['date'] !== '' ? DateTime::createFromFormat('Y-m-d', $_GET['date'])->format('d.m.Y') : null;
 
     if (isset($vehicleId)){
         $_SESSION['daily_data_filter_vehicle_id'] = $vehicleId;
