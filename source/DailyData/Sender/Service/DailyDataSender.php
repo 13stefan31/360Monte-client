@@ -26,7 +26,7 @@ class DailyDataSender extends \Main\SenderService
             $filters[] = 'vehicleId=' . urlencode($vehicleId);
         }
         if (!empty($date)) {
-            $filters[] = 'date=' . urlencode($date);
+            $filters[] = 'date=' . urlencode(DateTime::createFromFormat('Y-m-d', $date)->format('d.m.Y'));
         }
         if (!empty($limit)) {
             $filters[] = 'limit=' . urlencode($limit);
