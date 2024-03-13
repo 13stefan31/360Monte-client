@@ -760,10 +760,16 @@ $(document).on('click', '.work-edit', function() {
 
     var vehiclePartsPaymentMethod = $(this).data('vehiclepartspaymentmethod');
 
+
+    $('#partsPriceCacheEdit').prop('disabled', false).removeClass('disabled-input').val('');
+    $('#partsPriceCardEdit').prop('disabled', false).removeClass('disabled-input').val('');
+    $('#mechanicPriceCacheEdit').prop('disabled', false).removeClass('disabled-input').val('');
+    $('#mechanicPriceCardEdit').prop('disabled', false).removeClass('disabled-input').val('');
+
     if (mechanicPaymentMethod === 'Račun') {
-        $('#mechanicPriceCardEdit').prop('disabled', true).addClass('disabled-input').val('');
-    } else if (mechanicPaymentMethod === 'Keš') {
         $('#mechanicPriceCacheEdit').prop('disabled', true).addClass('disabled-input').val('');
+    } else if (mechanicPaymentMethod === 'Keš') {
+        $('#mechanicPriceCardEdit').prop('disabled', true).addClass('disabled-input').val('');
     }
 
     if (vehiclePartsPaymentMethod === 'Račun') {

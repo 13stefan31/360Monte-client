@@ -211,7 +211,6 @@ function getDailyDataHistory(filters,current_page,per_page){
         data.vehicleId = filters.vehicleId;
         data.date = filters.date;
     }
-    console.log(filters)
 
     $('#daily-data-table tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     $.ajax({
