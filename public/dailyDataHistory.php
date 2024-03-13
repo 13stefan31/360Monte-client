@@ -114,6 +114,7 @@ $current_page= 1;
                                         <th style="text-align: right">Počeo dan</th>
                                         <th style="text-align: right">Završio dan</th>
                                         <th style="text-align: right">Količina goriva</th>
+                                        <th style="text-align: right">Datum unosa</th>
                                         <th></th>
                                     </tr>
                                     </thead>
