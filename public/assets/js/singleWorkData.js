@@ -15,7 +15,7 @@ $(document).ready(function() {
                 $('.dailyDataDivCard').hide()
             } else {
                 var data = response.data.data;
-                // console.log(data)
+                console.log(data)
                 storedData = response.data.data;
 
                 $('.workDataVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model+ ' ' + data.vehicle.year  + '<br/> Reg. oznaka: ' +data.vehicle.registrationNumber);
@@ -26,6 +26,7 @@ $(document).ready(function() {
                 }
 
                 $('.workBreakMileage').html(data.breakDownMilage + ' km');
+                $('.workDataReportedBy').html(data.reportedBy.name);
                 $('.workStarted').html(data.startingDate);
                 $('.workEnding').html(data.endingDate);
                 $('.mehanicPayMethod').html(data.mechanicPaymentMethod);
@@ -87,6 +88,7 @@ $(document).ready(function() {
                     $('.workBreakMileage').html(updatedRowData.breakDownMilage + ' km');
                     $('.workStarted').html(updatedRowData.startingDate);
                     $('.workEnding').html(updatedRowData.endingDate);
+                    $('.workDataReportedBy').html(updatedRowData.reportedBy.name);
                     $('.mehanicPayMethod').html(updatedRowData.mechanicPaymentMethod);
                     $('.partsPayMethod').html(updatedRowData.vehiclePartsPaymentMethod);
                     $('.workDesc').html(updatedRowData.description);

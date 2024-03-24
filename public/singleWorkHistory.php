@@ -47,6 +47,10 @@ if (!in_array($authRole,$worksHistoryAllowedRoles)){
                                                     <li class="list-group-item">
                                                         <p>Vozilo: <span class="workDataVehicle m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
+
+                                                    <li class="list-group-item">
+                                                        <p>Prijavio: <span class="workDataReportedBy m-b-0 text-dark font-weight-semibold"></span></p>
+                                                    </li>
                                                     <li class="list-group-item">
                                                         <p>Kategorija kvara: <span class="workBreakCategory m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
