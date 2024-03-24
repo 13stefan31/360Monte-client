@@ -21,6 +21,8 @@ RewriteRule ^zaposleni/([0-9]+)/?$ person.php?id=$1 [QSA]
 
 RewriteRule ^istorija-radova/?$ worksHistory.php
 RewriteRule ^istorija-rada/([0-9]+)/?$ singleWorkHistory.php?id=$1 [QSA]
+RewriteRule ^aktivni-kvarovi-vozila/([0-9]+)/?$ activeWorksHistory.php?id=$1 [QSA]
+RewriteRule ^pregled-aktivnog-kvara-vozila/([0-9]+)/?$ singleActiveWorkHistory.php?id=$1 [QSA]
 
 RewriteRule ^istorija-dnevnih-podataka/?$ dailyDataHistory.php
 RewriteRule ^istorija-dnevnog-podatka/([0-9]+)/?$ signleDailyDataHistory.php?id=$1 [QSA]

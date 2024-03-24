@@ -54,6 +54,10 @@ if(isset($_GET) && isset($_GET['getAllWorksHistory'])){
     return $works_history_sender->getAllWorksHistory($reportedBy,$breakdownCat,$vehicleId,$date,$breakdownSubcat,$partsPay,$mehanicPay,$limit,$page);
 }
 
+if(isset($_GET) && isset($_GET['getActiveWorkData'])){
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+    return $works_history_sender->getActiveWorksHistory($id);
+}
 if(isset($_GET) && isset($_GET['generateCart'])){
     $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
     $breakDownCategoryId = isset($_GET['breakDownCategoryId']) ? $_GET['breakDownCategoryId'] : null;

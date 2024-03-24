@@ -56,6 +56,10 @@ class WorksHistorySender extends \Main\SenderService
         }
         return  $this->send_get_request($initialize_field);
     }
+    public function getActiveWorksHistory($id){
+        $initialize_field = 'vehicle-break-down-log/active-breakdowns/vehicle/'.$id;
+        return  $this->send_get_request($initialize_field);
+    }
 
     public function getCartData($vehicleId = null,$breakDownCategoryId=null){
         $initialize_field = 'vehicle-break-down-log/report/preview?vehicleId='.$vehicleId.'&breakDownCategoryId='.(int)$breakDownCategoryId;
