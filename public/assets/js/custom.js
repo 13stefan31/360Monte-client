@@ -225,5 +225,80 @@ $(document).ready(function() {
     });
 });
 
+function getBreakDownSubcategoryIdSelect(selectId, categoryId = null, selectedId = null) {
+    $.ajax({
+        url: '/../../functions/worksHistory.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            'getAllBreakDownCategory': 1
+        },
+        success: function (response) {
+            var data = response.data;
+            var select = $('#' + selectId);
+            select.empty();
+            select.append('<option value="">Odaberite potkategoriju</option>');
+
+            $.each(data, function (key, value) {
+                if (value.id == categoryId) {
+                    var subcategories = value.subcategories;
+                    $.each(subcategories, function (key, subcategory) {
+                        var option = $('<option>', {
+                            value: subcategory.id,
+                            text: subcategory.name
+                        });
+
+                        if (subcategory.id == selectedId) {
+                            option.prop('selected', true);
+                        }
+
+                        select.append(option);
+                    });
+                }
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
+}
+function getBreakDownCategoryIdSelect(selectId, selectedValue = null){
+    $.ajax({
+        url: '/../../functions/worksHistory.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{
+            'getAllBreakDownCategory':1
+        },
+        success: function(response) {
+            var  data= response.data;
+            var select = $('#'+selectId);
+            select.empty();
+            select.append('<option value="">Odaberite kategoriju</option>');
+            $.each(data, function(key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + errorThrown);
+        }
+    });
+
+}
+function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheElement) {
+    var selectedOption = paymentMethod.val();
+    priceCardElement.prop('disabled', true).addClass('disabled-input').val('');
+    priceCacheElement.prop('disabled', true).addClass('disabled-input').val('');
+
+    if (selectedOption === '1') {
+        priceCardElement.prop('disabled', false).removeClass('disabled-input');
+    } else if (selectedOption === '2') {
+        priceCacheElement.prop('disabled', false).removeClass('disabled-input');
+    } else if (selectedOption === '3') {
+        priceCardElement.prop('disabled', false).removeClass('disabled-input');
+        priceCacheElement.prop('disabled', false).removeClass('disabled-input');
+    }
+}
 
 

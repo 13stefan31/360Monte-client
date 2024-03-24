@@ -66,6 +66,11 @@ class WorksHistorySender extends \Main\SenderService
         return  $this->send_get_request($initialize_field);
     }
 
+    function getSingleWorkData($id)
+    {
+        $initialize_field = 'vehicle-break-down-log' . '/' . $id;
+        return  $this->send_get_request($initialize_field);
+    }
     public function getAllBreakDownCategory(){
         $initialize_field = 'vehicle-break-down-categories' ;
         return  $this->send_get_request($initialize_field);
