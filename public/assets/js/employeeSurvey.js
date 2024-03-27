@@ -16,6 +16,7 @@ $(document).ready(function() {
                 $('#surveyError').html(handleErrors(response.error));
             } else {
                 var data = response.data.data;
+                console.log(data)
                 // if (loggedUser != null && loggedUser!=data.user.id ){
                 //
                 //     $('#surveyError').html('Možete odgovoriti samo na svoje ankete');
@@ -23,6 +24,7 @@ $(document).ready(function() {
                     if (data.status == 1) {
                         $('#surveyError').html(handleErrors('Anketa je već popunjena'));
                         $(".backHome").show();
+                        $('.surveyData').empty();
 
                     } else {
                         if (data.type == 1) {
@@ -62,9 +64,67 @@ $(document).ready(function() {
                                 '<input type="text" class="form-control" id="vehicleComment" placeholder="Obrazložite odgovor">' +
                                 '</div>';
 
-
                             $('#surveyData').append(vehicleSurvey);
                             $('#surveyData').append('<input  hidden="" value="' + data.surveyData.vehicleId + '" id="vehicleId">');
+                        }else if (data.type=3){
+
+
+                            $.ajax({
+                                url: '/../../functions/worksHistory.php',
+                                type:'GET',
+                                data:{getActiveWorkData:1,id:data.surveyData.vehicleId},
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.error) {
+                                        $('#activeWorkMessage').append(createWarningMessage(response.error));
+                                    } else {
+                                        $('#breakdownSurveyInfo tbody').empty();
+                                        var data = response.data.data;
+                                        console.log(data)
+                                        if (data.length>0){
+                                            $.each(data, function(index, row) {
+                                                var workHistoryRow = '<tr>' +
+                                                    '<td>' + row.breakDownCategory.name + '</td>' +
+                                                    '<td>' + row.breakDownSubcategory.name + '</td>'+
+                                                    '<td class="tdMax">' + row.description + '</td>' +
+                                                     '</tr>';
+
+                                                $('#breakdownSurveyInfo tbody').append(workHistoryRow );
+                                            });
+
+                                        }else{
+                                            $('#breakdownSurveyInfo tbody').empty();
+                                            $('#breakdownSurveyInfo thead').remove();
+                                            $('#breakdownSurveyInfo').html(createWarningMessage('Ne postoje aktivni kvarovi za vozilo'));
+                                        }
+
+
+                                    }
+                                }  ,
+                                error: function(jqXHR) {
+                                    var error = generateAjaxError(jqXHR);
+                                    $('#alert').append(createWarningMessage(error));
+                                }
+                            });
+
+
+                            var vehicleSurvey = '<div class="form-group m-t-30"><div class="alert alert-danger markErrorDiv" style="display: none"><p class="markError"></p> </div>' +
+                                '<label class="font-weight-semibold">Ocijenite vozilo ' + data.surveyData.brand + ' ' + data.surveyData.model + ' ' + data.surveyData.registrationNumber + ':</label>' +
+                                '<div class="star-rating m-t-5">' +
+                                '<input type="radio" id="star3-5" name="vehicleRate" value="5" /><label for="star3-5" title="5 star"></label>' +
+                                '<input type="radio" id="star3-4" name="vehicleRate" value="4" /><label for="star3-4" title="4 star"></label>' +
+                                '<input type="radio" id="star3-3" name="vehicleRate" value="3" /><label for="star3-3" title="3 star"></label>' +
+                                '<input type="radio" id="star3-2" name="vehicleRate" value="2" /><label for="star3-2" title="2 star"></label>' +
+                                '<input type="radio" id="star3-1" name="vehicleRate" value="1" /><label for="star3-1" title="1 star"></label>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="form-group comment-input" style="display: none;">' +
+                                '<label class="font-weight-semibold">Obrazložite odgovor:</label>' +
+                                '<input type="text" class="form-control" id="vehicleComment" placeholder="Obrazložite odgovor">' +
+                                '</div>';
+
+                            $('#breakdownSurveyData').append(vehicleSurvey);
+                            $('#breakdownSurveyData').append('<input  hidden="" value="' + data.surveyData.vehicleId + '" id="vehicleId">');
                         }
                         $('#surveyData').append('<input  hidden="" value="' + data.type + '" id="surveyType">');
                         $('#surveyData').append(' <div class="form-group">' +
@@ -92,6 +152,8 @@ $(document).on('click', '#saveSurveyResults', function(e) {
     var type = $('#surveyType').val();
     var url = window.location.href;
     var token = url.substring(url.lastIndexOf('/') + 1);
+    console.log(type);
+
     if (type==1){
         var surveyData = [];
         var isValid = 0;
@@ -129,7 +191,7 @@ $(document).on('click', '#saveSurveyResults', function(e) {
         var data = JSON.stringify({
             "surveyData": surveyData
         });
-    }else if(type==2){
+    }else if(type==2 || type==3){
         var targetId = $('#vehicleId').val();
         var mark = $('input[name="vehicleRate"]:checked').val();
         var comment = $('#vehicleComment').val();
@@ -177,13 +239,10 @@ $(document).on('click', '#saveSurveyResults', function(e) {
             if (dataParse.error) {
                 $('#surveyError').html(handleErrors(dataParse.error));
             } else {
-                // $('#surveyError').html(createSuccessMessage('Uspješno ste dodali novog zaposlenog na alokaciji'));
-                var data = dataParse.data.data;
                 $('#surveyError').html(createSuccessMessage('Uspješno ste glasali'));
                 $('#surveyData').empty();
+                $('.surveyData').empty();
                 $(".backHome").show();
-
-
             }
         },  error: function(jqXHR) {
             var error = generateAjaxError(jqXHR);
@@ -210,7 +269,7 @@ $('#surveyData').on('click', '.star-rating input[type="radio"]', function() {
 });
 
 // Trigger the show/hide behavior on vehicle rating click
-$('#surveyData').on('click', '.star-rating input[type="radio"]', function() {
+$('#surveyData, #breakdownSurveyData').on('click', '.star-rating input[type="radio"]', function() {
     var rating = $(this).val();
     var commentInput = $(this).closest('.form-group').next('.comment-input')
 
@@ -221,3 +280,4 @@ $('#surveyData').on('click', '.star-rating input[type="radio"]', function() {
         commentInput.hide();
     }
 });
+

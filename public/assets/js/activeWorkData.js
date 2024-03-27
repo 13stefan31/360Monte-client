@@ -15,7 +15,6 @@ $(document).ready(function() {
             } else {
                 $('#works-history-table tbody').empty();
                 var data = response.data.data;
-                console.log(data)
                 if (data.length>0){
                     $.each(data, function(index, row) {
                         var workHistoryRow = '<tr class="work-history-row" id="' + row.id + '">' +

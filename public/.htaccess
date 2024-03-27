@@ -41,6 +41,7 @@ RewriteRule ^izvjestaj/?$ report.php
 RewriteRule ^anketa/([^/.]+)/?$  survey.php?id=$1 [QSA]
 RewriteRule ^saradnici/ankete/([^/.]+)/?$ employeeSurvey.php?token=$1 [QSA]
 RewriteRule ^vozila/ankete/([^/.]+)/?$ employeeSurvey.php?token=$1 [QSA]
+RewriteRule ^vozila/provjera-vozila/ankete/([^/.]+)/?$ breakdownSurvey.php?token=$1 [QSA]
 RewriteRule ^korisnici/zaboravljena-lozinka/([^/.]+)/?$ changePassword.php?token=$1 [QSA]
 
 

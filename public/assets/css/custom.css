@@ -139,7 +139,6 @@ div#chartDiv ,div#chartDivBreakdown,div#chartDivPrice,#dailyDataChartBreakdown,#
 .hidden {
     display: none;
 }
-}
 
 @media screen and (max-width: 767px) {
   #chartDiv{
@@ -155,4 +154,9 @@ div#chartDiv ,div#chartDivBreakdown,div#chartDivPrice,#dailyDataChartBreakdown,#
 }
 .work-history-row.hovered, .work-history-opis-row.hovered {
     background-color: rgba(63, 135, 245,0.2)!important;
+}
+
+.tdMax{
+    min-width: 300px;
+    white-space: normal;
 }
