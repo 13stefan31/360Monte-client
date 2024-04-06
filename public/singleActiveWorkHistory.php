@@ -67,43 +67,46 @@
                                                     <li class="list-group-item">
                                                         <p>Kreirao: <span class="workCreatedBy m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
+                                                    <li class="list-group-item">
+                                                                                                            <p>Opis: <span class="workDesc m-b-0 text-dark font-weight-semibold"></span></p>
+                                                                                                        </li>
                                                 </ul>
                                             </div>
-                                            <div class="card">
-                                                <div class="table-responsive">
-                                                    <table id="mehanic-tabele" class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col" colspan="3" class="text-center" style="background-color: #ededed">MAJSTOR </th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="col">Način plaćanja </th>
-                                                            <th scope="col" class="mehanicPayMethod"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table id="parts-tabele" class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col" colspan="3" class="text-center" style="background-color: #ededed">DJELOVI </th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="col">Način plaćanja </th>
-                                                            <th scope="col" class="partsPayMethod"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <li class="list-group-item">
-                                                    <p>Opis: <span class="workDesc m-b-0 text-dark font-weight-semibold"></span></p>
-                                                </li>
-                                            </div>
+<!--                                            <div class="card">-->
+<!--                                                <div class="table-responsive">-->
+<!--                                                    <table id="mehanic-tabele" class="table">-->
+<!--                                                        <thead>-->
+<!--                                                        <tr>-->
+<!--                                                            <th scope="col" colspan="3" class="text-center" style="background-color: #ededed">MAJSTOR </th>-->
+<!--                                                        </tr>-->
+<!--                                                        <tr>-->
+<!--                                                            <th scope="col">Način plaćanja </th>-->
+<!--                                                            <th scope="col" class="mehanicPayMethod"></th>-->
+<!--                                                        </tr>-->
+<!--                                                        </thead>-->
+<!--                                                        <tbody>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </div>-->
+<!--                                                <div class="table-responsive">-->
+<!--                                                    <table id="parts-tabele" class="table">-->
+<!--                                                        <thead>-->
+<!--                                                        <tr>-->
+<!--                                                            <th scope="col" colspan="3" class="text-center" style="background-color: #ededed">DJELOVI </th>-->
+<!--                                                        </tr>-->
+<!--                                                        <tr>-->
+<!--                                                            <th scope="col">Način plaćanja </th>-->
+<!--                                                            <th scope="col" class="partsPayMethod"></th>-->
+<!--                                                        </tr>-->
+<!--                                                        </thead>-->
+<!--                                                        <tbody>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </div>-->
+<!--                                                <li class="list-group-item">-->
+<!--                                                    <p>Opis: <span class="workDesc m-b-0 text-dark font-weight-semibold"></span></p>-->
+<!--                                                </li>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>

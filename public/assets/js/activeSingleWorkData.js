@@ -38,15 +38,15 @@ $(document).ready(function() {
                 $('.workBreakCreated').html(data.createdAt);
                 $('.workCreatedBy').html(data.createdBy.name);
 
-                var newRow =
-                    '<tr><td rowspan="2" class="w-20">Iznos</td><td>Račun</td><td>Keš</td></tr>' +
-                '<tr ><td>' + data.mechanicPricePayedOverAccount + '€' + '</td><td>' + data.mechanicPricePayedWithCache + ' €' + '</td></tr>';
-                $('#mehanic-tabele tbody').append(newRow);
-
-                var newRow2 =
-                    '<tr><td rowspan="2" class="w-20">Iznos</td><td>Račun</td><td>Keš</td></tr>' +
-                    '<tr ><td>' + data.vehiclePartsPricePayedOverAccount + '€' + '</td><td>' + data.vehiclePartsPricePayedWithCache + ' €' + '</td></tr>';
-                $('#parts-tabele tbody').append(newRow2);
+                // var newRow =
+                //     '<tr><td rowspan="2" class="w-20">Iznos</td><td>Račun</td><td>Keš</td></tr>' +
+                // '<tr ><td>' + data.mechanicPricePayedOverAccount + '€' + '</td><td>' + data.mechanicPricePayedWithCache + ' €' + '</td></tr>';
+                // $('#mehanic-tabele tbody').append(newRow);
+                //
+                // var newRow2 =
+                //     '<tr><td rowspan="2" class="w-20">Iznos</td><td>Račun</td><td>Keš</td></tr>' +
+                //     '<tr ><td>' + data.vehiclePartsPricePayedOverAccount + '€' + '</td><td>' + data.vehiclePartsPricePayedWithCache + ' €' + '</td></tr>';
+                // $('#parts-tabele tbody').append(newRow2);
 
             }
         }  ,

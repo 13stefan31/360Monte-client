@@ -8,12 +8,18 @@ if(isset($_GET) && isset($_GET['getAllWorksHistory'])){
     $partsPay = isset($_GET['partsPay']) ? $_GET['partsPay'] : null;
     $mehanicPay = isset($_GET['mehanicPay']) ? $_GET['mehanicPay'] : null;
     $vehicleId = isset($_GET['vehicleId']) ? $_GET['vehicleId'] : null;
+    $isWorkFinishedFilter = isset($_GET['isWorkFinishedFilter']) ? $_GET['isWorkFinishedFilter'] : null;
     $date = isset($_GET['breakDownDate']) ? $_GET['breakDownDate'] : null;
 
     if (isset($reportedBy)){
         $_SESSION['work_filter_reported_id'] = $reportedBy;
     }else{
         $_SESSION['work_filter_reported_id'] = null;
+    }
+    if (isset($isWorkFinishedFilter)){
+        $_SESSION['is_work_finished_filter'] = $isWorkFinishedFilter;
+    }else{
+        $_SESSION['is_work_finished_filter'] = null;
     }
     if (isset($vehicleId)){
         $_SESSION['work_filter_vehicle_id'] = $vehicleId;
@@ -51,7 +57,7 @@ if(isset($_GET) && isset($_GET['getAllWorksHistory'])){
     $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
 
 
-    return $works_history_sender->getAllWorksHistory($reportedBy,$breakdownCat,$vehicleId,$date,$breakdownSubcat,$partsPay,$mehanicPay,$limit,$page);
+    return $works_history_sender->getAllWorksHistory($reportedBy,$breakdownCat,$vehicleId,$date,$breakdownSubcat,$partsPay,$mehanicPay,$isWorkFinishedFilter,$limit,$page);
 }
 
 if(isset($_GET) && isset($_GET['getActiveWorkData'])){

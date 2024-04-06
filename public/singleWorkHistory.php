@@ -37,17 +37,28 @@ if (!in_array($authRole,$worksHistoryAllowedRoles)){
                                     <h4 class="card-title">Informacije
                                         <button type="button" class="btn btn-primary m-l-15" data-toggle="modal" id="changeWorkDataButton" data-target="#editWorkHistory">
                                             <i class="anticon anticon-form"></i>Izmijeni podatke
-                                        </button> </h4>
+                                        </button>
+                                        <?php if (in_array($authRole,$completeWorkRoles)){?>
+                                        <button type="button" class="btn btn-success m-l-15"  id="markAsFinished">
+                                            <i class="anticon anticon-check"></i>Označi kao završeno
+                                        </button>
+                                        <?php }?>
+                                    </h4>
                                     <div id="dailyDataAlert"></div>
                                     <div id="alertGetDailyData"></div>
                                     <div class="dailyDataDivCard">
                                         <div class="card-group">
                                             <div class="card">
                                                 <ul class="list-group list-group-flus">
+                                                    <li hidden="">
+                                                        <input type="text" class="form-control" id="workId" name="workId" hidden="" readonly>
+                                                    </li>
                                                     <li class="list-group-item">
                                                         <p>Vozilo: <span class="workDataVehicle m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>
-
+                                                    <li class="list-group-item">
+                                                        <p>Završeno: <span class="isFinished m-b-0 text-dark font-weight-semibold"></span></p>
+                                                    </li>
                                                     <li class="list-group-item">
                                                         <p>Prijavio: <span class="workDataReportedBy m-b-0 text-dark font-weight-semibold"></span></p>
                                                     </li>

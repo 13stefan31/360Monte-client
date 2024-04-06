@@ -103,6 +103,12 @@ $(document).ready(function() {
                         errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }else{
                         var data = dataParse.data.data;
+                        let finished;
+                        if (data.isFinished){
+                            finished='DA';
+                        }else{
+                            finished='NE';
+                        }
                         var newRow = $('<tr>').attr('id', data.id);
                          newRow.append($('<td>').text(data.vehicle.brand + ' ' + data.vehicle.model + ' ' + data.vehicle.year));
                         newRow.append($('<td>').text(data.reportedBy.name));
@@ -112,6 +118,7 @@ $(document).ready(function() {
                         newRow.append($('<td>').text(data.endingDate));
                         newRow.append($('<td>').text(data.mechanicPaymentMethod));
                          newRow.append($('<td>').text(data.vehiclePartsPaymentMethod));
+                         newRow.append($('<td class="text-center">').text(finished));
                          newRow.append($('<td>').text(data.createdBy.name));
                          newRow.append($('<td>').text(data.createdAt));
                         newRow.append($('<td style="display: flex">').html(
@@ -182,6 +189,7 @@ $(document).ready(function() {
         getWorksHistory('',1,per_page);
         localStorage.removeItem('worksHistoryFilters');
         $('#reportedByFilterId').val('');
+        $('#isWorkFinishedFilter').val('');
         $('#breakdownCatFilterId').val('');
         $('#breakdownSubcatFilterId').val('');
         $('#dateFilterId').val('');
@@ -307,6 +315,7 @@ $(document).ready(function() {
 $(document).on('click', '#worksHistoryFilter', function() {
     var reportedByFilterId = $('#reportedByFilterId').val();
     var breakdownCatFilterId = $('#breakdownCatFilterId').val();
+    var isWorkFinishedFilter = $('#isWorkFinishedFilter').val();
     var breakdownSubcatFilterId = $('#breakdownSubcatFilterId').val();
     var partsPayFilterId = $('#partsPayFilterId').val();
     var vehicleFilterId = $('#vehicleFilterId').val();
@@ -315,6 +324,7 @@ $(document).on('click', '#worksHistoryFilter', function() {
     var filters = {
         reportedByFilterId: reportedByFilterId,
         breakdownCatFilterId: breakdownCatFilterId,
+        isWorkFinishedFilter: isWorkFinishedFilter,
         breakdownSubcatFilterId: breakdownSubcatFilterId,
         partsPayFilterId: partsPayFilterId,
         vehicleFilterId: vehicleFilterId,
@@ -336,6 +346,7 @@ function getWorksHistory(filters,current_page,per_page){
     if (filters !== '') {
         data.reportedBy = filters.reportedByFilterId;
         data.breakDownDate = filters.dateFilterId;
+        data.isWorkFinishedFilter = filters.isWorkFinishedFilter;
         data.vehicleId = filters.vehicleFilterId;
         data.breakdownCat = filters.breakdownCatFilterId;
         data.breakdownSubcat = filters.breakdownSubcatFilterId;
@@ -356,6 +367,14 @@ function getWorksHistory(filters,current_page,per_page){
                 $('#works-history-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
+                    let finished;
+                    if (row.isFinished){
+                        finished='DA';
+                    }else{
+                        finished='NE';
+                    }
+
+
                     var workHistoryRow = '<tr class="work-history-row" id="' + row.id + '">' +
                         '<td>' + row.vehicle.brand + ' ' + row.vehicle.model + ' ' + row.vehicle.year + '</td>' +
                         '<td>' + row.reportedBy.name + '</td>' +
@@ -365,6 +384,7 @@ function getWorksHistory(filters,current_page,per_page){
                         '<td>' + row.endingDate + '</td>' +
                         '<td>' + row.mechanicPaymentMethod + '</td>' +
                         '<td>' + row.vehiclePartsPaymentMethod + '</td>' +
+                        '<td class="text-center">' + finished + '</td>' +
                          '<td>' + row.createdBy.name + '</td>' +
                         '<td>' + row.createdAt + '</td>' +
                         '<td  style="display: flex">' +

@@ -111,5 +111,11 @@ $dailyDataHistoryAllowedRoles = array(
     P_SALE_COORDINATOR_ROLE_ID,
     P_VEHICLE_COORDINATOR_ROLE_ID
 );
+$completeWorkRoles = array(
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
+
+);
 
 ?>

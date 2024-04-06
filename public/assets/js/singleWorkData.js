@@ -15,16 +15,25 @@ $(document).ready(function() {
                 $('.dailyDataDivCard').hide()
             } else {
                 var data = response.data.data;
-                console.log(data)
                 storedData = response.data.data;
 
+                let finished;
+                if (data.isFinished){
+                    finished='DA';
+                    $('#markAsFinished').remove();
+                }else{
+                    finished='NE';
+                }
+
+
                 $('.workDataVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model+ ' ' + data.vehicle.year  + '<br/> Reg. oznaka: ' +data.vehicle.registrationNumber);
+                $('.isFinished').html(finished);
+                $('#workId').val(data.id);
                 $('.workBreakCategory').html(data.breakDownCategory.name);if (data.breakDownSubcategory !== null && data.breakDownSubcategory.name !== undefined) {
                     $('.workBreakSubcategory').html(data.breakDownSubcategory.name);
                 } else {
                     $('.workBreakSubcategory').html('-');
                 }
-
                 $('.workBreakMileage').html(data.breakDownMilage + ' km');
                 $('.workDataReportedBy').html(data.reportedBy.name);
                 $('.workStarted').html(data.startingDate);
@@ -202,6 +211,7 @@ $(document).ready(function() {
         }
     });
 
+
     $(document).on('change', '#vehiclePartsPaymentMethodEdit, #mechanicPaymentMethodEdit', function() {
         var selectedOption = $(this).val();
         var isVehicle = $(this).attr('id') === 'vehiclePartsPaymentMethodEdit';
@@ -214,3 +224,57 @@ $(document).ready(function() {
     });
 });
 
+$(document).on('click', '#markAsFinished', function() {
+    var workId = $('#workId').val();
+    Swal.fire({
+        title: 'Da li ste sigurni da želite da označite kvar završenim ?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Da',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            var $btn = $(this);
+            $btn.addClass('is-loading').prop('disabled', true);
+            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+            $.ajax({
+                url: '/../../functions/singleWorkData.php',
+                type: 'put',
+                contentType: 'application/json',
+                data: JSON.stringify({ markAsFinished: 1, workId: workId }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        // $('#alertDeleteAllocation').html(handleErrors(data.error));
+                        Swal.fire(data.error,'','error')
+                    }else{
+                        let finished;
+                        if (data.data.data.isFinished){
+                            finished='DA';
+                        }else{
+                            finished='NE';
+                        }
+                        $('.isFinished').html(finished);
+                        $('#markAsFinished').remove();
+
+                        Swal.fire('Uspješno ste kompletirali kvar. ','','success')
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var error = generateAjaxError(jqXHR);
+                    Swal.fire(error,'','error')
+                },
+                complete:function (){
+                    $btn.removeClass('is-loading').prop('disabled', false);
+                    $btn.find('.anticon-loading').remove();
+                }
+            });
+
+        } else if (result.isDenied) {   }
+    })
+
+
+
+});

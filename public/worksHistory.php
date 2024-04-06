@@ -14,6 +14,7 @@ if(isset($_SESSION['work_filter_reported_id'])
     || isset($_SESSION['work_filter_mehanic_pay_id'])
     || isset($_SESSION['work_filter_vehicle_id'])
     || isset($_SESSION['work_filter_date'])
+    || isset($_SESSION['is_work_finished_filter'])
 ){
     $showFilters = '';
     $clearFilters = '';
@@ -76,6 +77,16 @@ $current_page= 1;
                                             <span class="input-group-text" id="basic-addon1">Prijavio</span>
                                         </div>
                                         <select id="reportedByFilterId" class="form-control"></select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Završeno</span>
+                                        </div>
+                                        <select id="isWorkFinishedFilter" class="form-control">
+                                            <option>Odaberite</option>
+                                            <option value="0" <?php if ($_SESSION['is_work_finished_filter'] == '0') echo ' selected'; ?>>NE</option>
+                                            <option value="1" <?php if ($_SESSION['is_work_finished_filter'] == '1') echo ' selected'; ?>>DA</option>
+                                        </select>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -183,6 +194,7 @@ $current_page= 1;
                                         <th>Kraj</th>
                                         <th>Način plaćanja majstora</th>
                                         <th>Način plaćanja djelova</th>
+                                        <th>Završeno</th>
                                         <th>Kreirao</th>
                                         <th>Kreirano</th>
                                         <th></th>

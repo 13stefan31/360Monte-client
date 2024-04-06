@@ -20,7 +20,7 @@ class WorksHistorySender extends \Main\SenderService
     }
 
 
-    public function getAllWorksHistory($reportedBy = null,$breakdownCat=null,$vehicleId=null,$date=null,$breakdownSubcat=null,$partsPay=null,$mehanicPay=null, $limit,$page){
+    public function getAllWorksHistory($reportedBy = null,$breakdownCat=null,$vehicleId=null,$date=null,$breakdownSubcat=null,$partsPay=null,$mehanicPay=null,$isWorkFinishedFilter=null, $limit,$page){
         $initialize_field = 'vehicle-break-down-log' ;
         $filters = array();
         if (!empty($reportedBy)) {
@@ -44,6 +44,10 @@ class WorksHistorySender extends \Main\SenderService
         if (!empty($mehanicPay)) {
             $filters[] = 'mechanicPayMethod=' . urlencode($mehanicPay);
         }
+        if ($isWorkFinishedFilter !== null && $isWorkFinishedFilter !== '' && $isWorkFinishedFilter !== false) {
+            $filters[] = 'isFinished=' . urlencode($isWorkFinishedFilter);
+        }
+
         if (!empty($limit)) {
             $filters[] = 'limit=' . urlencode($limit);
         }
@@ -146,6 +150,15 @@ class WorksHistorySender extends \Main\SenderService
         return  $this->send_put_request($initialize_field, $body);
 
     }
+
+    public function markAsFinished($workId){
+        $initialize_field = 'vehicle-break-down-log/'.$workId.'/mark-as-done';
+        return  $this->send_put_request($initialize_field);
+
+    }
+
+
+
 
 }
 

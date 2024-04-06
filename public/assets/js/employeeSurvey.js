@@ -16,7 +16,6 @@ $(document).ready(function() {
                 $('#surveyError').html(handleErrors(response.error));
             } else {
                 var data = response.data.data;
-                console.log(data)
                 // if (loggedUser != null && loggedUser!=data.user.id ){
                 //
                 //     $('#surveyError').html('Možete odgovoriti samo na svoje ankete');
@@ -80,7 +79,6 @@ $(document).ready(function() {
                                     } else {
                                         $('#breakdownSurveyInfo tbody').empty();
                                         var data = response.data.data;
-                                        console.log(data)
                                         if (data.length>0){
                                             $.each(data, function(index, row) {
                                                 var workHistoryRow = '<tr>' +
@@ -152,7 +150,6 @@ $(document).on('click', '#saveSurveyResults', function(e) {
     var type = $('#surveyType').val();
     var url = window.location.href;
     var token = url.substring(url.lastIndexOf('/') + 1);
-    console.log(type);
 
     if (type==1){
         var surveyData = [];
