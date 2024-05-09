@@ -43,7 +43,6 @@ function getAllSurveys(current_page,per_page,status){
             } else {
                 $('#surveysTable tbody').empty();
                 var data = response.data.data;
-                console.log(data)
                 data.forEach(function(item) {
                     var surveyItem='';
                     var filled='';
