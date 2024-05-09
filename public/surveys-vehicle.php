@@ -77,7 +77,7 @@ $current_page= 1;
                                 <thead>
                                 <tr>
                                     <th>Vozilo</th>
-<!--                                    <th>Tip ankete</th>-->
+                                    <th>Osoba</th>
                                     <th>Status</th>
 <!--                                    <th>Datum</th>-->
 <!--                                    <th></th>-->
