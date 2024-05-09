@@ -35,6 +35,25 @@ class SurveySender extends \Main\SenderService
         }
         return  $this->send_get_request($initialize_field);
     }
+    public function getAllSurveysVehicle($status,$limit,$page){
+        $initialize_field = 'surveys/pre-tour-car' ;
+
+        $filters = array();
+        if (!empty($limit)) {
+            $filters[] = 'limit=' . urlencode($limit);
+        }
+        if (isset($status)){
+            $filters[] = 'statusId=' . urlencode($status);
+        }
+        if (!empty($page)) {
+            $filters[] = 'page=' . urlencode($page);
+        }
+        $filterString = implode('&', $filters);
+        if (!empty($filterString)) {
+            $initialize_field .= '?' . $filterString;
+        }
+        return  $this->send_get_request($initialize_field);
+    }
 
     public function getSingleSurveys($token){
         $initialize_field = 'surveys/'.$token ;

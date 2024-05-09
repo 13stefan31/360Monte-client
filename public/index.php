@@ -58,13 +58,32 @@
                                             <i class="anticon anticon-question-circle"></i>
                                         </div>
                                         <div class="m-l-15">
-                                            <h3 class="m-b-0">Ankete</h3>
+                                            <h3 class="m-b-0">Ankete saradnici</h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             </a>
                         </div>
+
+                        <?php }?>
+                        <?php if (in_array($authRole,$surveysAllowedRoles)){?>
+                            <div class="col-md-6 col-lg-3">
+                                <a href="/ankete-vozila">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media align-items-center">
+                                                <div class="avatar avatar-icon avatar-lg avatar-red">
+                                                    <i class="anticon anticon-question-circle"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <h3 class="m-b-0">Ankete vozila</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
 
                         <?php }?>
                         <?php if (in_array($authRole,$allocationAllowedRoles)){?>

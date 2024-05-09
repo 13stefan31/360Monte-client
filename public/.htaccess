@@ -37,6 +37,7 @@ RewriteRule ^alokacije/([0-9]+)/?$ allocation.php?id=$1 [QSA]
 
 RewriteRule ^ture/?$ tours.php
 RewriteRule ^ankete/?$ surveys.php
+RewriteRule ^ankete-vozila/?$ surveys-vehicle.php
 RewriteRule ^izvjestaj/?$ report.php
 RewriteRule ^anketa/([^/.]+)/?$  survey.php?id=$1 [QSA]
 RewriteRule ^saradnici/ankete/([^/.]+)/?$ employeeSurvey.php?token=$1 [QSA]

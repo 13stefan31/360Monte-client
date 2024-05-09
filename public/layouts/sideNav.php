@@ -34,7 +34,17 @@
                              <span class="icon-holder">
                          <i class="anticon anticon-question-circle"></i>
                          </span>
-                                Ankete</a>
+                                Ankete saradnici</a>
+                        </li>
+
+                    <?php }?>
+                    <?php if (in_array($authRole,$surveysAllowedRoles)){?>
+                        <li>
+                            <a href="/ankete-vozila">
+                             <span class="icon-holder">
+                         <i class="anticon anticon-question-circle"></i>
+                         </span>
+                                Ankete vozila</a>
                         </li>
 
                     <?php }?>
