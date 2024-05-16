@@ -95,6 +95,7 @@ $allocationUpdateRolesString = json_encode($allocationUpdateRoles);
 $vehicleCommentRoles = array(
     P_ADMIN_ROLE_ID,
     P_MEHANIC_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
     P_VEHICLE_COORDINATOR_ROLE_ID
 );
 
