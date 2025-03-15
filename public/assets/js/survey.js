@@ -27,7 +27,7 @@ function getAllSurveys(current_page,per_page){
                     var surveyItem='';
                     var filled='';
 
-                    if (item.type==1) {
+                    if (item.type==1 || item.type==4) {
                         surveyItem='Saradnici';
                         if (item.status==1){
                             filled='Popunjena';
