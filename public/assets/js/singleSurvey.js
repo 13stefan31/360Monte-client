@@ -20,7 +20,7 @@ $(document).ready(function() {
                 var surveyTypeP='';
                 var surveyTypeS='';
                 var emptySurvey='';
-                if (data.type==1) {
+                if (data.type==1  || data.type==4 ) {
                     surveyTypeP='Saradnici';
                     surveyTypeS='Saradnik';
                     emptySurvey='Na komentar i ocjenu čekaju sledeći saradnici:';
@@ -33,7 +33,7 @@ $(document).ready(function() {
                 $('.surveyPersonName').html(data.user.name)
                 $('.surveyType').html(surveyTypeP)
                 if (data.status==0){
-                    if (data.type==1) {
+                    if (data.type==1 || data.type==4) {
                         var wait = '';
                         for (var i = 0; i < data.surveyData.length; i++) {
                             wait += data.surveyData[i].username;
@@ -64,43 +64,48 @@ $(document).ready(function() {
                     data.result.forEach(function(item) {
                         $('.surveyTime').html(item.createdAt);
                         var rating = Math.round(item.rating);
-                        var starRatingHTML = '<div class="star-rating m-t-5">';
-                        for (var i = 5; i >= 1; i--) {
-                            starRatingHTML += '<input type="radio" id="star3-' + i + '"   value="' + i + '"';
-                            if (rating >= i) {
-                                starRatingHTML += ' checked';
-                            }
-                            starRatingHTML += ' /><label for="star3-' + i + '" title="' + i + ' star"></label>';
-                        }
-                        starRatingHTML += '</div>';
-
-                        // starRatingHTML += '</div>';
                         var comment = item.comment ? item.comment : '';
-                        var newRow =
-                            '  <div class="card">' +
-                            '    <div class="card-header employeeSurveyName">' +
-                            '      <h4 class="card-title ">' +
-                            surveyTypeS +
-                            ': <span> ' +
-                            item.target.name +
-                            '</span></h4>' +
-                            '    </div>' +
-                            '    <div class="card-header">' +
-                            '      <h4 class="card-title">Ocjena:  <span>' +
-                            starRatingHTML +
-                            '</span></h4>' +
-                            '    </div>' +
-                            '    <div class="card-header">' +
-                            '      <h4 class="card-title">Komentar</h4>' +
-                            '      <span>' +
-                            comment +
-                            '</span>' +
-                            '    </div>' +
-                            '    <br>' +
-                            '  </div>';
 
-                        $('.surveyData').append(newRow);
+                        var content = '';
+
+                        if (rating === 0) {
+                            content = '<div class="card">' +
+                                '  <div class="card-header employeeSurveyName">' +
+                                '    <h4 class="card-title">' + surveyTypeS + ': <span>' + item.target.name + '</span></h4>' +
+                                '  </div>' +
+                                '  <div class="card-header">' +
+                                '    <h4 class="card-title text-muted">Nismo sarađivali</h4>' +
+                                '  </div>' +
+                                '</div>';
+                        } else {
+                            var starRatingHTML = '<div class="star-rating m-t-5">';
+                            for (var i = 5; i >= 1; i--) {
+                                starRatingHTML += '<input type="radio" id="star3-' + i + '" value="' + i + '"';
+                                if (rating >= i) {
+                                    starRatingHTML += ' checked';
+                                }
+                                starRatingHTML += ' /><label for="star3-' + i + '" title="' + i + ' star"></label>';
+                            }
+                            starRatingHTML += '</div>';
+
+                            content = '<div class="card">' +
+                                '  <div class="card-header employeeSurveyName">' +
+                                '    <h4 class="card-title">' + surveyTypeS + ': <span>' + item.target.name + '</span></h4>' +
+                                '  </div>' +
+                                '  <div class="card-header">' +
+                                '    <h4 class="card-title">Ocjena: <span>' + starRatingHTML + '</span></h4>' +
+                                '  </div>' +
+                                '  <div class="card-header">' +
+                                '    <h4 class="card-title">Komentar</h4>' +
+                                '    <span>' + comment + '</span>' +
+                                '  </div>' +
+                                '  <br>' +
+                                '</div>';
+                        }
+
+                        $('.surveyData').append(content);
                     });
+
 
 
 

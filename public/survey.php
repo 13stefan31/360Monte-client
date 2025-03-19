@@ -93,7 +93,7 @@ if (!in_array($authRole,$surveysAllowedRoles)){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleSurvey.js"></script>
+    <script src="/assets/js/singleSurvey.js?v=1903"></script>
 
 </body>
 

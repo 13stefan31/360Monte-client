@@ -45,7 +45,7 @@ include('layouts/head.php') ?>
 
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/employeeSurvey.js"></script>
+<script src="/assets/js/employeeSurvey.js?v=1903"></script>
 
 
 </body>
