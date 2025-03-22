@@ -85,7 +85,23 @@
                          <i class="anticon anticon-deployment-unit"></i>
                          </span>Ture</a>
                     </li>
+                    <?php if (in_array($authRole,$allVacationRoles)){?>
+                    <li>
+                        <a href="/slobodni-dani">
+                             <span class="icon-holder">
+                        <i class="anticon anticon-calendar"></i>
+                         </span>Svi slobodni dani</a>
+                    </li>
+                    <?php }?>
+                        <?php if (in_array($authRole,$myVacationRoles)){?>
 
+                    <li>
+                        <a href="/slobodni-dani-pregled">
+                             <span class="icon-holder">
+                         <i class="anticon anticon-calendar"></i>
+                         </span>Moji slobodni dani</a>
+                    </li>
+                    <?php }?>
                 </ul>
             </li>
             <hr/>

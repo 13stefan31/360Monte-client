@@ -1,6 +1,7 @@
 p.error {
     color: red;
 }
+
 .input-group .error {
     position: absolute;
     right: 0;
@@ -8,10 +9,12 @@ p.error {
     font-size: 1.2em;
     color: red;
 }
-.warrningAlert{
+
+.warrningAlert {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
 .dropdown-item {
     display: flex;
     align-items: center;
@@ -22,15 +25,17 @@ p.error {
     max-width: 330px;
     white-space: normal;
 }
-.newNotification{
+
+.newNotification {
     background-color: #f2f2f2;
     box-shadow: 0 0 10px rgb(0 0 0 / 20%);
     transition: transform 0.3s ease-in-out;
     margin-bottom: 4px;
 
 }
+
 .pop-notification {
-    width: 420px!important;
+    width: 420px !important;
 }
 
 .loader {
@@ -45,12 +50,14 @@ p.error {
 }
 
 .swal2-styled.swal2-confirm {
-    background-color: #00c9a7!important;
+    background-color: #00c9a7 !important;
 }
+
 .swal2-title {
-     font-weight: unset!important;
-     font-size: unset!important;
+    font-weight: unset !important;
+    font-size: unset !important;
 }
+
 .card-header.employeeSurveyName {
     background: #ecf0f1;
 }
@@ -68,21 +75,23 @@ p.error {
 /* Styles for mobile devices */
 @media (max-width: 767px) {
     .table-container {
-        overflow-x: auto!important;
+        overflow-x: auto !important;
     }
 
     .table {
         width: 100% !important;
     }
+
     .pop-notification {
-        position: fixed!important;
+        position: fixed !important;
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        width: 362px!important;
+        width: 362px !important;
     }
 
 }
+
 #loader-overlay {
     position: fixed;
     top: 0;
@@ -106,57 +115,125 @@ p.error {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.invalidComment{
-    border: 2px red solid
-;
+.invalidComment {
+    border: 2px red solid;
 }
+
 #vehicle-comment-table td {
     white-space: pre-line;
 }
 
-div#chartDiv ,div#chartDivBreakdown,div#chartDivPrice,#dailyDataChartBreakdown,#dailyDataChartPrice{
-    max-height: 400px!important ;
+div#chartDiv, div#chartDivBreakdown, div#chartDivPrice, #dailyDataChartBreakdown, #dailyDataChartPrice {
+    max-height: 400px !important;
 }
+
 .disabled-input {
     background-color: silver;
 }
+
 #works-history-table .table th, .table td {
     white-space: break-spaces;
 }
-.accordion>.card>.card-header>.card-title>a{
-    background-color: rgba(63, 135, 245,0.2)!important;
+
+.accordion > .card > .card-header > .card-title > a {
+    background-color: rgba(63, 135, 245, 0.2) !important;
 }
+
 @media screen and (min-width: 768px) {
-    #showDailyDataCart,#showWorksDataCart {
+    #showDailyDataCart, #showWorksDataCart {
         float: right;
         margin-right: 10px;
     }
 }
+
 .hidden {
     display: none;
 }
 
 @media screen and (max-width: 767px) {
-  #chartDiv{
-      padding: unset!important;
-  }
-    canvas#dailyDataChart{
-        height: auto!important;
-        width: 100%!important;
+    #chartDiv {
+        padding: unset !important;
     }
-    .dialy-data{
-        padding: unset!important;
+
+    canvas#dailyDataChart {
+        height: auto !important;
+        width: 100% !important;
     }
-}
-.work-history-row.hovered, .work-history-opis-row.hovered {
-    background-color: rgba(63, 135, 245,0.2)!important;
+
+    .dialy-data {
+        padding: unset !important;
+    }
 }
 
-.tdMax{
+.work-history-row.hovered, .work-history-opis-row.hovered {
+    background-color: rgba(63, 135, 245, 0.2) !important;
+}
+
+.tdMax {
     min-width: 300px;
     white-space: normal;
+}
+
+#calendar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.week-days-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.month {
+    width: 240px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.month-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    text-align: center;
+}
+
+.day {
+    padding: 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.day.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+.day.empty {
+    background-color: #f0f0f0;
 }

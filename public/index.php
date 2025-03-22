@@ -174,6 +174,46 @@
                                 </div>
                             </a>
                         </div>
+                        <?php if (in_array($authRole,$allVacationRoles)){?>
+                        <div class="col-md-6 col-lg-3">
+                            <a href="/slobodni-dani">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="avatar avatar-icon avatar-lg avatar-blue">
+                                                <i class="anticon anticon-calendar"></i>
+
+                                            </div>
+                                            <div class="m-l-15">
+                                                <h3 class="m-b-0">Svi slobodni dani</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php }?>
+                        <?php if (in_array($authRole,$myVacationRoles)){?>
+
+
+                        <div class="col-md-6 col-lg-3">
+                            <a href="/slobodni-dani-pregled">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media align-items-center">
+                                            <div class="avatar avatar-icon avatar-lg avatar-blue">
+
+                                                <i class="anticon anticon-calendar"></i>
+                                            </div>
+                                            <div class="m-l-15">
+                                                <h3 class="m-b-0">Moji slobodni dani</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php }?>
                     </div>
                 </div>
                 <?php  include ('layouts/footer.php')?>

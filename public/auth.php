@@ -118,5 +118,12 @@ $completeWorkRoles = array(
     P_VEHICLE_COORDINATOR_ROLE_ID
 
 );
+$allVacationRoles = array(
+    P_ADMIN_ROLE_ID
 
+);
+$myVacationRoles = array(
+    P_ADMIN_ROLE_ID
+
+);
 ?>

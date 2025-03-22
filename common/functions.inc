@@ -37,6 +37,11 @@ require_once(dirname(__FILE__) . "/../source/DailyData/Model/DailyData.php");
 require_once(dirname(__FILE__) . "/../source/WorksHistory/Sender/Service/WorksHistorySender.php");
 require_once(dirname(__FILE__) . "/../source/WorksHistory/Model/WorksHistory.php");
 
+require_once(dirname(__FILE__) . "/../source/AnnualLeave/Sender/Service/AnnualLeaveSender.php");
+require_once(dirname(__FILE__) . "/../source/AnnualLeave/Model/AnnualLeave.php");
+
+$annualLeave_sender = AnnualLeaveSender::getInstance();
+$annualLeave = AnnualLeave::getInstance();
 
 
 $person_sender = PersonSender::getInstance();
