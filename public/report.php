@@ -159,7 +159,7 @@ if (!in_array($authRole,$reportAllowedRoles)){
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">
-                                <a data-toggle="collapse" href="#collapse4Default">
+                                <a class="collapsed" data-toggle="collapse" href="#collapse4Default">
                                     <span>Broj polazaka za turu</span>
                                 </a>
                             </h5>
