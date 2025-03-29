@@ -38,7 +38,7 @@ function getAllSurveys(current_page,per_page){
                         var newRow =
                             '<tr id="'+item.id+'">' +
                             '<td>' + item.user.name + '</td>' +
-                            '<td>'+ item.type +surveyItem+'</td>' +
+                            '<td>' +surveyItem+'</td>' +
                             '<td>' +filled +'</td>' +
                             '<td>' + item.createdAt +'</td>' +
                             '<td><a class="btn btn-primary m-r-5 " href="/anketa/'+item.token+'"   ><i class="anticon anticon-plus"></i>Više detalja</a></td>' +
