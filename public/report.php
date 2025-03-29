@@ -155,6 +155,42 @@ if (!in_array($authRole,$reportAllowedRoles)){
                             </div>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <a data-toggle="collapse" href="#collapse4Default">
+                                    <span>Broj polazaka za turu</span>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapse4Default" class="collapse " data-parent="#accordion-default">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label class="font-weight-semibold">Tura:</label>
+                                            <select id="toursSelectReport1" class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Početni datum:</label>
+                                            <input type="date" id="dateFromReport1" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="font-weight-semibold" >Krajnji datum:</label>
+                                            <input type="date" id="dateToReport1" class="form-control" placeholder="Unesite datum" aria-label="Unesite datum"  >
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary m-r-5 float-right mb-3" id="generateReport4"><i class="anticon anticon-download"></i> Preuzmi izvještaj</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php include ('layouts/footer.php')?>
@@ -165,7 +201,7 @@ if (!in_array($authRole,$reportAllowedRoles)){
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/report.js?v=1.1"></script>
+<script src="/assets/js/report.js?v=1.2"></script>
 
 </body>
 

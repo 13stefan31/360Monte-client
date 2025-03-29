@@ -55,5 +55,27 @@ class ReportSender extends \Main\SenderService
 
     }
 
+    public function generateReport4($data){
+
+        $initialize_field = 'report/tour-departures-counter';
+        $filters = array();
+        if (!empty($data['tourId'])) {
+            $filters[] = 'tourId=' . urlencode($data['tourId']);
+        }
+        if (!empty($data['fromDate'])) {
+            $filters[] = 'fromDate=' . urlencode($data['fromDate']);
+        }
+        if (!empty($data['toDate'])) {
+            $filters[] = 'toDate=' . urlencode($data['toDate']);
+        }
+        $filterString = implode('&', $filters);
+        if (!empty($filterString)) {
+            $initialize_field .= '?' . $filterString;
+        }
+
+        return  $this->send_get_request($initialize_field);
+
+    }
+
 }
 

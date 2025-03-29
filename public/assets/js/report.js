@@ -3,6 +3,7 @@ $(document).ready(function() {
     getStuffAllocation('employeeSelectReport2')
 
     getToursSelect('toursSelectReport')
+    getToursSelect('toursSelectReport1')
 
     //izvjestaj za poredjenje po zaposlenom
     getStuffAllocation('employeeSelectReport3')
@@ -230,6 +231,81 @@ $(document).on('click', '#generateReport3', function(e) {
 
                 Swal.fire(error,'','error')
              },
+            complete:function (){
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
+        });
+    }
+
+});
+
+$(document).on('click', '#generateReport4', function(e) {
+    e.preventDefault();
+    $('#reportMessage').empty();
+    var errorInputs = [];
+    var errorMessage= "Morate odabrati";
+
+    var tour = $('#toursSelectReport1').val();
+    if (tour==''){
+        errorInputs.push('turu');
+    }
+    const dateFrom = $('#dateFromReport1').val();
+    if (dateFrom) {
+        date_from = new Date(dateFrom);
+        const yyyy = date_from.getFullYear();
+        let mm = date_from.getMonth() + 1;
+        let dd = date_from.getDate();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        date_from = dd + '.' + mm + '.' + yyyy;
+    }else{
+        date_from =null;
+    }
+
+    const dateTo = $('#dateToReport1').val();
+    if (dateTo) {
+        date_to = new Date(dateTo);
+        const yyyy = date_to.getFullYear();
+        let mm = date_to.getMonth() + 1;
+        let dd = date_to.getDate();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        date_to = dd + '.' + mm + '.' + yyyy;
+    }else {
+        date_to=null;
+    }
+    if (errorInputs.length > 0) {
+        var errorMessage = 'Morate odabrati ' + errorInputs.join(', ');
+        Swal.fire(errorMessage,'','warning')
+    } else {
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+
+        $.ajax({
+            url: '/../../functions/report.php',
+            type:'get',
+            data:{
+                tourId: tour,
+                fromDate: date_from,
+                toDate: date_to,
+                generateReport4:1
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status==200){
+                    var data = response.data.data;
+                    Swal.fire('Izvještaj vam je uspješno poslat na email adresu!','','success')
+                }else{
+                    Swal.fire('Za kombinaciju unešenih parametara ne postoje podaci','','warning')
+                }
+            }  ,
+            error: function(jqXHR) {
+                var error = generateAjaxError(jqXHR);
+
+                Swal.fire(error,'','error')
+            },
             complete:function (){
                 $btn.removeClass('is-loading').prop('disabled', false);
                 $btn.find('.anticon-loading').remove();
