@@ -141,7 +141,7 @@ $current_page = 1;
 
 <?php include('layouts/scripts.php') ?>
 <script src="/assets/js/annualLeaveCalendar.js"></script>
-<script src="/assets/js/myAnnualLeave.js"></script>
+<script src="/assets/js/myAnnualLeave.js?v=1204"></script>
 
 </body>
 

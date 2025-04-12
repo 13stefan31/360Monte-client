@@ -51,7 +51,7 @@
     <script src="/assets/js/vendors.min.js"></script>
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/alerts.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/custom.js?v=1204"></script>
     <script src="/assets/js/changePassword.js?v=1"></script>
 
 </body>

@@ -94,7 +94,7 @@ class WorksHistorySender extends \Main\SenderService
 
         $body = [
             'reportedBy' => $data['reportedBy'],
-            'vehicleId' => $data['vehicleNew'],
+            'vehicleId' => $data['vehicleNewWorks'],
             'startingDate' => $startingDate,
             'endingDate' => $endingDate,
             'breakDownCategoryId' => (int)$data['workCategory'],

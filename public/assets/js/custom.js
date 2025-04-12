@@ -13,31 +13,31 @@ $(document).ready(function () {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $(".alert").remove();
     });
-    $('#newPersonButton').click(function() {
+    $('#newPersonButton').click(function () {
         $('.alert').remove();
     });
 
 
-    $('.login').click(function(e) {
+    $('.login').click(function (e) {
         e.preventDefault();
         var $btn = $(this);
         $btn.addClass('is-loading').prop('disabled', true);
         $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
         $.ajax({
             url: '/../../functions/user.php',
-            type:'POST',
-            data:  {
+            type: 'POST',
+            data: {
                 'login': 1,
                 'data': {
                     'email': $('#email').val(),
                     'password': $('#password').val()
                 }
             },
-            success: function(response) {
+            success: function (response) {
                 var dataParse = JSON.parse(response);
-                if (dataParse.success==false){
+                if (dataParse.success == false) {
                     $('#loginAlert').html(createWarningMessage(dataParse.error));
-                }else{
+                } else {
                     var accessToken = dataParse.data.access_token;
                     var expiresIn = dataParse.data.expires_in;
                     var expirationTimeInMinutes = new Date().getTime() + (expiresIn * 60 * 1000);
@@ -51,139 +51,139 @@ $(document).ready(function () {
                     var sub = JSON.parse(atob(parts[1])).sub;
                     document.cookie = "userid=" + sub;
 
-                    window.location ='/pocetna';
+                    window.location = '/pocetna';
                 }
 
-            },  error: function(jqXHR) {
+            }, error: function (jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#loginAlert').html(createErrorMessage(error));
             },
-            complete:function (){
+            complete: function () {
                 $btn.removeClass('is-loading').prop('disabled', false);
                 $btn.find('.anticon-loading').remove();
             }
         });
     });
-    $('#logout').click(function(e) {
+    $('#logout').click(function (e) {
         e.preventDefault();
         $.ajax({
             url: '/../../functions/user.php',
-            type:'POST',
+            type: 'POST',
             data: {
                 'logout': 1
             },
-            success: function(response) {
+            success: function (response) {
                 var dataParse = JSON.parse(response);
-                if (dataParse.success==false){
+                if (dataParse.success == false) {
                     alert('Doslo je do greske, pokusajte ponovo');
-                }else{
+                } else {
                     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     sessionStorage.clear();
                     localStorage.clear();
-                    window.location ='/prijava';
+                    window.location = '/prijava';
                 }
 
-            },  error: function(jqXHR) {
+            }, error: function (jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#loginAlert').html(createErrorMessage(error));
             }
         });
     });
 
-    $('#forgottenPassword').click(function(e) {
+    $('#forgottenPassword').click(function (e) {
         e.preventDefault();
         $.ajax({
             url: '/../../functions/user.php',
-            type:'POST',
+            type: 'POST',
             data: {
                 'forgottenPassword': 1,
                 'email': $('#email').val()
             },
-            success: function(response) {
+            success: function (response) {
                 var dataParse = JSON.parse(response);
-                if (dataParse.error){
+                if (dataParse.error) {
                     $('#passwordResetError').html(handleErrors(dataParse.error));
-                }else{
-                   Swal.fire('Poslat vam je email za promjenu lozinke','','success')
+                } else {
+                    Swal.fire('Poslat vam je email za promjenu lozinke', '', 'success')
                 }
-            },  error: function(jqXHR) {
+            }, error: function (jqXHR) {
                 var error = generateAjaxError(jqXHR);
                 $('#passwordResetError').html(createErrorMessage(error));
             }
         });
     });
 });
+
 //svi vozaci i vodici
-function getStuffAllocation(selectId, selectedValue = null){
+function getStuffAllocation(selectId, selectedValue = null) {
     $.ajax({
         url: '/../../functions/allocation.php',
         type: 'GET',
         dataType: 'json',
-        data:{'getAllStuffAdd':1},
-        success: function(response) {
+        data: {'getAllStuffAdd': 1},
+        success: function (response) {
             var data = response.data.data;
-            var select = $('#'+selectId);
+            var select = $('#' + selectId);
             select.empty();
             select.append('<option value="">Odaberite zaposlenog</option>');
-            $.each(data, function(key, value) {
-                var selected = (value.id == selectedValue) ? 'selected' : '';
-                select.append('<option value="' + value.id + '"' + selected + '>' + value.name +'</option>');
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
-        }
-    });
-
-}
-function getVehiclesSelect(selectId, selectedValue = null){
-    $.ajax({
-        url: '/../../functions/vehicles.php',
-        type: 'GET',
-        dataType: 'json',
-        data:{
-            'getAllVehicles':1,
-            'status':true
-        },
-        success: function(response) {
-            var data = response.data.data;
-            var select = $('#'+selectId);
-            select.empty();
-            select.append('<option value="">Odaberite vozilo</option>');
-            $.each(data, function(key, value) {
-                var selected = (value.id == selectedValue) ? 'selected' : '';
-                select.append('<option value="' + value.id + '"' + selected + '>' + value.brand + ' ' + value.model + ' ' + value.year +'</option>');
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
-        }
-    });
-
-}
-
-function getToursSelect(selectId, selectedValue = null){
-    $.ajax({
-        url: '/../../functions/tours.php',
-        type: 'GET',
-        dataType: 'json',
-        data:{'getAllTours':1},
-        success: function(response) {
-            var data = response.data.data;
-            var select = $('#'+selectId);
-            select.empty();
-            select.append('<option value="">Odaberite turu</option>');
-            $.each(data, function(key, value) {
+            $.each(data, function (key, value) {
                 var selected = (value.id == selectedValue) ? 'selected' : '';
                 select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
+        error: function (jqXHR, textStatus, errorThrown) {
         }
     });
 
 }
+
+function getVehiclesSelect(selectId, selectedValue = null) {
+    $.ajax({
+        url: '/../../functions/vehicles.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            'getAllVehicles': 1,
+            'status': true
+        },
+        success: function (response) {
+            var data = response.data.data;
+            var select = $('#' + selectId);
+            select.empty();
+            select.append('<option value="">Odaberite vozilo</option>');
+            $.each(data, function (key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.brand + ' ' + value.model + ' ' + value.year + '</option>');
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+
+}
+
+function getToursSelect(selectId, selectedValue = null) {
+    $.ajax({
+        url: '/../../functions/tours.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {'getAllTours': 1},
+        success: function (response) {
+            var data = response.data.data;
+            var select = $('#' + selectId);
+            select.empty();
+            select.append('<option value="">Odaberite turu</option>');
+            $.each(data, function (key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+
+}
+
 function handleErrors(error) {
     if (typeof error === 'string') {
         return createWarningMessage(error);
@@ -214,9 +214,9 @@ function handleErrors(error) {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     var currentPath = '/' + window.location.pathname.split('/')[1];
-    $('.side-nav-menu a').each(function() {
+    $('.side-nav-menu a').each(function () {
         var linkUrl = $(this).attr('href');
         if (linkUrl && linkUrl === currentPath) {
             $(this).closest('li').addClass('active');
@@ -258,34 +258,34 @@ function getBreakDownSubcategoryIdSelect(selectId, categoryId = null, selectedId
             });
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
         }
     });
 }
-function getBreakDownCategoryIdSelect(selectId, selectedValue = null){
+
+function getBreakDownCategoryIdSelect(selectId, selectedValue = null) {
     $.ajax({
         url: '/../../functions/worksHistory.php',
         type: 'GET',
         dataType: 'json',
-        data:{
-            'getAllBreakDownCategory':1
+        data: {
+            'getAllBreakDownCategory': 1
         },
-        success: function(response) {
-            var  data= response.data;
-            var select = $('#'+selectId);
+        success: function (response) {
+            var data = response.data;
+            var select = $('#' + selectId);
             select.empty();
             select.append('<option value="">Odaberite kategoriju</option>');
-            $.each(data, function(key, value) {
+            $.each(data, function (key, value) {
                 var selected = (value.id == selectedValue) ? 'selected' : '';
                 select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
+        error: function (jqXHR, textStatus, errorThrown) {
         }
     });
 
 }
+
 function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheElement) {
     var selectedOption = paymentMethod.val();
     priceCardElement.prop('disabled', true).addClass('disabled-input').val('');
@@ -301,7 +301,7 @@ function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheEl
     }
 }
 
-function deleteVehicleInspections(id){
+function deleteVehicleInspections(id) {
     Swal.fire({
         title: 'Da li ste sigutni da želite da obrišete?',
         showDenyButton: true,
@@ -315,36 +315,38 @@ function deleteVehicleInspections(id){
                 type: 'delete',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    deleteInspectionVehicleData: 1 ,
+                    deleteInspectionVehicleData: 1,
                     id: id
                 }),
-                success: function(response) {
+                success: function (response) {
                     var data = JSON.parse(response);
-                    if (data.error){
-                        Swal.fire( data.error,'','error');
-                    }else{
-                        $('#'+data.data.data.id).remove();
-                        Swal.fire('Uspješno obrisano','','success');
+                    if (data.error) {
+                        Swal.fire(data.error, '', 'error');
+                    } else {
+                        $('#' + data.data.data.id).remove();
+                        Swal.fire('Uspješno obrisano', '', 'success');
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
 
                     var error = generateAjaxError(jqXHR);
-                    Swal.fire( error,'','error');
+                    Swal.fire(error, '', 'error');
                 }
             });
-        } else if (result.isDenied) {   }
+        } else if (result.isDenied) {
+        }
     })
 }
-function returnWeeklyInspectionData(type){
+
+function returnWeeklyInspectionData(type) {
     $.ajax({
         url: '/functions/vehicleInspection.php',
-        type:'GET',
-        data:  {
+        type: 'GET',
+        data: {
             'getInspectionAddData': 1,
-            type:type
-        } ,
-        success: function(response) {
+            type: type
+        },
+        success: function (response) {
             var dataParse = JSON.parse(response);
             let html = '';
 
@@ -379,31 +381,30 @@ function returnWeeklyInspectionData(type){
             $('#inspectionTableContainer').html(html);
 
 
-
-        },  error: function(jqXHR) {
+        }, error: function (jqXHR) {
             var error = generateAjaxError(jqXHR);
             $('#weeklyInspectionAddError').html(createErrorMessage(error));
         }
     });
 }
 
-$('#inspectionAdd').on('submit', function(e) {
+$('#inspectionAdd').on('submit', function (e) {
     e.preventDefault();
     const vehicleId = $('#vehicleNew').val();
     const type = $('#reportType').val();
 
     if (!vehicleId) {
 
-        Swal.fire('Morate odabrati vozilo!','','warning') ;
+        Swal.fire('Morate odabrati vozilo!', '', 'warning');
         return;
     }
     const dataToSend = {
-        reportTypeId:type,
+        reportTypeId: type,
         vehicleId: vehicleId,
         data: []
     };
 
-    $('input[name="itemId[]"]').each(function() {
+    $('input[name="itemId[]"]').each(function () {
         const itemId = $(this).val();
         const isCorrect = $(`input[name="isCorrect_${itemId}"]`).is(':checked');
         const comment = $(`input[name="comment_${itemId}"]`).val().trim() || null;
@@ -421,25 +422,25 @@ $('#inspectionAdd').on('submit', function(e) {
         method: 'POST',
         data: {
             addInspectionData: 1,
-            data:  dataToSend
+            data: dataToSend
         },
         dataType: 'json',
-        success: function(response) {
-            if (response.error){
+        success: function (response) {
+            if (response.error) {
                 $('#weeklyInspectionAddError').html(handleErrors(response.error)).focus();
                 var errorElement = document.getElementById('weeklyInspectionAddError');
                 errorElement.innerHTML = handleErrors(response.error);
-                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                errorElement.scrollIntoView({behavior: 'smooth', block: 'center'});
 
-            }else{
+            } else {
                 let item = response.data.data;
-                if (item.type ==  1) {
+                if (item.type == 1) {
                     inspectionType = 'Nedeljni';
                 } else if (item.type == 2) {
                     inspectionType = 'Mjesečni';
                 }
                 var singleVehicleInspection = $('#singleVehicleInspection').val();
-                let newRow = '<tr id="'+item.id+'">' +
+                let newRow = '<tr id="' + item.id + '">' +
                     '<td>' + item.reporter.name + '</td>' +
                     '<td>' + item.vehicle.brand + ' ' + item.vehicle.model + '</td>' +
                     '<td>' + item.reporter.createdAt + '</td>';
@@ -449,9 +450,9 @@ $('#inspectionAdd').on('submit', function(e) {
                 }
 
                 newRow += '<td>' +
-                    '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/'+item.id+'/1">' +
+                    '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/' + item.id + '/1">' +
                     '<i class="anticon anticon-plus"></i> Više detalja</a> ' +
-                    '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections('+item.id+')">' +
+                    '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections(' + item.id + ')">' +
                     '<i class="anticon anticon-delete"></i> Obriši</a>' +
                     '</td>' +
                     '</tr>';
@@ -463,10 +464,170 @@ $('#inspectionAdd').on('submit', function(e) {
                 $('#inspectionAdd')[0].reset();
             }
         },
-        error: function(xhr, status, error) {
-            console.error('Greška pri slanju:', error);
-            console.log('Detalji:', xhr.responseText);
+        error: function (xhr, status, error) {
         }
     });
 
+});
+$('#newWorkDataButton').click(function (e) {
+    e.preventDefault();
+    $('#workHisrtoryAdd')[0].reset();
+    $("#workHistoryAddError").empty();
+
+    var isSingleVehicleWorkAdd = $('#isSingleVehicleWorkAdd').val();
+    if (isSingleVehicleWorkAdd == 1) {
+        $('#partsPriceCache').prop('disabled', false).removeClass('disabled-input').val('');
+        $('#partsPriceCard').prop('disabled', false).removeClass('disabled-input').val('');
+        $('#mechanicPriceCache').prop('disabled', false).removeClass('disabled-input').val('');
+        $('#mechanicPriceCard').prop('disabled', false).removeClass('disabled-input').val('');
+
+        var selectedVehicleId = $('.vehicleId').val();
+        getVehiclesSelect('vehicleNewWorks', selectedVehicleId);
+
+    } else {
+
+        getVehiclesSelect('vehicleNewWorks');
+    }
+
+    getBreakDownCategoryIdSelect('workCategory');
+    getStuffAllocation('reportedBy');
+});
+$('#addNewWorkHistory').off('click').on('click', function (e) {
+    e.preventDefault();
+    var formData = $('#workHisrtoryAdd').serialize();
+    var isSingleVehicleWorkAdd = $('#isSingleVehicleWorkAdd').val();
+    if (isSingleVehicleWorkAdd == 1) {
+        var vehicleValue = $('.vehicleId').val();
+        formData += '&vehicleNewWorks=' + vehicleValue;
+    }
+    var validate = validateNewWork();
+    if (validate) {
+        var $btn = $(this);
+        $btn.addClass('is-loading').prop('disabled', true);
+        $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
+        $.ajax({
+            url: '/../../functions/worksHistory.php',
+            type: 'POST',
+            data: {
+                'addNewWorkHistory': 1,
+                'data': formData
+            },
+            success: function (response) {
+                var dataParse = JSON.parse(response);
+                if (dataParse.error) {
+                    $('#workHistoryAddError').html(handleErrors(dataParse.error)).focus();
+                    var errorElement = document.getElementById('workHistoryAddError');
+                    errorElement.innerHTML = handleErrors(dataParse.error);
+                    errorElement.scrollIntoView({behavior: 'smooth', block: 'center'});
+                } else {
+                    var isSingleVehicleWorkAdd = $('#isSingleVehicleWorkAdd').val();
+                    if (isSingleVehicleWorkAdd != 1) {
+                        var data = dataParse.data.data;
+                        let finished;
+                        if (data.isFinished) {
+                            finished = 'DA';
+                        } else {
+                            finished = 'NE';
+                        }
+                        var newRow = $('<tr>').attr('id', data.id);
+                        newRow.append($('<td>').text(data.vehicle.brand + ' ' + data.vehicle.model + ' ' + data.vehicle.year));
+                        newRow.append($('<td>').text(data.reportedBy.name));
+                        newRow.append($('<td>').text(data.breakDownCategory.name));
+                        newRow.append($('<td style="text-align:right">').text(data.breakDownMilage + "km"));
+                        newRow.append($('<td>').text(data.startingDate));
+                        newRow.append($('<td>').text(data.endingDate));
+                        newRow.append($('<td>').text(data.mechanicPaymentMethod));
+                        newRow.append($('<td>').text(data.vehiclePartsPaymentMethod));
+                        newRow.append($('<td class="text-center">').text(finished));
+                        newRow.append($('<td>').text(data.createdBy.name));
+                        newRow.append($('<td>').text(data.createdAt));
+                        newRow.append($('<td style="display: flex">').html(
+                            '<a class="btn btn-primary m-r-5 " href="/istorija-rada/' + data.id + '"><i class="anticon anticon-plus"></i>Detalji</a>'
+                            + '<button class="btn btn-danger btn-sm m-r-5  " href="javascript:void(0)" onclick="deleteWorkHistory(' + data.id + ')"  ><i class="anticon anticon-delete"></i></button>'
+                        ));
+
+                        $('#works-history-table tbody').prepend(newRow);
+                    }
+                    $('#alertAddWorkHistory').html(createSuccessMessage('Uspješan unos!'));
+
+                    $('#newWorkHistory').modal('hide');
+                    $('#workHisrtoryAdd')[0].reset();
+
+
+                }
+
+            }, error: function (jqXHR) {
+                var error = generateAjaxError(jqXHR);
+                $('#workHistoryAddError').html(createErrorMessage(error));
+            },
+            complete: function () {
+
+                $btn.removeClass('is-loading').prop('disabled', false);
+                $btn.find('.anticon-loading').remove();
+            }
+        });
+    }
+});
+
+function validateNewWork() {
+    if ($('#startingDate').val().length === 0) {
+        $('#workHistoryAddError').html(handleErrors('Morate unijeti datum početka'));
+        return false;
+    }
+    if ($('#endingDate').val().length === 0) {
+        $('#workHistoryAddError').html(handleErrors('Morate unijeti datum kraja'));
+        return false;
+    }
+    return true;
+}
+
+$('#workCategory').on('change', function () {
+    var selectedCategoryId = $(this).val();
+    if (selectedCategoryId) {
+        getBreakDownSubcategoryIdSelect( 'workSubcategory',selectedCategoryId);
+    } else {
+        $('#workSubcategory').empty();
+    }
+});
+
+$('#vehiclePartsPaymentMethod, #mechanicPaymentMethod').on('change', function() {
+    var selectedOption = $(this).val();
+    var isVehicle = $(this).attr('id') === 'vehiclePartsPaymentMethod';
+
+    if (isVehicle) {
+        handlePaymentMethodChange($(this), $('#partsPriceCard'), $('#partsPriceCache'));
+    } else {
+        handlePaymentMethodChange($(this), $('#mechanicPriceCard'), $('#mechanicPriceCache'));
+    }
+});
+
+
+$('#breakdownCatFilterId').on('change', function () {
+    var selectedCategoryId = $(this).val();
+    if (selectedCategoryId) {
+        getBreakDownSubcategoryIdSelect( 'breakdownSubcatFilterId',selectedCategoryId);
+    } else {
+        $('#breakdownSubcatFilterId').empty();
+    }
+});
+
+$(document).ready(function () {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+
+        $('#newWorkDataButton').hide();
+
+        if (target === "#profile") {
+            $('#worksTab').append($('#newWorkDataButton'));
+            $('#newWorkDataButton').show();
+        } else if (target === "#inspection") {
+            $('#inspectionTab').append($('#newWorkDataButton'));
+            $('#newWorkDataButton').show();
+        }
+    });
+
+    if ($('#worksTab').length) {
+        $('#worksTab').append($('#newWorkDataButton'));
+        $('#newWorkDataButton').show();
+    }
 });

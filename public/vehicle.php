@@ -40,7 +40,10 @@ $current_page1= 1;
                 <div class="card">
                     <div class="card-body">
                         <h4> <a href="/vozila"><i class="anticon anticon-left"></i> &nbsp;Nazad </a></h4>
+
                         <div id="alertGetVehicle"></div>
+
+                        <div id="alertAddWorkHistory"></div>
                         <div class="m-t-25 vehicleDataCard">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -53,6 +56,11 @@ $current_page1= 1;
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inspection" role="tab" aria-controls="inspection" aria-selected="false">Inspekcija vozila</a>
                                 </li>
                             </ul>
+                            <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                                <button type="button" class="btn btn-primary m-b-15" style=" display:none;" data-toggle="modal" id="newWorkDataButton" data-target="#newWorkHistory" >
+                                    Novi unos kvara
+                                </button>
+                            <?php }?>
                             <div class="tab-content m-t-15" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="card">
@@ -110,6 +118,10 @@ $current_page1= 1;
                                             Promijeni status
                                         </button>
                                     <?php }?>
+                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                                        <span id="worksTab"></span>
+                                    <?php }?>
+                                        <input hidden="" value="1" id="isSingleVehicleWorkAdd">
 
                                     <div class="table-container">
                                     <table id="vehicle-comment-table" class="table">
@@ -138,6 +150,9 @@ $current_page1= 1;
                                             Novi mjesečni izvještaj
                                         </button>
 <input id="singleVehicleInspection" value="1" hidden="">
+                                    <?php }?>
+                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                                        <span id="inspectionTab"></span>
                                     <?php }?>
                                     <div class="table-container">
                                         <table id="surveysTable" class="table">
@@ -296,6 +311,147 @@ $current_page1= 1;
                 </div>
 
             <?php }?>
+            <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+
+                <div class="modal fade" id="newWorkHistory">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Novi unos</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="anticon anticon-close"></i>
+                            </button>
+                        </div>
+                        <form id="workHisrtoryAdd">
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Prijavio</span>
+                                    </div>
+                                    <select id="reportedBy" name="reportedBy" class="form-control"></select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Vozilo</span>
+                                    </div>
+                                    <select id="vehicleNewWorks" name="vehicleNewWorks" class="form-control" disabled></select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" >Početak</span>
+                                    </div>
+                                    <input type="date" class="form-control" id="startingDate" name="startingDate" aria-describedby="basic-addon3">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"  >Kraj </span>
+                                    </div>
+                                    <input type="date" class="form-control" id="endingDate" name="endingDate" aria-describedby="basic-addon3">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Kategorija</span>
+                                    </div>
+                                    <select id="workCategory" name="workCategory" class="form-control"></select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Potkategorija</span>
+                                    </div>
+                                    <select id="workSubcategory" name="workSubcategory" class="form-control"></select>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center m-r-10 mb-2">
+                                    <span>Djelovi</span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Plaćanje</span>
+                                            </div>
+                                            <select id="vehiclePartsPaymentMethod" name="vehiclePartsPaymentMethod" class="form-control">
+                                                <option>Izaberite</option>
+                                                <option value="1">Račun</option>
+                                                <option value="2">Keš</option>
+                                                <option value="3">Kombinovano</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-6">Račun</div>
+                                            <div class="col-6">Keš</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="partsPriceCard" name="partsPriceCard" aria-describedby="basic-addon3" placeholder="EUR">
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="partsPriceCache" name="partsPriceCache" aria-describedby="basic-addon3" placeholder="EUR">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center m-r-10 justify-content-center mb-2">
+                                    <span>Majstor</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Plaćanje</span>
+                                            </div>
+                                            <select id="mechanicPaymentMethod" name="mechanicPaymentMethod" class="form-control">
+                                                <option>Izaberite</option>
+                                                <option value="1">Račun</option>
+                                                <option value="2">Keš</option>
+                                                <option value="3">Kombinovano</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-6">Račun</div>
+                                            <div class="col-6">Keš</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="mechanicPriceCard" name="mechanicPriceCard" aria-describedby="basic-addon3" placeholder="EUR">
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="mechanicPriceCache" name="mechanicPriceCache" aria-describedby="basic-addon3" placeholder="EUR">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3 mt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"  >Opis</span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="description" name="description" aria-describedby="basic-addon3" placeholder="Unesite opis kvara i popravke"></textarea>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Kvar se desio na</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="breakDownMileage" name="breakDownMileage" aria-describedby="basic-addon3" placeholder="KM">
+                                </div>
+
+                                <div id="workHistoryAddError"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                <button type="submit" class="btn btn-primary" id="addNewWorkHistory">Sačuvaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <?php }?>
             <?php include ('layouts/footer.php')?>
         </div>
         <!-- Page Container END -->
@@ -310,7 +466,7 @@ $current_page1= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/vehicle.js?v=2"></script>
-<script src="/assets/js/custom.js?v=2"></script>
+<script src="/assets/js/custom.js?v=1204"></script>
 
 </body>
 

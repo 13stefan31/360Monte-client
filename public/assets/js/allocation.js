@@ -554,7 +554,6 @@ function getStuffPositionAllocation(selectId, selectedValue = null){
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + errorThrown);
         }
     });
 

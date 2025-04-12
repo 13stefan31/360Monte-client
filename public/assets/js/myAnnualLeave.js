@@ -206,7 +206,6 @@ $(document).on('click', '#sendRequest', function () {
 
         },
         error: function (jqXHR) {
-            console.log("Greška prilikom slanja:", jqXHR);
             Swal.fire('Došlo je do greške prilikom slanja zahteva.','','error')
         }
     });

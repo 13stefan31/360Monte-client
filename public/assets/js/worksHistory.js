@@ -69,84 +69,6 @@ $(document).ready(function() {
 
 
 
-    $('#newWorkDataButton').click(function(e) {
-        e.preventDefault();
-        $('#workHisrtoryAdd')[0].reset();
-        $("#workHistoryAddError").empty();
-        getVehiclesSelect('vehicleNew');
-        getBreakDownCategoryIdSelect('workCategory');
-        getStuffAllocation('reportedBy');
-    });
-
-
-    $('#addNewWorkHistory').click(function(e) {
-        var formData = $('#workHisrtoryAdd').serialize();
-        e.preventDefault();
-        var validate = validateNewWork();
-        if (validate){
-            var $btn = $(this);
-            $btn.addClass('is-loading').prop('disabled', true);
-            $btn.prepend('<i class="anticon anticon-loading m-r-5"></i>');
-            $.ajax({
-                url: '/../../functions/worksHistory.php',
-                type:'POST',
-                data:  {
-                    'addNewWorkHistory': 1,
-                    'data':formData
-                } ,
-                success: function(response) {
-                    var dataParse = JSON.parse(response);
-                    if (dataParse.error){
-                        $('#workHistoryAddError').html(handleErrors(dataParse.error)).focus();
-                        var errorElement = document.getElementById('workHistoryAddError');
-                        errorElement.innerHTML = handleErrors(dataParse.error);
-                        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }else{
-                        var data = dataParse.data.data;
-                        let finished;
-                        if (data.isFinished){
-                            finished='DA';
-                        }else{
-                            finished='NE';
-                        }
-                        var newRow = $('<tr>').attr('id', data.id);
-                         newRow.append($('<td>').text(data.vehicle.brand + ' ' + data.vehicle.model + ' ' + data.vehicle.year));
-                        newRow.append($('<td>').text(data.reportedBy.name));
-                        newRow.append($('<td>').text(data.breakDownCategory.name));
-                         newRow.append($('<td style="text-align:right">').text(data.breakDownMilage+"km"));
-                        newRow.append($('<td>').text(data.startingDate));
-                        newRow.append($('<td>').text(data.endingDate));
-                        newRow.append($('<td>').text(data.mechanicPaymentMethod));
-                         newRow.append($('<td>').text(data.vehiclePartsPaymentMethod));
-                         newRow.append($('<td class="text-center">').text(finished));
-                         newRow.append($('<td>').text(data.createdBy.name));
-                         newRow.append($('<td>').text(data.createdAt));
-                        newRow.append($('<td style="display: flex">').html(
-                            '<a class="btn btn-primary m-r-5 " href="/istorija-rada/'+data.id+'"><i class="anticon anticon-plus"></i>Detalji</a>'
-                            +'<button class="btn btn-danger btn-sm m-r-5  " href="javascript:void(0)" onclick="deleteWorkHistory('+data.id+')"  ><i class="anticon anticon-delete"></i></button>'
-                        ));
-
-                        $('#works-history-table tbody').prepend(newRow);
-                        $('#alertAddWorkHistory').html(createSuccessMessage('Uspješan unos!'));
-
-                        $('#newWorkHistory').modal('hide');
-                        $('#workHisrtoryAdd')[0].reset();
-
-
-                    }
-
-                },  error: function(jqXHR) {
-                    var error = generateAjaxError(jqXHR);
-                    $('#workHistoryAddError').html(createErrorMessage(error));
-                },
-                complete:function (){
-                    $btn.removeClass('is-loading').prop('disabled', false);
-                    $btn.find('.anticon-loading').remove();
-                }
-            });
-        }
-    });
-
 
     $('#downloadWorksDataCart').click(function(e) {
         var vehicleId = $('#vehicleCartId').val();
@@ -431,26 +353,6 @@ function getWorksHistory(filters,current_page,per_page){
 
 
 
-$('#workCategory').on('change', function () {
-    var selectedCategoryId = $(this).val();
-    if (selectedCategoryId) {
-        getBreakDownSubcategoryIdSelect( 'workSubcategory',selectedCategoryId);
-    } else {
-        $('#workSubcategory').empty();
-    }
-});
-
-
-
-$('#breakdownCatFilterId').on('change', function () {
-    var selectedCategoryId = $(this).val();
-    if (selectedCategoryId) {
-        getBreakDownSubcategoryIdSelect( 'breakdownSubcatFilterId',selectedCategoryId);
-    } else {
-        $('#breakdownSubcatFilterId').empty();
-    }
-});
-
 
 function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
     var totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -506,16 +408,6 @@ function handlePageClick(pageNumber) {
     }
 
 }
-$('#vehiclePartsPaymentMethod, #mechanicPaymentMethod').on('change', function() {
-    var selectedOption = $(this).val();
-    var isVehicle = $(this).attr('id') === 'vehiclePartsPaymentMethod';
-
-    if (isVehicle) {
-        handlePaymentMethodChange($(this), $('#partsPriceCard'), $('#partsPriceCache'));
-    } else {
-        handlePaymentMethodChange($(this), $('#mechanicPriceCard'), $('#mechanicPriceCache'));
-    }
-});
 
 $(document).on('click', '.work-edit', function() {
     $('#workHistoryEdit')[0].reset();
@@ -604,20 +496,6 @@ $(document).on('click', '.work-edit', function() {
 
 });
 
-
-
-
-function validateNewWork() {
-    if ($('#startingDate').val().length === 0) {
-        $('#workHistoryAddError').html(handleErrors('Morate unijeti datum početka'));
-        return false;
-    }
-    if ($('#endingDate').val().length === 0) {
-        $('#workHistoryAddError').html(handleErrors('Morate unijeti datum kraja'));
-        return false;
-    }
-    return true;
-}
 function deleteWorkHistory(id){
     Swal.fire({
         title: 'Da li ste sigutni da želite da obrišete?',

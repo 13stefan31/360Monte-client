@@ -162,7 +162,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/persons.js"></script>
+<script src="/assets/js/persons.js?v=1204"></script>
 
 </body>
 

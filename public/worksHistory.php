@@ -233,7 +233,7 @@ $current_page= 1;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Vozilo</span>
                                         </div>
-                                        <select id="vehicleNew" name="vehicleNew" class="form-control"></select>
+                                        <select id="vehicleNewWorks" name="vehicleNewWorks" class="form-control"></select>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -423,7 +423,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/worksHistory.js?v=1"></script>
+<script src="/assets/js/worksHistory.js?v=1204"></script>
 
 </body>
 

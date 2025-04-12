@@ -7,7 +7,7 @@
 
 <script src="/assets/js/app.min.js"></script>
 <script src="/assets/js/alerts.js"></script>
-<script src="/assets/js/custom.js"></script>
+<script src="/assets/js/custom.js?v=1204"></script>
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script src="/assets/js/notifications.js"></script>
 
