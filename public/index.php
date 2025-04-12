@@ -214,6 +214,27 @@
                             </a>
                         </div>
                         <?php }?>
+                        <?php if (in_array($authRole,$weeklyReportRoles)){?>
+
+
+                            <div class="col-md-6 col-lg-3">
+                                <a href="/nedeljni-izvjestaji">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media align-items-center">
+                                                <div class="avatar avatar-icon avatar-lg avatar-blue">
+
+                                                    <i class="anticon anticon-calendar"></i>
+                                                </div>
+                                                <div class="m-l-15">
+                                                    <h3 class="m-b-0">Nedeljni izvejštaji</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php }?>
                     </div>
                 </div>
                 <?php  include ('layouts/footer.php')?>

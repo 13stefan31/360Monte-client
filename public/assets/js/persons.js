@@ -168,7 +168,6 @@ function getUsers(filters,current_page,per_page){
             if (response.error) {
                 $('#alert').append(createWarningMessage(response.error));
             } else {
-                console.log()
                 $('#persons-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {

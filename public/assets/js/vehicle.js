@@ -41,9 +41,12 @@ $(document).ready(function() {
             $('#loader-overlay').hide();
         }
     });
+    var current_page1=$('#current_page1').val();
     var current_page=$('#current_page').val();
+    var per_page1=$('#per_page1').val();
     var per_page=$('#per_page').val();
     getVehicleComment(current_page,per_page);
+    getVehicleInspection(current_page1,per_page1);
 
     $('#addVehicleComment').click(function(e) {
         e.preventDefault();
@@ -229,6 +232,105 @@ function getVehicleComment(current_page,per_page){
         }
     });
 }
+function getVehicleInspection(current_page,per_page){
+
+    var url = window.location.href;
+    var vehicleId = url.substring(url.lastIndexOf('/') + 1);
+    $('#surveysTable tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
+    $.ajax({
+        url: '/../../functions/vehicleInspection.php',
+        type:'GET',
+        data:{
+            getAllInspectionReports:1,
+            vehicleId:vehicleId,
+            per_page:per_page,
+            current_page:current_page},
+        dataType: 'json',
+        success: function(response) {
+            var data = response.data.data;
+            if (data.error) {
+                $('#alertGetVehicle').html(handleErrors(data.error));
+            } else {
+                $('#surveysTable tbody').empty();
+                response.data.data.forEach(function(item) {
+                    var inspectionType = '';
+                    if (item.type == 1) {
+                        inspectionType = 'Nedeljni';
+                    } else if (item.type == 2) {
+                        inspectionType = 'Mjesečni';
+                    }
+
+                    var newRow =
+                        '<tr id="'+item.id+'">' +
+                        '<td>' + item.reporter.name + '</td>' +
+                        '<td>' + item.vehicle.brand + ' ' + item.vehicle.model + '</td>' +
+                        '<td>' + item.reporter.createdAt + '</td>' +
+                        '<td>' + inspectionType + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/'+item.id+'/'+item.type+'">' +
+                        '<i class="anticon anticon-plus"></i> Više detalja</a> ' +
+                        '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections('+item.id+')">' +
+                        '<i class="anticon anticon-delete"></i> Obriši</a>' +
+                        '</td>' +
+                        '</tr>';
+
+                    $('#surveysTable tbody').append(newRow);
+                });
+
+                var meta = response.data.meta;
+                var paginationHTML = generatePagination1(meta.totalItems, meta.itemsPerPage, meta.currentPage);
+                $('#pagination1').html(paginationHTML);
+
+            }
+        }  ,
+        error: function(jqXHR) {
+            var error = generateAjaxError(jqXHR);
+            $('#alertGetVehicle').html(createWarningMessage(error));
+        }
+    });
+}
+function generatePagination1(totalItems, itemsPerPage, currentPage, onPageClick) {
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+    var startPage, endPage;
+
+    if (totalPages <= 10) {
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        if (currentPage <= 6) {
+            startPage = 1;
+            endPage = 10;
+        } else if (currentPage + 4 >= totalPages) {
+            startPage = totalPages - 9;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
+        }
+    }
+
+    var paginationHTML = '<nav aria-label="Page navigation example"><ul class="pagination">';
+    if (currentPage === 1) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)" tabindex="-1">Prethodna</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick1('+(currentPage-1)+')" tabindex="-1">Prethodna</a></li>';
+    }
+    for (var i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationHTML += '<li class="page-item active"><a class="page-link" href="javascript:void(0)">' + i + '</a></li>';
+        } else {
+            paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick1('+i+')">' + i + '</a></li>';
+        }
+    }
+    if (currentPage === totalPages) {
+        paginationHTML += '<li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Sledeća</a></li>';
+    } else {
+        paginationHTML += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="handlePageClick1('+(currentPage+1)+')">Sledeća</a></li>';
+    }
+    paginationHTML += '</ul></nav>';
+
+    return paginationHTML;
+}
 function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) {
     var totalPages = Math.ceil(totalItems / itemsPerPage);
     var startPage, endPage;
@@ -277,3 +379,20 @@ function handlePageClick(pageNumber) {
         getVehicleComment(pageNumber,per_page);
 
 }
+function handlePageClick1(pageNumber) {
+    $('#current_page1').val(pageNumber);
+    var per_page=$('#per_page1').val();
+    getVehicleInspection(pageNumber,per_page);
+
+}
+$('#newWeeklyInspectionButton, #newMonthlyInspectionButton').click(function(e) {
+    e.preventDefault();
+    $('#inspectionAdd')[0].reset();
+    $("#weeklyInspectionAddError").empty();
+    const type = $(this).data('type');
+    $('#reportType').val(type);
+var v = $('.vehicleId').val();
+    getVehiclesSelect('vehicleNew',v);
+    let reportType = $(this).data('type');
+    returnWeeklyInspectionData(reportType);
+});

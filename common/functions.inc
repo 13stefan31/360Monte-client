@@ -40,6 +40,9 @@ require_once(dirname(__FILE__) . "/../source/WorksHistory/Model/WorksHistory.php
 require_once(dirname(__FILE__) . "/../source/AnnualLeave/Sender/Service/AnnualLeaveSender.php");
 require_once(dirname(__FILE__) . "/../source/AnnualLeave/Model/AnnualLeave.php");
 
+require_once(dirname(__FILE__) . "/../source/VehicleInspection/Sender/Service/VehicleInspectionSender.php");
+require_once(dirname(__FILE__) . "/../source/VehicleInspection/Model/VehicleInspection.php");
+
 $annualLeave_sender = AnnualLeaveSender::getInstance();
 $annualLeave = AnnualLeave::getInstance();
 
@@ -73,3 +76,6 @@ $daily_data = DailyData::getInstance();
 
 $works_history_sender = WorksHistorySender::getInstance();
 $works_history = WorksHistory::getInstance();
+
+$vehicle_inspection_sender = VehicleInspectionSender::getInstance();
+$vehicle_inspection = VehicleInspection::getInstance();

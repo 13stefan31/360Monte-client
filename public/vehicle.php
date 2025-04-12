@@ -8,6 +8,10 @@ if (!in_array($authRole,$vehiclesAllowedRoles)){
 $itemsPerPage = 10;
 $current_page= 1;
 
+$itemsPerPage1 = 10;
+$current_page1= 1;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +48,9 @@ $current_page= 1;
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Istorija kvarova i neregularnosti</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inspection" role="tab" aria-controls="inspection" aria-selected="false">Inspekcija vozila</a>
                                 </li>
                             </ul>
                             <div class="tab-content m-t-15" id="myTabContent">
@@ -118,6 +125,35 @@ $current_page= 1;
                                     <input hidden="" id="per_page" value="<?=$itemsPerPage?>">
                                     <input hidden="" id="current_page" value="<?=$current_page?>">
                                     <div id="pagination"></div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="inspection" role="tabpanel" aria-labelledby="inspection-tab">
+                                    <div id="commentAlert"></div>
+                                    <div id="inspectionError"></div>
+                                    <?php if (in_array($authRole,$vehicleInspectionsRoles)){?>
+                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newWeeklyInspection" id="newWeeklyInspectionButton" data-type="1">
+                                            Novi nedeljni izvještaj
+                                        </button>
+                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newWeeklyInspection" id="newMonthlyInspectionButton" data-type="2">
+                                            Novi mjesečni izvještaj
+                                        </button>
+<input id="singleVehicleInspection" value="1" hidden="">
+                                    <?php }?>
+                                    <div class="table-container">
+                                        <table id="surveysTable" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Komentariše</th>
+                                                <th>Vozilo</th>
+                                                <th>Datum</th>
+                                                <th>Tip</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>  </tbody>
+                                        </table>
+                                        <input hidden="" id="per_page1" value="<?=$itemsPerPage1?>">
+                                        <input hidden="" id="current_page1" value="<?=$current_page1?>">
+                                        <div id="pagination1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -229,6 +265,36 @@ $current_page= 1;
                     </div>
                 </div>
             </div>
+                <div class="modal fade" id="newWeeklyInspection">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Novi unos</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <form id="inspectionAdd">
+                                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Vozilo</span>
+                                        </div>
+                                        <select id="vehicleNew" name="vehicleNew" class="form-control" disabled></select>
+                                    </div>
+                                    <div id="inspectionTableContainer"></div>
+                                    <div id="weeklyInspectionAddError"></div>
+                                    <input type="hidden" id="reportType" name="reportType" value="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="addNewWeeklyInspection">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             <?php }?>
             <?php include ('layouts/footer.php')?>
         </div>
@@ -244,6 +310,7 @@ $current_page= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/vehicle.js?v=2"></script>
+<script src="/assets/js/custom.js?v=2"></script>
 
 </body>
 

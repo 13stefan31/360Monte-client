@@ -301,4 +301,172 @@ function handlePaymentMethodChange(paymentMethod, priceCardElement, priceCacheEl
     }
 }
 
+function deleteVehicleInspections(id){
+    Swal.fire({
+        title: 'Da li ste sigutni da želite da obrišete?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Obriši',
+        denyButtonText: `Odustani`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/../../functions/vehicleInspection.php',
+                type: 'delete',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deleteInspectionVehicleData: 1 ,
+                    id: id
+                }),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.error){
+                        Swal.fire( data.error,'','error');
+                    }else{
+                        $('#'+data.data.data.id).remove();
+                        Swal.fire('Uspješno obrisano','','success');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
 
+                    var error = generateAjaxError(jqXHR);
+                    Swal.fire( error,'','error');
+                }
+            });
+        } else if (result.isDenied) {   }
+    })
+}
+function returnWeeklyInspectionData(type){
+    $.ajax({
+        url: '/functions/vehicleInspection.php',
+        type:'GET',
+        data:  {
+            'getInspectionAddData': 1,
+            type:type
+        } ,
+        success: function(response) {
+            var dataParse = JSON.parse(response);
+            let html = '';
+
+            dataParse.data.data.forEach(group => {
+                html += `<h5 class="mt-4">${group.reportItemGroupName || ''}</h5>`;
+                html += `<table class="table table-bordered">`;
+
+                if (group.reportItemGroupId) {
+                    html += `<thead><tr><th>Opis</th><th>Ispravno</th><th>Komentar</th></tr></thead>`;
+                }
+
+                html += `<tbody>`;
+                group.items.forEach(item => {
+                    html += `
+            <tr>
+                <td>${item.label}</td>
+                <td>
+                    <input type="checkbox" name="isCorrect_${item.id}" checked/>
+                </td>
+                <td>
+                    <input type="text" name="comment_${item.id}" class="form-control" />
+                    <input type="hidden" name="itemId[]" value="${item.id}" />
+                </td>
+            </tr>
+        `;
+                });
+
+                html += `</tbody></table>`;
+            });
+
+
+            $('#inspectionTableContainer').html(html);
+
+
+
+        },  error: function(jqXHR) {
+            var error = generateAjaxError(jqXHR);
+            $('#weeklyInspectionAddError').html(createErrorMessage(error));
+        }
+    });
+}
+
+$('#inspectionAdd').on('submit', function(e) {
+    e.preventDefault();
+    const vehicleId = $('#vehicleNew').val();
+    const type = $('#reportType').val();
+
+    if (!vehicleId) {
+
+        Swal.fire('Morate odabrati vozilo!','','warning') ;
+        return;
+    }
+    const dataToSend = {
+        reportTypeId:type,
+        vehicleId: vehicleId,
+        data: []
+    };
+
+    $('input[name="itemId[]"]').each(function() {
+        const itemId = $(this).val();
+        const isCorrect = $(`input[name="isCorrect_${itemId}"]`).is(':checked');
+        const comment = $(`input[name="comment_${itemId}"]`).val().trim() || null;
+
+        dataToSend.data.push({
+            itemId: parseInt(itemId),
+            isCorrect: isCorrect,
+            comment: comment
+        });
+    });
+
+
+    $.ajax({
+        url: '/functions/vehicleInspection.php',
+        method: 'POST',
+        data: {
+            addInspectionData: 1,
+            data:  dataToSend
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.error){
+                $('#weeklyInspectionAddError').html(handleErrors(response.error)).focus();
+                var errorElement = document.getElementById('weeklyInspectionAddError');
+                errorElement.innerHTML = handleErrors(response.error);
+                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            }else{
+                let item = response.data.data;
+                if (item.type ==  1) {
+                    inspectionType = 'Nedeljni';
+                } else if (item.type == 2) {
+                    inspectionType = 'Mjesečni';
+                }
+                var singleVehicleInspection = $('#singleVehicleInspection').val();
+                let newRow = '<tr id="'+item.id+'">' +
+                    '<td>' + item.reporter.name + '</td>' +
+                    '<td>' + item.vehicle.brand + ' ' + item.vehicle.model + '</td>' +
+                    '<td>' + item.reporter.createdAt + '</td>';
+
+                if (singleVehicleInspection == 1) {
+                    newRow += '<td>' + inspectionType + '</td>';
+                }
+
+                newRow += '<td>' +
+                    '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/'+item.id+'/1">' +
+                    '<i class="anticon anticon-plus"></i> Više detalja</a> ' +
+                    '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections('+item.id+')">' +
+                    '<i class="anticon anticon-delete"></i> Obriši</a>' +
+                    '</td>' +
+                    '</tr>';
+
+                $('#surveysTable tbody').prepend(newRow);
+                $('#inspectionError').html(createSuccessMessage('Uspješan unos!'));
+
+                $('#newWeeklyInspection').modal('hide');
+                $('#inspectionAdd')[0].reset();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Greška pri slanju:', error);
+            console.log('Detalji:', xhr.responseText);
+        }
+    });
+
+});
