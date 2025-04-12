@@ -6,6 +6,15 @@ if (!in_array($authRole,$myVacationRoles)){
 
     exit();
 }
+
+
+if ($_GET['type']=='A'){
+    $link='slobodni-dani';
+    $naslov='Slobodni dani';
+}else{
+    $link='slobodni-dani-pregled';
+    $naslov='Moji slobodni dani';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +35,7 @@ if (!in_array($authRole,$myVacationRoles)){
                     <div class="header-sub-title">
                         <nav class="breadcrumb breadcrumb-dash">
                             <a href="/" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Početna</a>
-                            <a class="breadcrumb-item" href="/slobodni-dani">Slobodni dani</a>
+                            <a class="breadcrumb-item" href="/<?=$link?>"><?=$naslov?></a>
                             <span class="breadcrumb-item active">Zahtjev za slobodne dane</span>
                         </nav>
                     </div>
@@ -129,7 +138,7 @@ if (!in_array($authRole,$myVacationRoles)){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/annualLeaveSingle.js?v=1"></script>
+    <script src="/assets/js/annualLeaveSingle.js?v=1204.1"></script>
 
 </body>
 

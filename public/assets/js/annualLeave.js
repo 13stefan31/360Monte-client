@@ -70,11 +70,20 @@ function getAllAnualLeav(filters,current_page,per_page){
                 $('#all-vacations-table tbody').empty();
                 var data = response.data.data;
                 $.each(data, function(index, row) {
+                    var statusBadge = '';
+
+                    if (row.status === 'Aktivan') {
+                        statusBadge = '<span class="badge badge-pill badge-orange">Aktivan</span>';
+                    } else if (row.status === 'Odbijen') {
+                        statusBadge = '<span class="badge badge-pill badge-volcano">Odbijen</span>';
+                    } else if (row.status === 'Odobren') {
+                        statusBadge = '<span class="badge badge-pill badge-green">Odobren</span>';
+                    }
                     $('#all-vacations-table tbody').append('<tr id="'+row.id+'">' +
                         '<td>' + row.userRequestedVacation.name + '</td>' +
-                        '<td>' + row.status + '</td>' +
+                        '<td>' + statusBadge + '</td>' +
                         '<td>' + row.requestedDaysAmount + '</td>' +
-                        '<td><a href="/zahtjev-slobodni-dani/'+row.id+'" class="btn btn-primary m-r-5">' +
+                        '<td><a href="/zahtjev-slobodni-dani/'+row.id+'/A/" class="btn btn-primary m-r-5">' +
                         '<i class="anticon anticon-plus"></i> Detalji</a></td></tr>'
                     );
                 });

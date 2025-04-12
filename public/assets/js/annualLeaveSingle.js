@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var url = window.location.href;
-    var id = url.substring(url.lastIndexOf('/') + 1);
-    var vacationId = id.match(/\d+/)[0];
+    var segments = url.split('/');
+    var vacationId = segments[segments.length - 3];
     $('#vacationId').val(vacationId);
 
     $.ajax({

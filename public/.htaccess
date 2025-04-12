@@ -47,7 +47,7 @@ RewriteRule ^korisnici/zaboravljena-lozinka/([^/.]+)/?$ changePassword.php?token
 
 RewriteRule ^slobodni-dani/?$ annualLeave.php
 RewriteRule ^slobodni-dani-pregled/?$ myAnnualLeave.php
-RewriteRule ^zahtjev-slobodni-dani/([^/.]+)/?$  annualLeaveSingle.php?id=$1 [QSA]
+RewriteRule ^zahtjev-slobodni-dani/([^/.]+)/([^/.]+)/?$  annualLeaveSingle.php?id=$1&type=$2 [QSA]
 
 
 RewriteRule ^nedeljni-izvjestaji/?$ vehicleWeekInspection.php
