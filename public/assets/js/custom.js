@@ -364,7 +364,7 @@ function returnWeeklyInspectionData(type) {
             <tr>
                 <td>${item.label}</td>
                 <td>
-                    <input type="checkbox" name="isCorrect_${item.id}" checked/>
+                    <input type="checkbox" name="isCorrect_${item.id}" />
                 </td>
                 <td>
                     <input type="text" name="comment_${item.id}" class="form-control" />
