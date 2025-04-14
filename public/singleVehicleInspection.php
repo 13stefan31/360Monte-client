@@ -103,7 +103,7 @@ if ($_GET['tip']==1){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleVehicleInspection.js?v=1903"></script>
+    <script src="/assets/js/singleVehicleInspection.js?v=1404"></script>
 
 </body>
 

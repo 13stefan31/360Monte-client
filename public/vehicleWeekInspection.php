@@ -142,7 +142,7 @@ $current_page = 1;
 
 <?php include('layouts/scripts.php') ?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicleInspection.js"></script>
+<script src="/assets/js/vehicleInspection.js?v=1404"></script>
 </body>
 
 </html>
