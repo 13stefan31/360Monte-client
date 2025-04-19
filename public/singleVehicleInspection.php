@@ -62,12 +62,9 @@ if ($_GET['tip']==1){
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="vehicleInspectionData">
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <div id="inspectionResults" class="inspection-wrapper"></div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +100,7 @@ if ($_GET['tip']==1){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleVehicleInspection.js?v=1404"></script>
+    <script src="/assets/js/singleVehicleInspection.js?v=1904"></script>
 
 </body>
 

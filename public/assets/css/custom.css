@@ -262,3 +262,16 @@ div#chartDiv, div#chartDivBreakdown, div#chartDivPrice, #dailyDataChartBreakdown
 .hidden-checkbox {
     display: none !important;
 }
+
+.inspection-group {
+    border-left: 1px solid #edf2f9  ;
+    padding-left: 1rem;
+}
+.inspection-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+.inspection-item-group0 {
+    padding: 0.5rem 0;
+    border-top: 1px solid #eee;
+}
