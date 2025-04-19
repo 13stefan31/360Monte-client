@@ -59,8 +59,8 @@ $current_page= 1;
                                         </div>
                                         <select id="statusFilter" class="form-control">
                                             <option value="">Odaberite status ankete</option>
-                                            <option value="1">Popunjeno</option>
-                                            <option value="0">Nije popunjeno</option>
+                                            <option value="1" <?= ($statusFilters == 1) ? 'selected' : '' ?>>Popunjeno</option>
+                                            <option value="0" <?= ($statusFilters == 0) ? 'selected' : '' ?>>Nije popunjeno</option>
                                         </select>
                                     </div>
 
@@ -145,7 +145,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/survey-vehicle.js"></script>
+<script src="/assets/js/survey-vehicle.js?v=1904"></script>
 </body>
 
 </html>

@@ -1,35 +1,47 @@
 $(document).ready(function() {
+    var savedFilters = localStorage.getItem('allSurveysFilters');
     var current_page=$('#current_page').val();
     var per_page=$('#per_page').val();
-    getAllSurveys(current_page,per_page,'');
+    if (savedFilters) {
+        savedFilters = JSON.parse(savedFilters);
+        getAllSurveys(savedFilters,current_page,per_page);
+    } else {
+        getAllSurveys('',current_page,per_page);
+    }
 
 });
 $(document).on('click', '#vehicleFilters', function() {
     var status = $('#statusFilter').val();
     var current_page=1;
     var per_page=$('#per_page').val();
-    getAllSurveys(current_page,per_page,status);
+
+    var filters = {
+        status: status,
+    };
+    localStorage.setItem('allSurveysFilters', JSON.stringify(filters));
+
+    getAllSurveys(filters,current_page,per_page,);
     $('#clearFilters').show();
 });
 $('#clearFilters').on('click', function() {
     var current_page=1;
     var per_page=$('#per_page').val();
-    getAllSurveys(current_page,per_page,'');
+    getAllSurveys('',current_page,per_page);
+    localStorage.removeItem('allSurveysFilters');
     $('#statusFilter').val('');
     $('#clearFilters').hide();
     $('#filterVehicles').hide();
 });
 
-function getAllSurveys(current_page,per_page,status){
+function getAllSurveys(filters,current_page,per_page){
     $('#surveysTable tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></td></tr>');
     var data = {
         getAllSurveysVehicle:1,
         per_page:per_page,
         current_page:current_page
     };
-
-    if (status !== '') {
-        data.status= status;
+    if (filters !== '') {
+        data.status= filters.status;
     }
     $.ajax({
         url: '/../../functions/survey-vehicle.php',
@@ -204,7 +216,12 @@ function generatePagination(totalItems, itemsPerPage, currentPage, onPageClick) 
 function handlePageClick(pageNumber) {
     $('#current_page').val(pageNumber);
     var per_page=$('#per_page').val();
-    getAllSurveys(pageNumber,per_page);
-
+    var savedFilters = localStorage.getItem('allSurveysFilters');
+    if (savedFilters) {
+        savedFilters = JSON.parse(savedFilters);
+        getAllSurveys(savedFilters,pageNumber,per_page);
+    } else {
+        getAllSurveys('',pageNumber,per_page);
+    }
 }
 
