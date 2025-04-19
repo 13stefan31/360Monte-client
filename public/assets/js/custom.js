@@ -414,7 +414,7 @@ function returnWeeklyInspectionData(type) {
             </div>
             <div class="checkbox-section mb-2 ${isHiddenStyle} align-items-center"  style="flex: 0 0 auto;">
                 <label class="me-2 mb-0">Ispravno:</label>
-                <input type="checkbox" name="isCorrect_${item.id}" ${isDefaultChecked} style="width: 30px;transform: scale(1.5);" />
+                <input type="checkbox" name="isCorrect_${item.id}"  ${isDefaultChecked} style="width: 30px;transform: scale(1.5);" />
             </div>
         </div>
         <div class="comment-section mt-2">
@@ -449,29 +449,58 @@ $('#inspectionAdd').on('submit', function (e) {
     const type = $('#reportType').val();
 
     if (!vehicleId) {
-
         Swal.fire('Morate odabrati vozilo!', '', 'warning');
         return;
     }
+
     const dataToSend = {
         reportTypeId: type,
         vehicleId: vehicleId,
         data: []
     };
 
+    let validationPassed = true;
+    let firstInvalidComment = null;
+
+    $('textarea').removeClass('is-invalid');
+    $('.comment-error').remove();
+
     $('input[name="itemId[]"]').each(function () {
         const itemId = $(this).val();
         const isCorrect = $(`input[name="isCorrect_${itemId}"]`).is(':checked');
-        const comment = $(`textarea[name="comment_${itemId}"]`).val().trim() || null;
+        const commentField = $(`textarea[name="comment_${itemId}"]`);
+        const comment = commentField.val().trim();
+
+        commentField.removeClass('is-invalid');
+        commentField.next('.comment-error').remove();
+
+        if (itemId == '23' && isCorrect && comment === '') {
+            commentField.addClass('is-invalid');
+            commentField.after(`<span class="text-danger comment-error">Stavka (Stanje km sata) mora biti popunjena</span>`);
+            if (!firstInvalidComment) firstInvalidComment = commentField;
+            validationPassed = false;
+        }
+        else if (itemId != '23' && !isCorrect && comment === '') {
+            commentField.addClass('is-invalid');
+            commentField.after(`<span class="text-danger comment-error">Unesite komentar za neispravnu stavku.</span>`);
+            if (!firstInvalidComment) firstInvalidComment = commentField;
+            validationPassed = false;
+        }
 
         dataToSend.data.push({
             itemId: parseInt(itemId),
             isCorrect: isCorrect,
-            comment: comment
+            comment: comment || null
         });
     });
 
 
+    if (!validationPassed) {
+        firstInvalidComment.focus();
+        return;
+    }
+
+    // AJAX poziv
     $.ajax({
         url: '/functions/vehicleInspection.php',
         method: 'POST',
@@ -494,6 +523,7 @@ $('#inspectionAdd').on('submit', function (e) {
                 } else if (item.type == 2) {
                     inspectionType = 'Mjesečni';
                 }
+
                 var singleVehicleInspection = $('#singleVehicleInspection').val();
                 let newRow = '<tr id="' + item.id + '">' +
                     '<td>' + item.reporter.name + '</td>' +
@@ -520,10 +550,13 @@ $('#inspectionAdd').on('submit', function (e) {
             }
         },
         error: function (xhr, status, error) {
+            console.error(error);
         }
     });
 
 });
+
+
 $('#newWorkDataButton').click(function (e) {
     e.preventDefault();
     $('#workHisrtoryAdd')[0].reset();
