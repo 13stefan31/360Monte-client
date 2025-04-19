@@ -105,7 +105,10 @@ $(document).on('click', '.user-delete', function() {
                     }else{
                         var id = data.data.data.id;
                         var name = data.data.data.name;
-                        var table = $('#persons-table').DataTable();
+                        var table = $('#persons-table').DataTable({
+                            searching: false,
+                            lengthChange: false
+                        });
                         var row = table.row('#'+id);
                         row.remove().draw();
                         Swal.fire('Uspješno ste obrisali korisnika '+name, '', 'success')

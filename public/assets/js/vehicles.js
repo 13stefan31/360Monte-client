@@ -86,7 +86,12 @@ function getVehicles(filters){
                     }
                     $('#vehicles-table tbody').append('<tr id="'+row.id+'"><td>' + row.brand + '</td><td>' + row.model + '</td><td>' + row.year + '</td><td>' + row.registrationNumber + '</td><td>' + row.numberOfSeats + '</td><td>' + readyForDrive + '</td><td>'+show+'</td><td><a class="btn btn-primary m-r-5 " href="/vozila/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
                 });
-                $('#vehicles-table').DataTable();
+                $('#vehicles-table').DataTable({
+                    searching: false,
+                    lengthChange: false
+                });
+                $('#vehicles-table_info').hide();
+
             }
         }  ,
         error: function(jqXHR) {

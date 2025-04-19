@@ -294,7 +294,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
 
 <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/allocation.js?v=1204"></script>
+    <script src="/assets/js/allocation.js?v=1904"></script>
 
 </body>
 

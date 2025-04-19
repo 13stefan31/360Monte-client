@@ -135,7 +135,10 @@ $(document).on('click', '.allocation-delete', function() {
                         var id = data.data.data.id;
                         var datum = data.data.data.allocationDate;
                         var vehicle = data.data.data.vehicle.brand + ' ' +data.data.data.vehicle.model ;
-                        var table = $('#allocation-table').DataTable();
+                        var table = $('#allocation-table').DataTable({
+                            searching: false,
+                            lengthChange: false
+                        });
                         var rowRemove = table.row('#'+allocationId);
                         // rowRemove.remove().draw();
                         // row.parentNode.removeChild(rowRemove);

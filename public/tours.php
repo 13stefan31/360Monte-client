@@ -56,7 +56,7 @@ require 'auth.php';
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/tours.js"></script>
+<script src="/assets/js/tours.js?v=1904"></script>
 
 </body>
 

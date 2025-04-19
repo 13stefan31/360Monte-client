@@ -19,7 +19,10 @@ function getTours(filters){
                 $.each(data, function(index, row) {
                     $('#tours-table tbody').prepend('<tr id="'+row.id+'"><td>' + row.id + '</td><td>' + row.name + '</td></tr>');
                 });
-                $('#tours-table').DataTable();
+                $('#tours-table').DataTable({
+                    searching: false,
+                    lengthChange: false
+                });
             }
         }  ,
         error: function(jqXHR) {
