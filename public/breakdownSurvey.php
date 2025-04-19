@@ -59,7 +59,7 @@ include('layouts/head.php') ?>
 <!-- Core JS -->
 <script src="/assets/js/app.min.js"></script>
 <script src="/assets/js/alerts.js"></script>
-<script src="/assets/js/custom.js?v=1204"></script>
+<script src="/assets/js/custom.js?v=1904"></script>
 
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/js/userAuth.js"></script>

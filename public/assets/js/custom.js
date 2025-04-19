@@ -136,6 +136,28 @@ function getStuffAllocation(selectId, selectedValue = null) {
     });
 
 }
+
+function getAvailableStuffAllocation(selectId, selectedValue = null,allocationDate=null) {
+    $.ajax({
+        url: '/../../functions/allocation.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {'getAvailableStuffAllocation': 1,allocationDate:allocationDate},
+        success: function (response) {
+            var data = response.data.data;
+            var select = $('#' + selectId);
+            select.empty();
+            select.append('<option value="">Odaberite zaposlenog</option>');
+            $.each(data, function (key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+
+}
 //allvehicles flag da vrati sva readyToDrive vozila, nezavisno od statusa
 function getVehiclesSelect(selectId, selectedValue = null,showOnWeb=null,allVehicles=false) {
     const requestData = {

@@ -164,13 +164,15 @@ $(document).ready(function() {
     $('#addEmpAllocationButton').click(function(e) {
         e.preventDefault();
         $('#allocationPersonAddError').html("");
+        var allocationDate = $(".allocationDate").text().trim();
         getStuffPositionAllocation('empPositionAddAllocation');
-        getStuffAllocation('empAddAllocation');
+        getAvailableStuffAllocation('empAddAllocation',null,allocationDate);
     });
 
     $('#addEmpAllocation').click(function(e) {
         e.preventDefault();
        var allocationId= $('#allocationId').val();
+       var allocationDate = $(".allocationDate").text().trim();
         // var validated = validateNewStaff();
         // var validated = true;
         // if (validated){
@@ -184,6 +186,7 @@ $(document).ready(function() {
                     'addAllocationStuff': 1,
                     'data':{
                         'allocationId': allocationId,
+                        'allocationDate': allocationDate,
                         'employeeId': $('#empAddAllocation').val(),
                         'allocationStuffPositionId': $('#empPositionAddAllocation').val(),
                     }
@@ -535,7 +538,9 @@ $(document).on('click', '.stuff-edit', function() {
     $('#stuffId').val(stuffId);
     $('#allocationId').val(allocationId);
     getStuffPositionAllocation('empPositionEditAllocation',allocationstuffposition);
-    getStuffAllocation('empEditAllocation',allocationStuffId);
+
+    var allocationDate = $(".allocationDate").text().trim();
+    getAvailableStuffAllocation('empEditAllocation',allocationStuffId,allocationDate);
 });
 function getStuffPositionAllocation(selectId, selectedValue = null){
     $.ajax({

@@ -123,7 +123,7 @@ $allVacationRoles = array(
 
 );
 $myVacationRoles = array(
-    P_ADMIN_ROLE_ID
+    P_ADMIN_ROLE_ID,
 );
 
 $vehicleInspectionsRoles = array(

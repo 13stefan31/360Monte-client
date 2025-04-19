@@ -470,7 +470,7 @@ $current_page1= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/vehicle.js?v=1904"></script>
-<script src="/assets/js/custom.js?v=1204"></script>
+<script src="/assets/js/custom.js?v=1904"></script>
 
 </body>
 

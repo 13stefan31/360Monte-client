@@ -14,6 +14,9 @@ if(isset($_GET) && isset($_GET['getAllStuffPositions'])){
 if(isset($_GET) && isset($_GET['getAllStuffAdd'])){
     return $person_sender->getAllStuffForAllocation();
 }
+if(isset($_GET) && isset($_GET['getAvailableStuffAllocation'])){
+    return $person_sender->getAvailableStuffAllocation($_GET['allocationDate']);
+}
 
 if(isset($_POST) && isset($_POST['addAllocationStuff'])){
     return $allocation_sender->addStuff($_POST['data']);
