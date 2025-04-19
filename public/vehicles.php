@@ -28,7 +28,7 @@ if(isset($_SESSION['vehicle_filter_brand']) ||
     $seatsNoFilters='';
 }
 
-$per_page=5;
+$per_page=10;
 $current_page= 1;
 
 
@@ -126,6 +126,9 @@ $current_page= 1;
                                 </thead>
                                 <tbody> </tbody>
                             </table>
+                                <input hidden="" id="per_page" value="<?=$per_page?>">
+                                <input hidden="" id="current_page" value="<?=$current_page?>">
+                                <div id="pagination"></div>
                             </div>
                         </div>
                     </div>
