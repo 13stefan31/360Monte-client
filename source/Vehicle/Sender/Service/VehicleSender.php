@@ -19,7 +19,7 @@ class VehicleSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null,$limit,$page){
+    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null,$limit,$page,$showOnSite){
         $initialize_field = 'vehicles' ;
 
         $filters = array();
@@ -44,6 +44,9 @@ class VehicleSender extends \Main\SenderService
         }
         if (!empty($page)) {
             $filters[] = 'page=' . urlencode($page);
+        }
+        if (!empty($showOnSite)) {
+            $filters[] = 'showOnWeb=' . urlencode($showOnSite);
         }
         $filterString = implode('&', $filters);
         if (!empty($filterString)) {

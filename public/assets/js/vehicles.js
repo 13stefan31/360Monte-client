@@ -43,7 +43,7 @@ $(document).on('click', '#vehicleFilters', function() {
 });
 function getVehicles(filters){
     var data = {
-        getAllVehicles: 1
+        getAllVehicles: 1,
     };
 
     if (filters !== '') {
@@ -51,8 +51,9 @@ function getVehicles(filters){
         data.model= filters.model;
         data.regNo= filters.regNo;
         data.status= filters.status;
-        data.seatsNo= filters.seatsNo
+        data.seatsNo= filters.seatsNo;
     }
+    data.showOnSite= 2;
     var paginationData = $('#pagination-form').serializeArray();
     $.each(paginationData, function(index, item) {
         data[item.name] = item.value;
@@ -77,7 +78,12 @@ function getVehicles(filters){
                     }else{
                         var readyForDrive ='<span class="badge badge-pill badge-red font-size-13">Neispravno</span>';
                     }
-                    $('#vehicles-table tbody').append('<tr id="'+row.id+'"><td>' + row.brand + '</td><td>' + row.model + '</td><td>' + row.year + '</td><td>' + row.registrationNumber + '</td><td>' + row.numberOfSeats + '</td><td>' + readyForDrive + '</td><td><a class="btn btn-primary m-r-5 " href="/vozila/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
+                    if (row.show==true){
+                        var show ='<span class="badge badge-pill badge-green font-size-13">Dostupno</span>';
+                    }else{
+                        var show ='<span class="badge badge-pill badge-red font-size-13">Nedostupno</span>';
+                    }
+                    $('#vehicles-table tbody').append('<tr id="'+row.id+'"><td>' + row.brand + '</td><td>' + row.model + '</td><td>' + row.year + '</td><td>' + row.registrationNumber + '</td><td>' + row.numberOfSeats + '</td><td>' + readyForDrive + '</td><td>'+show+'</td><td><a class="btn btn-primary m-r-5 " href="/vozila/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a></td></tr>');
                 });
                 $('#vehicles-table').DataTable();
             }

@@ -120,6 +120,7 @@ $current_page= 1;
                                     <th>Registarska oznaka</th>
                                     <th>Broj sjedišta</th>
                                     <th>Status</th>
+                                    <th>Dostupnost</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -145,7 +146,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicles.js"></script>
+<script src="/assets/js/vehicles.js?v=1904"></script>
 
 
 </body>

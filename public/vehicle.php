@@ -98,6 +98,10 @@ $current_page1= 1;
                                                         <td class="vehicleReadyForDrive"></td>
                                                     </tr>
                                                     <tr>
+                                                        <td>Dostupno:</td>
+                                                        <td class="vehicleShowOnSite"></td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>Da li je za eksternu upotrebu:</td>
                                                         <td class="vehicleExternalUse"></td>
                                                     </tr>
@@ -465,7 +469,7 @@ $current_page1= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicle.js?v=2"></script>
+<script src="/assets/js/vehicle.js?v=1904"></script>
 <script src="/assets/js/custom.js?v=1204"></script>
 
 </body>
