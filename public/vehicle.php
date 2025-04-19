@@ -99,7 +99,7 @@ $current_page1= 1;
                                                     </tr>
                                                     <tr>
                                                         <td>Dostupno:</td>
-                                                        <td class="vehicleShowOnSite"></td>
+                                                        <td class="vehicleShowOnWeb"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Da li je za eksternu upotrebu:</td>

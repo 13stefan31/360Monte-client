@@ -53,7 +53,7 @@ function getVehicles(filters){
         data.status= filters.status;
         data.seatsNo= filters.seatsNo;
     }
-    data.showOnSite= 2;
+    data.showOnWeb= 2;
     var paginationData = $('#pagination-form').serializeArray();
     $.each(paginationData, function(index, item) {
         data[item.name] = item.value;
@@ -66,6 +66,7 @@ function getVehicles(filters){
         data:data,
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             if (response.error) {
                 $('#alertVehicles').html(handleErrors(response.error));
             } else {

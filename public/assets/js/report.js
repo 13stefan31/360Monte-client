@@ -8,7 +8,7 @@ $(document).ready(function() {
     //izvjestaj za poredjenje po zaposlenom
     getStuffAllocation('employeeSelectReport3')
     getStuffAllocation('employeeSelectCompareReport3')
-    getVehiclesSelect('vehicleSelectReport3')
+    getVehiclesSelect('vehicleSelectReport3',null,2,true)
 
     $(document).ajaxStop(function() {
         $('#loader-overlay').hide();

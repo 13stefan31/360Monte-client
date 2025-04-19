@@ -19,7 +19,7 @@ class VehicleSender extends \Main\SenderService
         return self::$instance;
     }
 
-    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null,$limit,$page,$showOnSite){
+    public function getAllVehicles($brand=null,$model=null,$regNo=null,$status=null,$seatsNo=null,$limit,$page,$showOnWeb){
         $initialize_field = 'vehicles' ;
 
         $filters = array();
@@ -32,7 +32,7 @@ class VehicleSender extends \Main\SenderService
         if (!empty($regNo)) {
             $filters[] = 'registrationNumber=' . urlencode($regNo);
         }
-        if (!empty($status)) {
+        if (isset($status)) {
             $filters[] = 'readyToDrive=' . urlencode($status);
         }
 
@@ -45,8 +45,8 @@ class VehicleSender extends \Main\SenderService
         if (!empty($page)) {
             $filters[] = 'page=' . urlencode($page);
         }
-        if (!empty($showOnSite)) {
-            $filters[] = 'showOnWeb=' . urlencode($showOnSite);
+        if (isset($showOnWeb)) {
+            $filters[] = 'showOnWeb=' . urlencode($showOnWeb);
         }
         $filterString = implode('&', $filters);
         if (!empty($filterString)) {

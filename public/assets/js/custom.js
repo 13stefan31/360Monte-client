@@ -136,16 +136,21 @@ function getStuffAllocation(selectId, selectedValue = null) {
     });
 
 }
+//allvehicles flag da vrati sva readyToDrive vozila, nezavisno od statusa
+function getVehiclesSelect(selectId, selectedValue = null,showOnWeb=null,allVehicles=false) {
+    const requestData = {
+        getAllVehicles: 1,
+        showOnWeb: showOnWeb
+    };
 
-function getVehiclesSelect(selectId, selectedValue = null) {
+    if (allVehicles === false) {
+        requestData.status = true;
+    }
     $.ajax({
         url: '/../../functions/vehicles.php',
         type: 'GET',
         dataType: 'json',
-        data: {
-            'getAllVehicles': 1,
-            'status': true
-        },
+        data: requestData,
         success: function (response) {
             var data = response.data.data;
             var select = $('#' + selectId);

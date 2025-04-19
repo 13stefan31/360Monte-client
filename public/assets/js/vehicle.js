@@ -26,9 +26,9 @@ $(document).ready(function() {
                     $('.vehicleReadyForDrive').html('<span class="badge badge-pill badge-red font-size-13">Neispravno</span>');
                 }
                 if (data.show==true){
-                    $('.vehicleShowOnSite').html('<span class="badge badge-pill badge-green font-size-13">Dostupno</span>');
+                    $('.vehicleShowOnWeb').html('<span class="badge badge-pill badge-green font-size-13">Dostupno</span>');
                 }else{
-                    $('.vehicleShowOnSite').html('<span class="badge badge-pill badge-red font-size-13">Nedostupno</span>');
+                    $('.vehicleShowOnWeb').html('<span class="badge badge-pill badge-red font-size-13">Nedostupno</span>');
                 }
                 if (data.isReservedForExternalUsage==true){
                     $('.vehicleExternalUse').html('<span class="badge badge-pill badge-cyan font-size-13">DA</span>');
