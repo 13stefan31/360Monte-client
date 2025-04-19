@@ -193,7 +193,7 @@ $(document).on('click', '#sendRequest', function () {
         success: function (response) {
 
             if (!response.success) {
-                $('#requestError').html(handleErrors(response.error));
+                Swal.fire(handleErrors(response.error), '', '')
             } else {
                 Swal.fire('Uspješno ste poslali zahtjev.', '', 'success');
 

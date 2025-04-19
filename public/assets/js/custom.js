@@ -136,7 +136,28 @@ function getStuffAllocation(selectId, selectedValue = null) {
     });
 
 }
+function getAllEmp(selectId, selectedValue = null) {
+    $.ajax({
+        url: '/../../functions/persons.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {'getAllPersons': 1},
+        success: function (response) {
+            var data = response.data.data;
+            console.log(data)
+            var select = $('#' + selectId);
+            select.empty();
+            select.append('<option value="">Odaberite zaposlenog</option>');
+            $.each(data, function (key, value) {
+                var selected = (value.id == selectedValue) ? 'selected' : '';
+                select.append('<option value="' + value.id + '"' + selected + '>' + value.name + '</option>');
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
 
+}
 function getAvailableStuffAllocation(selectId, selectedValue = null,allocationDate=null) {
     $.ajax({
         url: '/../../functions/allocation.php',

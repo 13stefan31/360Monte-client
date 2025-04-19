@@ -6,11 +6,11 @@ $(document).ready(function() {
         savedFilters = JSON.parse(savedFilters);
         getAllAnualLeav(savedFilters,current_page,per_page);
         var selectedValue=$('#person_filter_id').val();
-        getStuffAllocation('employeeSelect',selectedValue)
+        getAllEmp('employeeSelect',selectedValue)
     } else {
         getAllAnualLeav('',current_page,per_page);
 
-        getStuffAllocation('employeeSelect')
+        getAllEmp('employeeSelect')
     }
 
     $('#showPersonsFilter').click(function(e) {

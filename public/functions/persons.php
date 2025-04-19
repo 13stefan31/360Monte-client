@@ -14,7 +14,7 @@ if(isset($_GET) && isset($_GET['getAllPersons'])){
     }else{
         $_SESSION['person_filter_rola_id'] = null;
     }
-    $limit = isset($_GET['per_page']) ? $_GET['per_page'] : null;
+    $limit = isset($_GET['per_page']) ? $_GET['per_page'] : 1000;
     $page = isset($_GET['current_page']) ? $_GET['current_page'] : null;
 
 
