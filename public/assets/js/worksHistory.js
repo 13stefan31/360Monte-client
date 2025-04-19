@@ -13,7 +13,7 @@ $(document).ready(function() {
         var work_filter_date=$('#work_filter_date').val();
         $('#dateFilterId').val(work_filter_date);
         getStuffAllocation('reportedByFilterId',work_filter_reported_id);
-        getVehiclesSelect('vehicleFilterId',work_filter_vehicle_id);
+        getVehiclesSelect('vehicleFilterId',work_filter_vehicle_id,2,true);
         getBreakDownCategoryIdSelect('breakdownCatFilterId',work_filter_breakdown_cat_id);
         getBreakDownSubcategoryIdSelect('breakdownSubcatFilterId',work_filter_breakdown_cat_id,work_filter_breakdown_sub_cat_id);
 
@@ -32,7 +32,7 @@ $(document).ready(function() {
         e.preventDefault();
         getStuffAllocation('reportedByFilterId');
         getBreakDownCategoryIdSelect('breakdownCatFilterId');
-        getVehiclesSelect('vehicleFilterId');
+        getVehiclesSelect('vehicleFilterId',null,2,true);
 
         // getRoles('rolaFilterId');
         $("#chartTypeChange").hide();

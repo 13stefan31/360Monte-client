@@ -83,7 +83,7 @@ $current_page= 1;
                                             <span class="input-group-text" id="basic-addon1">Završeno</span>
                                         </div>
                                         <select id="isWorkFinishedFilter" class="form-control">
-                                            <option>Odaberite</option>
+                                            <option value="">Odaberite</option>
                                             <option value="0" <?php if ($_SESSION['is_work_finished_filter'] == '0') echo ' selected'; ?>>NE</option>
                                             <option value="1" <?php if ($_SESSION['is_work_finished_filter'] == '1') echo ' selected'; ?>>DA</option>
                                         </select>
@@ -423,7 +423,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/worksHistory.js?v=1204"></script>
+<script src="/assets/js/worksHistory.js?v=1904"></script>
 
 </body>
 

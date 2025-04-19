@@ -7,7 +7,7 @@ $(document).ready(function() {
         getAllocations(savedFilters,current_page,per_page);
         var selectedVehicleValue=$('#allocation_filter_vehicle').val();
         var selectedTourValue=$('#allocation_filter_tour').val();
-        getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
+        getVehiclesSelect('vehicleFilterId',selectedVehicleValue,2,true)
         getToursSelect('tourFilterId',selectedTourValue)
     } else {
         getAllocations('',current_page,per_page);
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     $('#showAllocationsFilter').click(function(e) {
         e.preventDefault();
-        getVehiclesSelect('vehicleFilterId');
+        getVehiclesSelect('vehicleFilterId',null,2,true);
         getToursSelect('tourFilterId')
     });
     $('#newAllocationBtn').click(function(e) {
@@ -330,8 +330,8 @@ function handlePageClick(pageNumber) {
     if (savedFilters) {
         savedFilters = JSON.parse(savedFilters);
         getAllocations(savedFilters,pageNumber,per_page);
-        var selectedVehicleValue=$('#allocation_filter_vehicle').val();
-        getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
+        var selectedVehicleValue=$('#vehicleFilterId').val();
+        getVehiclesSelect('vehicleFilterId',selectedVehicleValue,2,true)
     } else {
         getAllocations('',pageNumber,per_page);
     }
