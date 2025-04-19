@@ -7,7 +7,7 @@ $(document).ready(function() {
         getDailyDataHistory(savedFilters,current_page,per_page);
 
         var selectedVehicleValue=$('#daily_data_filter_vehicle_id').val();
-        getVehiclesSelect('vehicleFilterId',selectedVehicleValue)
+        getVehiclesSelect('vehicleFilterId',selectedVehicleValue,2, true)
 
     } else {
         getDailyDataHistory('',current_page,per_page);
@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     $('#showDailyDataFilter').click(function(e) {
         e.preventDefault();
-        getVehiclesSelect('vehicleFilterId');
+        getVehiclesSelect('vehicleFilterId',null,2,true);
         $("#dailyDataFilter").toggle();
         $("#dailyDataCart").hide();
     });
@@ -106,6 +106,7 @@ $(document).ready(function() {
         $('#vehicleFilterId').val('');
         $('#date').val('');
         $('#clearFilters').hide();
+        $('#dailyDataFilter').hide();
     });
 
     let myChart;
@@ -333,9 +334,9 @@ function handlePageClick(pageNumber) {
     var savedFilters = localStorage.getItem('dailyDataFilters');
     if (savedFilters) {
         savedFilters = JSON.parse(savedFilters);
-        getUsers(savedFilters,pageNumber,per_page);
+        getDailyDataHistory(savedFilters,pageNumber,per_page);
     } else {
-        getUsers('',pageNumber,per_page);
+        getDailyDataHistory('',pageNumber,per_page);
     }
 
 }
