@@ -397,33 +397,40 @@ function returnWeeklyInspectionData(type) {
         success: function (response) {
             var dataParse = JSON.parse(response);
             let html = '';
-
+ console.log(response)
             dataParse.data.data.forEach(group => {
-                html += `<h5 class="mt-4">${group.reportItemGroupName || ''}</h5>`;
-                html += `<table class="table table-bordered">`;
+                html += `<div class="inspection-group mb-4">`;
+                html += `<h5 class="mb-3">${group.reportItemGroupName || ''}</h5>`;
 
-                if (group.reportItemGroupId) {
-                    html += `<thead><tr><th>Opis</th><th>Ispravno</th><th>Komentar</th></tr></thead>`;
-                }
+                    group.items.forEach(item => {
+                        const isDefaultChecked = item.group_id === 0 ? 'checked' : '';
+                        const isHiddenStyle = item.group_id === 0 ? 'd-none' : 'd-flex';
 
-                html += `<tbody>`;
-                group.items.forEach(item => {
-                    html += `
-            <tr>
-                <td>${item.label}</td>
-                <td>
-                    <input type="checkbox" name="isCorrect_${item.id}" />
-                </td>
-                <td>
-                    <input type="text" name="comment_${item.id}" class="form-control" />
-                    <input type="hidden" name="itemId[]" value="${item.id}" />
-                </td>
-            </tr>
-        `;
-                });
+                        html += `
+    <div class="inspection-item p-2 border rounded mb-3">
+        <div class="d-flex justify-content-between align-items-start flex-wrap">
+            <div class="label-section mb-2" style="flex: 1 1 300px;">
+                 ${item.label} 
+            </div>
+            <div class="checkbox-section mb-2 ${isHiddenStyle} align-items-center"  style="flex: 0 0 auto;">
+                <label class="me-2 mb-0">Ispravno:</label>
+                <input type="checkbox" name="isCorrect_${item.id}" ${isDefaultChecked} style="width: 30px;transform: scale(1.5);" />
+            </div>
+        </div>
+        <div class="comment-section mt-2">
+            <textarea name="comment_${item.id}" class="form-control" rows="2" style="height: 35px;overflow-y: hidden; resize: vertical;" placeholder="Komentar"></textarea>
+            <input type="hidden" name="itemId[]" value="${item.id}" />
+        </div>
+    </div>`;
+                    });
 
-                html += `</tbody></table>`;
+
+
+                html += `</div>`;
             });
+
+
+
 
 
             $('#inspectionTableContainer').html(html);
@@ -455,7 +462,7 @@ $('#inspectionAdd').on('submit', function (e) {
     $('input[name="itemId[]"]').each(function () {
         const itemId = $(this).val();
         const isCorrect = $(`input[name="isCorrect_${itemId}"]`).is(':checked');
-        const comment = $(`input[name="comment_${itemId}"]`).val().trim() || null;
+        const comment = $(`textarea[name="comment_${itemId}"]`).val().trim() || null;
 
         dataToSend.data.push({
             itemId: parseInt(itemId),

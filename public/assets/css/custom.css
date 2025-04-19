@@ -237,36 +237,28 @@ div#chartDiv, div#chartDivBreakdown, div#chartDivPrice, #dailyDataChartBreakdown
 .day.empty {
     background-color: #f0f0f0;
 }
-#vehicleInspectionData td:first-child {
-    max-width: 100px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-#inspectionTableContainer table {
-    border-collapse: collapse;
+
+.inspection-group h5 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
 }
 
-#inspectionTableContainer table td,
-#inspectionTableContainer table th {
-    padding: 1px 4px !important;
-    line-height: 1 !important;
-    height: 26px !important;
-    vertical-align: middle !important;
-    font-size: 13px;
+.inspection-item {
+    background-color: #f8f9fa;
+    transition: box-shadow 0.2s ease;
 }
 
-#inspectionTableContainer input[type="checkbox"],
-#inspectionTableContainer input[type="text"] {
-    height: 40px !important;
-    font-size: 13px;
-    padding: 0 4px;
-    margin: 0;
-    line-height: 1;
-    box-sizing: border-box;
+.inspection-item:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-#inspectionTableContainer input[type="checkbox"] {
-    width: 16px;
-    vertical-align: middle;
+.label-section {
+    font-size: 0.9rem;
+}
+
+.comment-section input {
+    width: 100%;
+}
+.hidden-checkbox {
+    display: none !important;
 }
