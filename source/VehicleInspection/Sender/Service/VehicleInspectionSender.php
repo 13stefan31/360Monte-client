@@ -89,7 +89,6 @@ class VehicleInspectionSender extends \Main\SenderService
             'vehicleId' => $data['vehicleId'],
             'data' => $data['data'],
         ];
-        $test= json_encode($body, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         $initialize_field = 'vehicle-inspections/' . $data['inspectionId'];
         return $this->send_put_request($initialize_field, $body);
