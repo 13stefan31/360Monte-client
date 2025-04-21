@@ -144,7 +144,6 @@ function getAllEmp(selectId, selectedValue = null) {
         data: {'getAllPersons': 1},
         success: function (response) {
             var data = response.data.data;
-            console.log(data)
             var select = $('#' + selectId);
             select.empty();
             select.append('<option value="">Odaberite zaposlenog</option>');
@@ -397,7 +396,6 @@ function returnWeeklyInspectionData(type) {
         success: function (response) {
             var dataParse = JSON.parse(response);
             let html = '';
- console.log(response)
             dataParse.data.data.forEach(group => {
                 html += `<div class="inspection-group mb-4">`;
                 html += `<h5 class="mb-3">${group.reportItemGroupName || ''}</h5>`;

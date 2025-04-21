@@ -50,6 +50,9 @@ if ($_GET['tip']==1){
                             <div class="card">
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="updateInspectionButton" data-target="#updateInspectionForm">
+                                            <i class="anticon anticon-edit"></i> Izmijeni
+                                        </button>
                                         <table class="product-info-table m-t-20">
                                             <tbody>
                                             <tr>
@@ -59,6 +62,9 @@ if ($_GET['tip']==1){
                                             <tr>
                                                 <td>Vozilo:</td>
                                                 <td class="surveyeVehicle"></td>
+                                                <input value="" id="surveyeVehicleId" hidden="">
+                                                <input value="" id="reportType"  hidden="">
+                                                <input value="" id="inspectionId" hidden="">
                                             </tr>
                                             </tbody>
                                         </table>
@@ -90,6 +96,32 @@ if ($_GET['tip']==1){
                     </div>
                 </div>
 
+                <div class="modal fade" id="updateInspectionForm">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Izmijeni</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <form id="inspectionUpdate">
+                                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                                    <div class="form-group">
+                                        <label for="vehicleInfo">Vozilo:</label>
+                                        <span id="vehicleInfo"></span>
+                                    </div>
+                                    <div id="inspectionTableContainer"></div>
+                                    <div id="weeklyInspectionAddError"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-primary" id="inspectionUpdate|">Sačuvaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <!-- Content Wrapper END -->
                 <?php include ('layouts/footer.php')?>
             </div>
@@ -100,7 +132,7 @@ if ($_GET['tip']==1){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleVehicleInspection.js?v=1904"></script>
+    <script src="/assets/js/singleVehicleInspection.js?v=2104"></script>
 
 </body>
 

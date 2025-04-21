@@ -63,3 +63,12 @@ if(isset($_POST) && isset($_POST['addInspectionData'])){
 
     return $vehicle_inspection_sender->addInspectionData($_POST['data']);
 }
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $data = file_get_contents('php://input');
+
+    parse_str($data, $decoded_data);
+
+    if (isset($decoded_data['updateInspectionData'])) {
+        return $vehicle_inspection_sender->updateInspectionData($decoded_data['data']);
+    }
+}
