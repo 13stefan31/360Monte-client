@@ -570,7 +570,7 @@ $('#newWorkDataButton').click(function (e) {
         $('#mechanicPriceCard').prop('disabled', false).removeClass('disabled-input').val('');
 
         var selectedVehicleId = $('.vehicleId').val();
-        getVehiclesSelect('vehicleNewWorks', selectedVehicleId);
+        getVehiclesSelect('vehicleNewWorks', selectedVehicleId,2,true);
 
     } else {
 
