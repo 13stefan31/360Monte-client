@@ -115,7 +115,7 @@ $current_page = 1;
                                         <h3>Odabrani dani:</h3>
                                         <ul id="dates-list"></ul>
                                         <button class="d-none btn btn-primary m-b-15 m-r-10" id="sendRequest">Pošalji
-                                            zathjev
+                                            zahtjev
                                         </button>
                                         <button class="d-none btn btn-danger m-b-15 m-r-10" id="clearDates" onclick="clearSelectedDates();">
                                             <i class="anticon anticon-delete"></i>  Ukloni selektovane datume
