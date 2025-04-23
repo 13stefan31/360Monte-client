@@ -55,7 +55,9 @@ $current_page1= 1;
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inspection" role="tab" aria-controls="inspection" aria-selected="false">Inspekcija vozila</a>
                                 </li>
+
                             </ul>
+                            <input hidden="" value="1" id="singleVehicleFlag">
                             <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
                                 <button type="button" class="btn btn-primary m-b-15" style=" display:none;" data-toggle="modal" id="newWorkDataButton" data-target="#newWorkHistory" >
                                     Novi unos kvara
@@ -469,8 +471,8 @@ $current_page1= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/vehicle.js?v=1904"></script>
-<script src="/assets/js/custom.js?v=1904"></script>
+<script src="/assets/js/vehicle.js?v=2304"></script>
+<script src="/assets/js/custom.js?v=2304"></script>
 
 </body>
 

@@ -272,7 +272,7 @@ function getVehicleInspection(current_page,per_page){
                         '<td>' + item.reporter.createdAt + '</td>' +
                         '<td>' + inspectionType + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/'+item.id+'/'+item.type+'">' +
+                        '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/'+item.id+'/'+item.type+'?v='+ item.vehicle.id+ '">' +
                         '<i class="anticon anticon-plus"></i> Više detalja</a> ' +
                         '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections('+item.id+')">' +
                         '<i class="anticon anticon-delete"></i> Obriši</a>' +
@@ -396,8 +396,8 @@ $('#newWeeklyInspectionButton, #newMonthlyInspectionButton').click(function(e) {
     $("#weeklyInspectionAddError").empty();
     const type = $(this).data('type');
     $('#reportType').val(type);
-var v = $('.vehicleId').val();
-    getVehiclesSelect('vehicleNew',v);
+    var v = $('.vehicleId').val();
+    getVehiclesSelect('vehicleNew',v,2,true);
     let reportType = $(this).data('type');
     returnWeeklyInspectionData(reportType);
 });

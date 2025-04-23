@@ -5,16 +5,23 @@ if (!in_array($authRole,$vehicleInspectionsRoles)){
     header('Location: /403');
     exit();
 }
-if ($_GET['tip']==1){
+if (isset($_GET['v'])){
     $naslov = 'Nedeljni izvještaj';
-    $prethodna = 'Nedeljni izvještaji';
-    $link='nedeljni-izvjestaji';
+    $prethodna = 'Vozilo';
+    $link='vozila/'.$_GET['v'];
 }else{
+    if ($_GET['tip']==1){
+        $naslov = 'Nedeljni izvještaj';
+        $prethodna = 'Nedeljni izvještaji';
+        $link='nedeljni-izvjestaji';
+    }else{
 
-    $naslov = 'Mjesečni izvještaj';
-    $prethodna = 'Mjesečni izvještaji';
-    $link='mjesecni-izvjestaji';
+        $naslov = 'Mjesečni izvještaj';
+        $prethodna = 'Mjesečni izvještaji';
+        $link='mjesecni-izvjestaji';
+    }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -65,6 +72,10 @@ if ($_GET['tip']==1){
                                                 <input value="" id="surveyeVehicleId" hidden="">
                                                 <input value="" id="reportType"  hidden="">
                                                 <input value="" id="inspectionId" hidden="">
+                                            </tr>
+                                            <tr>
+                                                <td>Datum:</td>
+                                                <td class="text-dark font-weight-semibold surveyDate"></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -132,7 +143,7 @@ if ($_GET['tip']==1){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleVehicleInspection.js?v=2104"></script>
+    <script src="/assets/js/singleVehicleInspection.js?v=2304"></script>
 
 </body>
 

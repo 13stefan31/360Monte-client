@@ -69,7 +69,7 @@ function getAllVehicleInspectionsReports(filters, current_page, per_page) {
                         '<tr id="' + item.id + '">' +
                         '<td>' + item.reporter.name + '</td>' +
                         '<td>' + item.vehicle.brand + ' ' + item.vehicle.model + '</td>' +
-                        '<td>' + item.reporter.createdAt + '</td>' +
+                        '<td>' + item.insertOrUpdateDate + '</td>' +
                         '<td><a class="btn btn-primary m-r-5 " href="/inspekcija-vozila/' + item.id + '/' + item.type + '"   ><i class="anticon anticon-plus"></i>Više detalja</a>' +
                         '<a class="btn btn-danger m-r-5 " href="javascript:void(0)" onclick="deleteVehicleInspections(' + item.id + ')"><i class="anticon anticon-delete"></i>Obriši</a></td>' +
 

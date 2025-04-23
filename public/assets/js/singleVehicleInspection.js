@@ -27,6 +27,7 @@ $(document).ready(function () {
                 $('#surveyeVehicleId').val(data.vehicle.id);
                 $('#reportType').val(data.type);
                 $('#inspectionId').val(data.id);
+                $('.surveyDate').html(data.insertOrUpdateDate);
 
                 const grouped = {};
 

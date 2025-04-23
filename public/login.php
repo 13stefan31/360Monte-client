@@ -63,7 +63,7 @@ if (isset($_COOKIE['token'])){
     <!-- Core JS -->
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/alerts.js"></script>
-    <script src="/assets/js/custom.js?v=1904"></script>
+    <script src="/assets/js/custom.js?v=2304"></script>
 
 </body>
 

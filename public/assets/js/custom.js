@@ -441,7 +441,7 @@ function returnWeeklyInspectionData(type) {
     });
 }
 
-$('#inspectionAdd').on('submit', function (e) {
+$('#inspectionAdd').off('submit').on('submit', function (e) {
     e.preventDefault();
     const vehicleId = $('#vehicleNew').val();
     const type = $('#reportType').val();
@@ -498,7 +498,6 @@ $('#inspectionAdd').on('submit', function (e) {
         return;
     }
 
-    // AJAX poziv
     $.ajax({
         url: '/functions/vehicleInspection.php',
         method: 'POST',
@@ -526,14 +525,17 @@ $('#inspectionAdd').on('submit', function (e) {
                 let newRow = '<tr id="' + item.id + '">' +
                     '<td>' + item.reporter.name + '</td>' +
                     '<td>' + item.vehicle.brand + ' ' + item.vehicle.model + '</td>' +
-                    '<td>' + item.reporter.createdAt + '</td>';
+                    '<td>' + item.insertOrUpdateDate + '</td>';
 
                 if (singleVehicleInspection == 1) {
                     newRow += '<td>' + inspectionType + '</td>';
                 }
 
+                var singleVehicleFlag = document.getElementById("singleVehicleFlag");
+                var vehicleParam = (singleVehicleFlag && singleVehicleFlag.value === "1") ? '?v=' + item.vehicle.id : '';
+
                 newRow += '<td>' +
-                    '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/' + item.id + '/1">' +
+                    '<a class="btn btn-primary m-r-5" href="/inspekcija-vozila/' + item.id + '/' + item.type + vehicleParam + '">' +
                     '<i class="anticon anticon-plus"></i> Više detalja</a> ' +
                     '<a class="btn btn-danger m-r-5" href="javascript:void(0)" onclick="deleteVehicleInspections(' + item.id + ')">' +
                     '<i class="anticon anticon-delete"></i> Obriši</a>' +

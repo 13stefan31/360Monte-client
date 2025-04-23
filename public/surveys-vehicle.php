@@ -145,7 +145,7 @@ $current_page= 1;
 
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
-<script src="/assets/js/survey-vehicle.js?v=1904"></script>
+<script src="/assets/js/survey-vehicle.js?v=2304"></script>
 </body>
 
 </html>
