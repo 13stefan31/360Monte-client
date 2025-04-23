@@ -1,11 +1,11 @@
 <?php  require 'auth.php';
 
-if (!in_array($authRole,$myVacationRoles)){
-    header('HTTP/1.0 403 Forbidden');
-    header('Location: /403');
-
-    exit();
-}
+//if (!in_array($authRole,$myVacationRoles)){
+//    header('HTTP/1.0 403 Forbidden');
+//    header('Location: /403');
+//
+//    exit();
+//}
 
 
 if ($_GET['type']=='A'){

@@ -92,7 +92,7 @@
                          </span>Svi slobodni dani</a>
                         </li>
                     <?php } ?>
-                    <?php if (in_array($authRole, $myVacationRoles)) { ?>
+<!--                    --><?php //if (in_array($authRole, $myVacationRoles)) { ?>
 
                         <li>
                             <a href="/slobodni-dani-pregled">
@@ -100,7 +100,7 @@
                          <i class="anticon anticon-calendar"></i>
                          </span>Moji slobodni dani</a>
                         </li>
-                    <?php } ?>
+<!--                    --><?php //} ?>
                     <?php if (in_array($authRole, $vehicleInspectionsRoles)) { ?>
 
                         <li>

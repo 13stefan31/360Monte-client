@@ -119,14 +119,18 @@ $completeWorkRoles = array(
 
 );
 $allVacationRoles = array(
-    P_ADMIN_ROLE_ID
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_SALE_COORDINATOR_ROLE_ID,
 
 );
-$myVacationRoles = array(
-    P_ADMIN_ROLE_ID,
-);
+//$myVacationRoles = array(
+//    P_ADMIN_ROLE_ID,
+//);
 
 $vehicleInspectionsRoles = array(
-    P_ADMIN_ROLE_ID
+    P_ADMIN_ROLE_ID,
+    P_GENERAL_MANAGER_ROLE_ID,
+    P_VEHICLE_COORDINATOR_ROLE_ID
 );
 ?>
