@@ -498,7 +498,7 @@ $(document).on('click', '.work-edit', function() {
 
 function deleteWorkHistory(id){
     Swal.fire({
-        title: 'Da li ste sigutni da želite da obrišete?',
+        title: 'Da li ste sigurni da želite da obrišete?',
         showDenyButton: true,
         showCancelButton: false,
         confirmButtonText: 'Obriši',

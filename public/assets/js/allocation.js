@@ -494,6 +494,11 @@ $(document).on('click', '.stuff-delete', function() {
         showCancelButton: false,
         confirmButtonText: 'Ukloni',
         denyButtonText: `Odustani`,
+        customClass: {
+            confirmButton: 'btn-delete',
+            denyButton: 'btn-cancel'
+        },
+        buttonsStyling: false
     }).then((result) => {
         if (result.isConfirmed) {
 
