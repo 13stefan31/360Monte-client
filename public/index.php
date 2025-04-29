@@ -122,7 +122,7 @@
                                 </a>
                             </div>
                         <?php }?>
-                        <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                        <?php if (in_array($authRole,$worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/istorija-radova">
                                 <div class="card">
@@ -140,7 +140,7 @@
                             </a>
                         </div>
                         <?php }?>
-                        <?php if (in_array($authRole,$dailyDataHistoryAllowedRoles)){?>
+                        <?php if (in_array($authRole,$dailyDataHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/istorija-dnevnih-podataka">
                                 <div class="card">
@@ -214,7 +214,7 @@
                             </a>
                         </div>
 <!--                        --><?php //}?>
-                        <?php if (in_array($authRole,$vehicleInspectionsRoles)){?>
+                        <?php if (in_array($authRole,$vehicleInspectionsRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
 
 
                             <div class="col-md-6 col-lg-3">
@@ -235,7 +235,7 @@
                                 </a>
                             </div>
                         <?php }?>
-                        <?php if (in_array($authRole,$vehicleInspectionsRoles)){?>
+                        <?php if (in_array($authRole,$vehicleInspectionsRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
 
 
                             <div class="col-md-6 col-lg-3">

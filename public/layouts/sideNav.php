@@ -63,7 +63,7 @@
                          </span> Izvještaji</a>
                         </li>
                     <?php } ?>
-                    <?php if (in_array($authRole, $worksHistoryAllowedRoles)) { ?>
+                    <?php if (in_array($authRole, $worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me") { ?>
                         <li>
                             <a href="/istorija-radova">
                              <span class="icon-holder">
@@ -71,7 +71,7 @@
                          </span>Istorija radova</a>
                         </li>
                     <?php } ?>
-                    <?php if (in_array($authRole, $dailyDataHistoryAllowedRoles)) { ?>
+                    <?php if (in_array($authRole, $dailyDataHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me") { ?>
                         <li>
                             <a href="/istorija-dnevnih-podataka">
                                 <i class="fas fa-history"></i>
@@ -101,7 +101,7 @@
                          </span>Moji slobodni dani</a>
                         </li>
 <!--                    --><?php //} ?>
-                    <?php if (in_array($authRole, $vehicleInspectionsRoles)) { ?>
+                    <?php if (in_array($authRole, $vehicleInspectionsRoles) || $authUser->email=="nikola.kontic@360monte.me") { ?>
 
                         <li>
                             <a href="/nedeljni-izvjestaji">
@@ -110,7 +110,7 @@
                          </span>Nedeljni izvejštaji (inspekcija vozila)</a>
                         </li>
                     <?php } ?>
-                    <?php if (in_array($authRole, $vehicleInspectionsRoles)) { ?>
+                    <?php if (in_array($authRole, $vehicleInspectionsRoles) || $authUser->email=="nikola.kontic@360monte.me") { ?>
 
                         <li>
                             <a href="/mjesecni-izvjestaji">

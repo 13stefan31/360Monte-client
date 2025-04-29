@@ -1,5 +1,5 @@
 <?php  require 'auth.php';
-if (!in_array($authRole,$worksHistoryAllowedRoles)){
+if (!in_array($authRole,$worksHistoryAllowedRoles) && $authUser->email!="nikola.kontic@360monte.me"){
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
     exit();
@@ -38,7 +38,7 @@ if (!in_array($authRole,$worksHistoryAllowedRoles)){
                                         <button type="button" class="btn btn-primary m-l-15" data-toggle="modal" id="changeWorkDataButton" data-target="#editWorkHistory">
                                             <i class="anticon anticon-form"></i>Izmijeni podatke
                                         </button>
-                                        <?php if (in_array($authRole,$completeWorkRoles)){?>
+                                        <?php if (in_array($authRole,$completeWorkRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                                         <button type="button" class="btn btn-success m-l-15"  id="markAsFinished">
                                             <i class="anticon anticon-check"></i>Označi kao završeno
                                         </button>

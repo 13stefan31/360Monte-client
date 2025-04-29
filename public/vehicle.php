@@ -58,7 +58,7 @@ $current_page1= 1;
 
                             </ul>
                             <input hidden="" value="1" id="singleVehicleFlag">
-                            <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                            <?php if (in_array($authRole,$worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                                 <button type="button" class="btn btn-primary m-b-15" style=" display:none;" data-toggle="modal" id="newWorkDataButton" data-target="#newWorkHistory" >
                                     Novi unos kvara
                                 </button>
@@ -124,7 +124,7 @@ $current_page1= 1;
                                             Promijeni status
                                         </button>
                                     <?php }?>
-                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                                         <span id="worksTab"></span>
                                     <?php }?>
                                         <input hidden="" value="1" id="isSingleVehicleWorkAdd">
@@ -148,7 +148,7 @@ $current_page1= 1;
                                 <div class="tab-pane fade" id="inspection" role="tabpanel" aria-labelledby="inspection-tab">
                                     <div id="commentAlert"></div>
                                     <div id="inspectionError"></div>
-                                    <?php if (in_array($authRole,$vehicleInspectionsRoles)){?>
+                                    <?php if (in_array($authRole,$vehicleInspectionsRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newWeeklyInspection" id="newWeeklyInspectionButton" data-type="1">
                                             Novi nedeljni izvještaj
                                         </button>
@@ -157,7 +157,7 @@ $current_page1= 1;
                                         </button>
 <input id="singleVehicleInspection" value="1" hidden="">
                                     <?php }?>
-                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+                                    <?php if (in_array($authRole,$worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                                         <span id="inspectionTab"></span>
                                     <?php }?>
                                     <div class="table-container">
@@ -317,7 +317,7 @@ $current_page1= 1;
                 </div>
 
             <?php }?>
-            <?php if (in_array($authRole,$worksHistoryAllowedRoles)){?>
+            <?php if (in_array($authRole,$worksHistoryAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
 
                 <div class="modal fade" id="newWorkHistory">
                 <div class="modal-dialog modal-dialog-centered">
