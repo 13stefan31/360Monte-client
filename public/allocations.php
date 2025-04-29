@@ -1,6 +1,6 @@
 <?php
 require 'auth.php';
-if (!in_array($authRole,$allocationAllowedRoles)){
+if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.kontic@360monte.me" && $authUser->email!="nikolina@360monte.me"){
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
 
@@ -196,7 +196,7 @@ $current_page= 1;
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/allocations.js?v=1904"></script>
+    <script src="/assets/js/allocations.js?v=2904"></script>
 </body>
 
 </html>

@@ -176,7 +176,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles)){
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleDailyDataHistory.js?v=1.1"></script>
+    <script src="/assets/js/singleDailyDataHistory.js?v=2904"></script>
 
 </body>
 

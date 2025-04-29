@@ -1,5 +1,5 @@
 <?php  require 'auth.php';
-if (!in_array($authRole,$allocationAllowedRoles)){
+if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.kontic@360monte.me" && $authUser->email!="nikolina@360monte.me"){
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
     exit();
@@ -53,7 +53,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                     <div class="card-group">
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
-                                                <?php if (in_array($authRole,$allocationEditRoles)){?>
+                                                <?php if (in_array($authRole,$allocationEditRoles) ||  $authUser->email=="nikola.kontic@360monte.me"){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
@@ -81,7 +81,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                                         </div>
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
-                                                <?php if (in_array($authRole,$allocationEditRoles)){?>
+                                                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me"){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="addEmpAllocationButton" data-target="#allocation-add-person-modal">
@@ -119,7 +119,7 @@ if (!in_array($authRole,$allocationAllowedRoles)){
                     </div>
                 </div>
 
-                <?php if (in_array($authRole,$allocationEditRoles)){?>
+                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me"){?>
                 <div class="modal fade" id="vehicle-date-change-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -289,12 +289,13 @@ if (!in_array($authRole,$allocationAllowedRoles)){
     <input hidden value="<?= htmlspecialchars($allocationEditRolesString) ?>" id="allocationEditRoles">
     <input hidden value="<?= htmlspecialchars($allocationUpdateRolesString) ?>" id="allocationUpdateRoles">
 
-
+    <input hidden value="<?= htmlspecialchars($user->email) ?>" id="authUserEmail">
+    <input hidden value='["nikola.kontic@360monte.me", "nikolina@360monte.me"]' id="overrideEmails">
 
 
 <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/allocation.js?v=1904"></script>
+    <script src="/assets/js/allocation.js?v=2904"></script>
 
 </body>
 

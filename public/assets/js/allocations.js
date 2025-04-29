@@ -115,6 +115,11 @@ $(document).on('click', '.allocation-delete', function() {
         showCancelButton: false,
         confirmButtonText: 'Obriši',
         denyButtonText: `Odustani`,
+        customClass: {
+            confirmButton: 'btn-delete',
+            denyButton: 'btn-cancel'
+        },
+        buttonsStyling: false
     }).then((result) => {
         if (result.isConfirmed) {
 

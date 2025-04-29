@@ -86,6 +86,11 @@ $(document).on('click', '.user-delete', function() {
         showCancelButton: false,
         confirmButtonText: 'Obriši',
         denyButtonText: `Odustani`,
+        customClass: {
+            confirmButton: 'btn-delete',
+            denyButton: 'btn-cancel'
+        },
+        buttonsStyling: false
     }).then((result) => {
         if (result.isConfirmed) {
             var $btn = $(this);

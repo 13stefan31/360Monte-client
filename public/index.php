@@ -29,7 +29,7 @@
                         </div>
                         <?php }?>
 
-                        <?php if (in_array($authRole,$vehiclesAllowedRoles)){?>
+                        <?php if (in_array($authRole,$vehiclesAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/vozila">
                             <div class="card">
@@ -86,7 +86,7 @@
                             </div>
 
                         <?php }?>
-                        <?php if (in_array($authRole,$allocationAllowedRoles)){?>
+                        <?php if (in_array($authRole,$allocationAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me" || $authUser->email=="nikolina@360monte.me"){?>
                         <div class="col-md-6 col-lg-3">
                             <a href="/alokacije">
                             <div class="card">

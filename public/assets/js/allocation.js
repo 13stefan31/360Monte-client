@@ -70,13 +70,20 @@ $(document).ready(function() {
                     var authRole = $("#authRole").val();
                     var loggedUser = $("#loggedUser").val();
 
-                    if (item.statusId == 0 && allocationEditRoles.indexOf(authRole) !== -1){
+                    const authUserEmail = document.getElementById("authUserEmail").value;
+                    const overrideEmails = JSON.parse(document.getElementById("overrideEmails").value);
+
+                    // if ((item.statusId == 0 && (allocationEditRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)))) {
+
+                        if (item.statusId == 0 && allocationEditRoles.indexOf(authRole) !== -1){
                         adminButton = '<button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid="'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">' +
                             ' <i class="anticon anticon-edit"></i> </button>' +
                             '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="' + item.allocation.id + '" data-allocationstuffid="' + item.id + '"data-allocationstuffname="' + item.employee.name + '"><i class="anticon anticon-delete"></i></button>';
 
                     }
-                    if (item.statusId == 1 && allocationUpdateRoles.indexOf(authRole) !== -1){
+                    if ((item.statusId == 1 && (allocationUpdateRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)))) {
+
+                        // if (item.statusId == 1 && allocationUpdateRoles.indexOf(authRole) !== -1){
                         adminButton = '<button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid="'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">' +
                             ' <i class="anticon anticon-edit"></i> </button>' +
                             '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="' + item.allocation.id + '" data-allocationstuffid="' + item.id + '"data-allocationstuffname="' + item.employee.name + '"><i class="anticon anticon-delete"></i></button>';

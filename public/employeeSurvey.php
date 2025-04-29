@@ -41,7 +41,7 @@ include('layouts/head.php') ?>
 <!-- Core JS -->
 <script src="/assets/js/app.min.js"></script>
 <script src="/assets/js/alerts.js"></script>
-<script src="/assets/js/custom.js?v=2304"></script>
+<script src="/assets/js/custom.js?v=2904"></script>
 
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/js/userAuth.js"></script>

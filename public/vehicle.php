@@ -1,5 +1,5 @@
 <?php require 'auth.php';
-if (!in_array($authRole,$vehiclesAllowedRoles)){
+if (!in_array($authRole,$vehiclesAllowedRoles) && $authUser->email!="nikola.kontic@360monte.me"){
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
     exit();
@@ -116,7 +116,7 @@ $current_page1= 1;
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div id="commentAlert"></div>
-                                    <?php if (in_array($authRole,$vehicleCommentRoles)){?>
+                                    <?php if (in_array($authRole,$vehicleCommentRoles)  || $authUser->email=="nikola.kontic@360monte.me"){?>
                                     <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" data-target="#newIrregularity" id="newIrregularityButton">
                                         Novi unos
                                     </button>
@@ -183,7 +183,7 @@ $current_page1= 1;
                 </div>
             </div>
 
-            <?php if (in_array($authRole,$vehicleCommentRoles)){?>
+            <?php if (in_array($authRole,$vehicleCommentRoles) || $authUser->email=="nikola.kontic@360monte.me"){?>
             <div class="modal fade" id="newIrregularity">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -472,7 +472,7 @@ $current_page1= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/js/vehicle.js?v=2304"></script>
-<script src="/assets/js/custom.js?v=2304"></script>
+<script src="/assets/js/custom.js?v=2904"></script>
 
 </body>
 

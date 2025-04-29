@@ -19,7 +19,7 @@
                         </li>
                     <?php } ?>
 
-                    <?php if (in_array($authRole, $vehiclesAllowedRoles)) { ?>
+                    <?php if (in_array($authRole, $vehiclesAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me") { ?>
                         <li>
                             <a href="/vozila">
                             <span class="icon-holder">
@@ -47,7 +47,7 @@
                         </li>
 
                     <?php } ?>
-                    <?php if (in_array($authRole, $allocationAllowedRoles)) { ?>
+                    <?php if (in_array($authRole, $allocationAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me" || $authUser->email=="nikolina@360monte.me") { ?>
                         <li>
                             <a href="/alokacije">
                              <span class="icon-holder">
