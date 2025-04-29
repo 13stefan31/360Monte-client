@@ -72,8 +72,6 @@ $(document).ready(function() {
 
                     const authUserEmail = document.getElementById("authUserEmail").value;
                     const overrideEmails = JSON.parse(document.getElementById("overrideEmails").value);
-                    console.log(authUserEmail);
-                    console.log(overrideEmails);
 
 
                     // if ((item.statusId == 0 && (allocationEditRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)))) {
