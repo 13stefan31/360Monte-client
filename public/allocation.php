@@ -289,7 +289,7 @@ if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.ko
     <input hidden value="<?= htmlspecialchars($allocationEditRolesString) ?>" id="allocationEditRoles">
     <input hidden value="<?= htmlspecialchars($allocationUpdateRolesString) ?>" id="allocationUpdateRoles">
 
-    <input hidden value="<?= htmlspecialchars($user->email) ?>" id="authUserEmail">
+    <input hidden value="<?= htmlspecialchars($authUser->email) ?>" id="authUserEmail">
     <input hidden value='["nikola.kontic@360monte.me", "nikolina@360monte.me"]' id="overrideEmails">
 
 
