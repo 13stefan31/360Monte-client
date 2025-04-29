@@ -51,7 +51,7 @@ if ($_GET['type']=='A'){
                                         <div class="card-group">
                                             <div class="card" style="max-width: 400px">
                                                 <ul class="list-group list-group-flus">
-                                                    <?php if (in_array($authRole,$allocationEditRoles)){?>
+                                                    <?php if (in_array($authRole,$allVacationRoles) ){?>
                                                         <div class="card-footer" id="vacationChangeButton">
                                                             <div class="text-center m-t-5">
                                                                 <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vacation-modal">
@@ -86,7 +86,7 @@ if ($_GET['type']=='A'){
                     </div>
                 </div>
 
-                <?php if (in_array($authRole,$allocationEditRoles)){?>
+                <?php if (in_array($authRole,$allVacationRoles)){?>
                     <div class="modal fade" id="vacation-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">

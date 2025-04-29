@@ -59,7 +59,7 @@ $current_page= 1;
                             <div id="alertDeleteAllocation"></div>
                            <div class="m-t-25">
 
-                               <?php if (in_array($authRole,$allocationEditRoles)){?>
+                               <?php if (in_array($authRole,$allocationEditRoles) || $authUser->email=="nikolina@360monte.me" || $authUser->email=="nikola.kontic@360monte.me" ){?>
                                 <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newAllocationBtn" data-target="#newAllocation">
                                     Novi unos
                                 </button>
@@ -133,7 +133,7 @@ $current_page= 1;
                         </div>
                     </div>
                 </div>
-<?php if (in_array($authRole,$allocationEditRoles)){?>
+<?php if (in_array($authRole,$allocationEditRoles) || $authUser->email=="nikolina@360monte.me" || $authUser->email=="nikola.kontic@360monte.me"){?>
                 <div class="modal fade" id="newAllocation">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
