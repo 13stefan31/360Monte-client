@@ -53,7 +53,7 @@ if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.ko
                                     <div class="card-group">
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
-                                                <?php if (in_array($authRole,$allocationEditRoles) ||  $authUser->email=="nikola.kontic@360monte.me"){?>
+                                                <?php if (in_array($authRole,$allocationEditRoles) ||  $authUser->email=="nikola.kontic@360monte.me" ||  $authUser->email=="nikolina@360monte.me"){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="changeAllocationDataButton" data-target="#vehicle-date-change-modal">
@@ -81,7 +81,7 @@ if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.ko
                                         </div>
                                         <div class="card">
                                             <ul class="list-group list-group-flus">
-                                                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me"){?>
+                                                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me" ||  $authUser->email=="nikolina@360monte.me"){?>
                                                 <div class="card-footer">
                                                     <div class="text-center m-t-5">
                                                         <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="addEmpAllocationButton" data-target="#allocation-add-person-modal">
@@ -119,7 +119,7 @@ if (!in_array($authRole,$allocationAllowedRoles) && $authUser->email!="nikola.ko
                     </div>
                 </div>
 
-                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me"){?>
+                <?php if (in_array($authRole,$allocationEditRoles)  ||  $authUser->email=="nikola.kontic@360monte.me" ||  $authUser->email=="nikolina@360monte.me"){?>
                 <div class="modal fade" id="vehicle-date-change-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
