@@ -72,7 +72,8 @@ $(document).ready(function() {
 
                     const authUserEmail = document.getElementById("authUserEmail").value;
                     const overrideEmails = JSON.parse(document.getElementById("overrideEmails").value);
-
+console.log('overrideEmails',overrideEmails)
+console.log('authUserEmail',authUserEmail)
 
                     // if ((item.statusId == 0 && (allocationEditRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)))) {
 
@@ -82,7 +83,7 @@ $(document).ready(function() {
                             '<button class="btn btn-danger m-r-5 stuff-delete"  data-allocationid="' + item.allocation.id + '" data-allocationstuffid="' + item.id + '"data-allocationstuffname="' + item.employee.name + '"><i class="anticon anticon-delete"></i></button>';
 
                     }
-                    if ((item.statusId == 1 && (allocationUpdateRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)))) {
+                    if ((item.statusId == 1 && (allocationUpdateRoles.indexOf(authRole) !== -1 || overrideEmails.includes(authUserEmail)) )) {
 
                         // if (item.statusId == 1 && allocationUpdateRoles.indexOf(authRole) !== -1){
                         adminButton = '<button type="button" class="btn btn-primary m-r-5 stuff-edit" data-allocationid="'+item.allocation.id+'" data-stuffid="'+item.id+'" data-allocationstuffid="'+item.employee.id+'" data-allocationstuffposition="'+item.allocationPosition+'" data-toggle="modal" id="editEmpAllocationButton" data-target="#allocation-edit-person-modal">' +
