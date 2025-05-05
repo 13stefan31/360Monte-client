@@ -1,5 +1,5 @@
 <?php require 'auth.php';
-if (!in_array($authRole,$reportAllowedRoles)){
+if (!in_array($authRole,$reportAllowedRoles) && $authUser->email!="nikola.kontic@360monte.me" && $authUser->email!="nikolina@360monte.me"){
 
     header('HTTP/1.0 403 Forbidden');
     header('Location: /403');
