@@ -55,7 +55,7 @@
                          </span> Alokacije</a>
                         </li>
                     <?php } ?>
-                    <?php if (in_array($authRole, $reportAllowedRoles)) { ?>
+                    <?php if (in_array($authRole, $reportAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me" || $authUser->email=="nikolina@360monte.me") { ?>
                         <li>
                             <a href="/izvjestaj">
                              <span class="icon-holder">

@@ -104,7 +104,7 @@
                             </a>
                         </div>
                         <?php }?>
-                        <?php if (in_array($authRole,$reportAllowedRoles)){?>
+                        <?php if (in_array($authRole,$reportAllowedRoles) || $authUser->email=="nikola.kontic@360monte.me" || $authUser->email=="nikolina@360monte.me"){?>
                             <div class="col-md-6 col-lg-3">
                                 <a href="/izvjestaj">
                                     <div class="card">
