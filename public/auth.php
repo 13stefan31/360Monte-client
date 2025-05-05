@@ -59,7 +59,8 @@ $personAllowedRoles = array(
 $reportAllowedRoles = array(
     P_ADMIN_ROLE_ID,
     P_GENERAL_MANAGER_ROLE_ID,
-    P_SALE_COORDINATOR_ROLE_ID
+    P_SALE_COORDINATOR_ROLE_ID,
+    P_OFFICE_ADMIN_ROLE_ID
 );
 $surveysAllowedRoles = array(
     P_ADMIN_ROLE_ID,
