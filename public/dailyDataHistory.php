@@ -113,7 +113,6 @@ $current_page= 1;
                                         <th style="text-align: right">Godina</th>
                                         <th style="text-align: right">Počeo dan</th>
                                         <th style="text-align: right">Završio dan</th>
-                                        <th style="text-align: right">Količina goriva</th>
                                         <th style="text-align: right">Datum unosa</th>
                                         <th></th>
                                     </tr>
@@ -213,7 +212,7 @@ $current_page= 1;
 <?php include ('layouts/scripts.php')?>
 <script src="/assets/js/userAuth.js"></script>
 <script src="/assets/vendors/chartist/chartist.min.js"></script>
-<script src="/assets/js/dailyDataHistory.js?v=2904"></script>
+<script src="/assets/js/dailyDataHistory.js?v=0710"></script>
 </body>
 
 </html>

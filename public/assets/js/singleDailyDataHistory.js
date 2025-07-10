@@ -15,20 +15,28 @@ $(document).ready(function() {
             } else {
                 var data = response.data.data;
                 getVehiclesSelect('vehicleDailyEdit',data.vehicle.id);
-                getStuffAllocation('empDailyEdit',data.drivenBy.id);
+                if (data.drivenBy){
+
+                    getStuffAllocation('empDailyEdit',data.drivenBy.id);
+                }else{
+                    getStuffAllocation('empDailyEdit');
+                }
 
                 $('#dataId').val(data.id);
                 $('.dailyDataCreated').html(data.createdAt);
-                $('.dailyDataFuelQ').html(data.fuel_quantity+'L');
+                $('.dailyDataFuelQ').html((data.fuel_quantity !== null ? data.fuel_quantity + ' L' : '-'));
+
                 $('#qpChange').val(data.fuel_quantity);
                 $('.dailyDataVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model+ ' ' + data.vehicle.year  + '<br/> Reg. oznaka: ' +data.vehicle.registrationNumber);
-                $('.dailyDataFuelP').html(data.fuel_price+'€');
+
+                $('.dailyDataFuelP').html((data.fuel_price !== null ? data.fuel_price + ' €' : '-'));
+
                 $('#fpChange').val(data.fuel_price);
-                $('.dailyDataStartingM').html(data.starting_mileage+'km');
+                $('.dailyDataStartingM').html(data.starting_mileage+' km');
                 $('#smChange').val(data.starting_mileage);
-                $('.dailyDataEndingM').html(data.ending_mileage+'km');
+                $('.dailyDataEndingM').html(data.ending_mileage+' km');
                 $('#emChange').val(data.ending_mileage  );
-                $('.dailyDataDistance').html(data.daily_distance+'km');
+                $('.dailyDataDistance').html(data.daily_distance+' km');
                 $('#tdChange').val(data.daily_distance);
                 $('.dailyData').html(data.logDate);
 
@@ -36,9 +44,11 @@ $(document).ready(function() {
                 var formattedDate = moment(dateString, "DD.MM.YYYY");
                 $('#dateChange').val(formattedDate.format("YYYY-MM-DD"));
 
+                if (data.drivenBy){
+                    var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
+                    $('#drivers-tabele tbody').append(newRow);
+                }
 
-                var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
-                $('#drivers-tabele tbody').append(newRow);
 
             }
         }  ,
@@ -90,16 +100,18 @@ $(document).ready(function() {
 
                     $('#dataId').val(data.id);
                     $('.dailyDataCreated').html(data.createdAt);
-                    $('.dailyDataFuelQ').html(data.fuel_quantity+'L');
+                    $('.dailyDataFuelQ').html((data.fuel_quantity !== null ? data.fuel_quantity + ' L' : '-'));
+
                     $('#qpChange').val(data.fuel_quantity);
                     $('.dailyDataVehicle').html(data.vehicle.brand + ' ' + data.vehicle.model  + ' Reg. oznaka: ' +data.vehicle.registrationNumber);
-                    $('.dailyDataFuelP').html(data.fuel_price+'€');
+                    $('.dailyDataFuelP').html((data.fuel_price !== null ? data.fuel_price + ' €' : '-'));
+
                     $('#fpChange').val(data.fuel_price);
-                    $('.dailyDataStartingM').html(data.starting_mileage+'km');
+                    $('.dailyDataStartingM').html(data.starting_mileage+' km');
                     $('#smChange').val(data.starting_mileage);
-                    $('.dailyDataEndingM').html(data.ending_mileage+'km');
+                    $('.dailyDataEndingM').html(data.ending_mileage+' km');
                     $('#emChange').val(data.ending_mileage  );
-                    $('.dailyDataDistance').html(data.daily_distance+'km');
+                    $('.dailyDataDistance').html(data.daily_distance+' km');
 
                     $('#tdChange').val(data.daily_distance);
                     $('.dailyData').html(data.logDate);

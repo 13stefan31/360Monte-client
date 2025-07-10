@@ -74,7 +74,6 @@ $(document).ready(function() {
                         newRow.append($('<td style="text-align: right">').text( data.vehicle.year ));
                         newRow.append($('<td style="text-align: right">').text(data.starting_mileage+'km'));
                         newRow.append($('<td style="text-align: right">').text(data.ending_mileage+'km'));
-                        newRow.append($('<td style="text-align: right">').text(data.fuel_quantity+'L'));
                         newRow.append($('<td style="text-align: right">').text(data.logDate));
                         newRow.append($('<td>').html('<a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+data.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                             '<a class="btn btn-danger m-r-5 " href="javascript:void(0)" onclick="deleteDailyData('+data.id+')"><i class="anticon anticon-delete"></i>Obriši</a>'));
@@ -220,6 +219,7 @@ function getDailyDataHistory(filters,current_page,per_page){
         data:data,
         dataType: 'json',
         success: function(response) {
+            console.log(response)
             if (response.error) {
                 $('#alert').append(createWarningMessage(response.error));
             } else {
@@ -233,7 +233,6 @@ function getDailyDataHistory(filters,current_page,per_page){
                         '<td style="text-align: right">' + row.vehicle.year + '</td>' +
                         '<td style="text-align: right">' + row.starting_mileage + 'km</td>' +
                         '<td style="text-align: right">' + row.ending_mileage + 'km</td>' +
-                        '<td style="text-align: right">' + row.fuel_quantity + 'L</td>' +
                         '<td style="text-align: right">' + row.logDate +'</td>' +
                         '<td><a class="btn btn-primary m-r-5 " href="/istorija-dnevnog-podatka/'+row.id+'"   ><i class="anticon anticon-plus"></i>Detalji</a>' +
                         '<a class="btn btn-danger m-r-5 " href="javascript:void(0)" onclick="deleteDailyData('+row.id+')"><i class="anticon anticon-delete"></i>Obriši</a>' +

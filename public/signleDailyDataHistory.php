@@ -111,13 +111,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles) && $authUser->email!="nik
                                         <input hidden="" id="vehicleId">
                                         <input hidden="" id="driverId">
 
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">Vozilo</span>
-                                            </div>
-                                            <select id="vehicleDailyEdit" class="form-control"></select>
 
-                                        </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Vozač</span>
@@ -125,18 +119,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles) && $authUser->email!="nik
                                             <select id="empDailyEdit" class="form-control"></select>
                                             <p class="error"></p>
                                         </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" >Početna kilometraža:</span>
-                                            </div>
-                                            <input type="number" id="smChange" class="form-control" />
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" >Krajnja kilometraža:</span>
-                                            </div>
-                                            <input type="number" id="emChange" class="form-control" />
-                                        </div>
+
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" >Cijena goriva (EUR):</span>
@@ -149,12 +132,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles) && $authUser->email!="nik
                                             </div>
                                             <input type="number" id="qpChange" class="form-control" />
                                         </div>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" >Datum:</span>
-                                            </div>
-                                            <input type="date" id="dateChange" class="form-control" />
-                                        </div>
+
 
                                     </div>
                                     <div class="modal-footer">
@@ -176,7 +154,7 @@ if (!in_array($authRole,$dailyDataHistoryAllowedRoles) && $authUser->email!="nik
 
     <?php include ('layouts/scripts.php')?>
     <script src="/assets/js/userAuth.js"></script>
-    <script src="/assets/js/singleDailyDataHistory.js?v=2904"></script>
+    <script src="/assets/js/singleDailyDataHistory.js?v=0710"></script>
 
 </body>
 
