@@ -44,9 +44,7 @@ $current_page= 1;
                     <div class="card-body" id="dialy-data">
                         <div id="alert"></div>
                         <div class="m-t-25">
-                                <button type="button" class="btn btn-primary m-b-15" data-toggle="modal" id="newDailyDataButton" data-target="#newDailyData">
-                                    Novi unos
-                                </button>
+
                             <button type="button" class="btn btn-primary m-b-15 m-r-10" id="showDailyDataFilter" >
                                 Filteri
                             </button>
@@ -113,7 +111,7 @@ $current_page= 1;
                                         <th style="text-align: right">Godina</th>
                                         <th style="text-align: right">Počeo dan</th>
                                         <th style="text-align: right">Završio dan</th>
-                                        <th style="text-align: right">Datum unosa</th>
+                                        <th style="text-align: right">Datum</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -128,79 +126,6 @@ $current_page= 1;
                 </div>
             </div>
 
-                <div class="modal fade" id="newDailyData">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Novi unos</h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <i class="anticon anticon-close"></i>
-                                </button>
-                            </div>
-                            <form id="dialyDataAdd">
-                                <div class="modal-body">
-                                    <div id="dailyDataAddError"  ></div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Vozilo</span>
-                                        </div>
-                                        <select id="vehicleSelectNew" class="form-control"></select>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Datum</span>
-                                        </div>
-                                        <input type="date" class="form-control" id="dateNew" aria-describedby="basic-addon3" >
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" >Vozač</span>
-                                        </div>
-                                        <select id="empAddDailyData" class="form-control"></select>
-                                        <p class="error"></p>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Početna kilometraža</span>
-                                        </div>
-                                        <input type="number" class="form-control" id="startingMileage" aria-describedby="basic-addon3" placeholder="Unesite početnu kilometražu">
-
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Krajnja kilomteraža</span>
-                                        </div>
-                                        <input type="number" class="form-control" id="endingMileage" aria-describedby="basic-addon3" placeholder="Unesite završnu kilometražu">
-
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Cijena goriva (EUR)</span>
-                                        </div>
-                                        <input type="number" class="form-control" id="fuelPrice" aria-describedby="basic-addon3" placeholder="Unesite cijenu goriva">
-
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"  >Količina goriva (L)</span>
-                                        </div>
-                                        <input type="number" class="form-control" id="fuelQuantity" aria-describedby="basic-addon3" placeholder="Unesite količinu goriva">
-
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-                                    <button type="submit" class="btn btn-primary" id="addNewDailyData">Sačuvaj</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             <?php include ('layouts/footer.php')?>
         </div>
         <?php  include ('layouts/themeConfig.php')?>

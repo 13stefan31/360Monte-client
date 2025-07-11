@@ -75,13 +75,9 @@ $(document).ready(function() {
                 'updateDailyData': 1,
                 'data': {
                     'dataId': $('#dataId').val(),
-                    'vehicleId': $('#vehicleDailyEdit').val(),
-                    'startingMileage': $('#smChange').val(),
-                    'endingMileage': $('#emChange').val(),
                     'fuelPrice': $('#fpChange').val(),
                     'fuelQuantity': $('#qpChange').val(),
                     'driverId': $('#empDailyEdit').val(),
-                    'date': $('#dateChange').val()
                 }
 
             }),
@@ -95,7 +91,10 @@ $(document).ready(function() {
 
 
                     getVehiclesSelect('vehicleDailyEdit',data.vehicle.id);
-                    getStuffAllocation('empDailyEdit',data.drivenBy.id);
+                    if (data.drivenBy){
+
+                        getStuffAllocation('empDailyEdit',data.drivenBy.id);
+                    }
 
 
                     $('#dataId').val(data.id);
@@ -119,10 +118,12 @@ $(document).ready(function() {
                     var dateString = data.logDate;
                     var formattedDate = moment(dateString, "DD.MM.YYYY");
                     $('#dateChange').val(formattedDate.format("YYYY-MM-DD"));
-
                     $('#drivers-tabele tbody').empty();
-                    var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
-                    $('#drivers-tabele tbody').append(newRow);
+if (data.drivenBy){
+    var newRow = '<tr id="'+data.drivenBy.id+'"><td><span class="badge badge-primary badge-dot m-r-10"></span>' + data.drivenBy.name + '-'+ data.drivenBy.roleName+'</td></tr>';
+    $('#drivers-tabele tbody').append(newRow);
+}
+
 
                     $('#daily-data-change-modal').modal('hide');
                     $('#dailyDataChangeError').html('');

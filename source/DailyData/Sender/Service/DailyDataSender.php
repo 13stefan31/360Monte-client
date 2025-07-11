@@ -62,16 +62,11 @@ class DailyDataSender extends \Main\SenderService
     }
 
     public function updateDailyData($data){
-        $date = isset($data['date']) && $data['date'] !== '' ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
 
         $body = [
-            'startingMileage' => $data['startingMileage'],
-            'endingMileage' => $data['endingMileage'],
             'fuelPrice' => $data['fuelPrice'],
             'fuelQuantity' => $data['fuelQuantity'],
-            'vehicleId' => $data['vehicleId'],
             'driverId' => $data['driverId'],
-            'date' => $date
         ];
 
         $initialize_field = 'vehicle-daily-data/'.$data['dataId'];
@@ -79,23 +74,23 @@ class DailyDataSender extends \Main\SenderService
 
     }
 
-    public function addDailyData($data){
-        $date = isset($data['date']) ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
-
-        $body = [
-            'vehicleId' => $data['vehicleId'],
-            'driverId' => $data['driverId'],
-            'startingMileage' => $data['startingMileage'],
-            'endingMileage' => $data['endingMileage'],
-            'fuelPrice' => $data['fuelPrice'],
-            'fuelQuantity' => $data['fuelQuantity'],
-            'date' => $date
-        ];
-
-        $initialize_field = 'vehicle-daily-data';
-        return  $this->send_post_request($initialize_field, $body);
-
-    }
+//    public function addDailyData($data){
+//        $date = isset($data['date']) ? DateTime::createFromFormat('Y-m-d', $data['date'])->format('d.m.Y') : null;
+//
+//        $body = [
+//            'vehicleId' => $data['vehicleId'],
+//            'driverId' => $data['driverId'],
+//            'startingMileage' => $data['startingMileage'],
+//            'endingMileage' => $data['endingMileage'],
+//            'fuelPrice' => $data['fuelPrice'],
+//            'fuelQuantity' => $data['fuelQuantity'],
+//            'date' => $date
+//        ];
+//
+//        $initialize_field = 'vehicle-daily-data';
+//        return  $this->send_post_request($initialize_field, $body);
+//
+//    }
 
 }
 
